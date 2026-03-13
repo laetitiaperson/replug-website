@@ -110,6 +110,41 @@
       .rp-devis-filters { flex-direction: column; }
       .rp-devis-subtabs { flex-direction: column; }
     }
+
+    /* ===== Comparateur de prix ===== */
+    .rp-comparateur { text-align: center; }
+    .rp-comparateur__title { font-size: 1.6rem; font-weight: 700; margin-bottom: 8px; color: var(--rp-dark); }
+    .rp-comparateur__subtitle { color: var(--rp-gray); font-size: .95rem; margin-bottom: 32px; }
+    .rp-comparateur__form-card { background: #f9fafb; border-radius: 16px; padding: 32px; margin-bottom: 20px; }
+    .rp-comparateur__fields { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; text-align: left; margin-bottom: 24px; }
+    .rp-comparateur__fields .rp-form__group { margin-bottom: 0; }
+    .rp-comparateur__fields .rp-form__label { font-size: .82rem; font-weight: 500; margin-bottom: 6px; display: block; color: var(--rp-dark); }
+    .rp-comparateur__fields .rp-form__input,
+    .rp-comparateur__fields .rp-form__select { padding: 10px 14px; font-size: .9rem; }
+    .rp-comparateur__features { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; background: #f9fafb; border-radius: 16px; padding: 28px 24px; text-align: left; }
+    .rp-comparateur__feature h4 { font-size: .92rem; font-weight: 600; margin-bottom: 4px; color: var(--rp-dark); }
+    .rp-comparateur__feature p { font-size: .82rem; color: var(--rp-gray); line-height: 1.4; }
+
+    /* Comparateur results */
+    .rp-comparateur__results { display: none; margin-top: 32px; text-align: left; }
+    .rp-comparateur__results.is-visible { display: block; }
+    .rp-comparateur__results-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 16px; color: var(--rp-dark); }
+    .rp-comparateur__result-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 20px 24px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; transition: box-shadow .2s; }
+    .rp-comparateur__result-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+    .rp-comparateur__result-info { flex: 1; min-width: 200px; }
+    .rp-comparateur__result-info h4 { font-size: 1rem; font-weight: 600; margin-bottom: 4px; color: var(--rp-dark); }
+    .rp-comparateur__result-info p { font-size: .85rem; color: var(--rp-gray); }
+    .rp-comparateur__result-price { font-size: 1.3rem; font-weight: 700; color: var(--rp-green); white-space: nowrap; }
+    .rp-comparateur__result-link { font-size: .88rem; }
+
+    @media (max-width: 768px) {
+      .rp-comparateur__fields { grid-template-columns: 1fr 1fr; }
+      .rp-comparateur__features { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 500px) {
+      .rp-comparateur__fields { grid-template-columns: 1fr; }
+      .rp-comparateur__features { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body class="template-partner-login">
@@ -502,10 +537,65 @@
 
         <!-- Panel: Comparateur -->
         <div class="rp-dashboard__panel" id="panel-comparateur">
-          <div class="rp-dash-empty">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
-            <h2>Comparateur</h2>
-            <p>Comparez les options de réparation et de reconditionnement pour chaque batterie diagnostiquée.</p>
+          <div class="rp-comparateur">
+            <h2 class="rp-comparateur__title">Comparateur de Prix</h2>
+            <p class="rp-comparateur__subtitle">Trouvez les meilleurs prix pour votre batterie de vélo électrique</p>
+
+            <!-- Search form -->
+            <div class="rp-comparateur__form-card">
+              <div class="rp-comparateur__fields">
+                <div class="rp-form__group">
+                  <label for="compMarque" class="rp-form__label">Marque de la batterie</label>
+                  <input type="text" id="compMarque" class="rp-form__input" placeholder="Ex: Bosch, Yamaha, Shimano">
+                </div>
+                <div class="rp-form__group">
+                  <label for="compCapacite" class="rp-form__label">Capacité (Ah)</label>
+                  <input type="text" id="compCapacite" class="rp-form__input" placeholder="Ex: 400, 500, 625...">
+                </div>
+                <div class="rp-form__group">
+                  <label for="compModele" class="rp-form__label">Modèle</label>
+                  <input type="text" id="compModele" class="rp-form__input" placeholder="Ex: PowerPack, Steps, PW-X">
+                </div>
+                <div class="rp-form__group">
+                  <label for="compTension" class="rp-form__label">Tension</label>
+                  <select id="compTension" class="rp-form__select">
+                    <option value="36V">36V</option>
+                    <option value="48V">48V</option>
+                    <option value="52V">52V</option>
+                    <option value="60V">60V</option>
+                    <option value="72V">72V</option>
+                  </select>
+                </div>
+              </div>
+              <button class="rp-btn rp-btn--primary" id="compSearchBtn">Rechercher les prix</button>
+            </div>
+
+            <!-- Feature cards -->
+            <div class="rp-comparateur__features">
+              <div class="rp-comparateur__feature">
+                <h4>Recherche temps réel</h4>
+                <p>Comparaison automatique sur les principaux sites partenaires</p>
+              </div>
+              <div class="rp-comparateur__feature">
+                <h4>Meilleurs prix</h4>
+                <p>Prix actualisés en direct pour vous garantir les meilleures offres</p>
+              </div>
+              <div class="rp-comparateur__feature">
+                <h4>Gain de temps</h4>
+                <p>Évitez de chercher manuellement sur chaque site marchand</p>
+              </div>
+              <div class="rp-comparateur__feature">
+                <h4>Liens sécurisés</h4>
+                <p>Redirection directe vers les sites officiels des partenaires</p>
+              </div>
+            </div>
+
+            <!-- Results (hidden, shown after search) -->
+            <div class="rp-comparateur__results" id="compResults">
+              <h3 class="rp-comparateur__results-title" id="compResultsTitle"></h3>
+              <div id="compResultsList"></div>
+            </div>
+
           </div>
         </div>
 
@@ -750,6 +840,62 @@ document.getElementById('suiviDevisInput').addEventListener('keydown', function(
 document.getElementById('btnFermerSuivi').addEventListener('click', function() {
   document.getElementById('suiviDevisDetail').classList.remove('is-visible');
   document.getElementById('suiviDevisInput').value = '';
+});
+
+// ===== Comparateur de prix =====
+var compDatabase = [
+  { marque: 'Bosch', capacite: '500', modele: 'PowerPack', tension: '36V', fournisseur: 'BatteryShop.fr', prix: 459, url: '#' },
+  { marque: 'Bosch', capacite: '500', modele: 'PowerPack', tension: '36V', fournisseur: 'VeloBatterie.com', prix: 479, url: '#' },
+  { marque: 'Bosch', capacite: '500', modele: 'PowerPack', tension: '36V', fournisseur: 'CycleEnergy', prix: 495, url: '#' },
+  { marque: 'Bosch', capacite: '625', modele: 'PowerTube', tension: '36V', fournisseur: 'BatteryShop.fr', prix: 599, url: '#' },
+  { marque: 'Bosch', capacite: '625', modele: 'PowerTube', tension: '36V', fournisseur: 'VeloBatterie.com', prix: 619, url: '#' },
+  { marque: 'Yamaha', capacite: '500', modele: 'InTube', tension: '36V', fournisseur: 'BatteryShop.fr', prix: 489, url: '#' },
+  { marque: 'Yamaha', capacite: '500', modele: 'InTube', tension: '36V', fournisseur: 'YamahaParts.fr', prix: 510, url: '#' },
+  { marque: 'Shimano', capacite: '504', modele: 'Steps E8035', tension: '36V', fournisseur: 'CycleEnergy', prix: 525, url: '#' },
+  { marque: 'Shimano', capacite: '504', modele: 'Steps E8035', tension: '36V', fournisseur: 'ShimanoDirect.eu', prix: 549, url: '#' },
+  { marque: 'Bosch', capacite: '400', modele: 'PowerPack', tension: '36V', fournisseur: 'BatteryShop.fr', prix: 389, url: '#' },
+  { marque: 'Bosch', capacite: '400', modele: 'PowerPack', tension: '36V', fournisseur: 'VeloBatterie.com', prix: 405, url: '#' },
+];
+
+document.getElementById('compSearchBtn').addEventListener('click', function() {
+  var marque = document.getElementById('compMarque').value.trim().toLowerCase();
+  var capacite = document.getElementById('compCapacite').value.trim();
+  var modele = document.getElementById('compModele').value.trim().toLowerCase();
+  var tension = document.getElementById('compTension').value;
+
+  var results = compDatabase.filter(function(item) {
+    var matchMarque = !marque || item.marque.toLowerCase().includes(marque);
+    var matchCapacite = !capacite || item.capacite.includes(capacite);
+    var matchModele = !modele || item.modele.toLowerCase().includes(modele);
+    var matchTension = item.tension === tension;
+    return matchMarque && matchCapacite && matchModele && matchTension;
+  });
+
+  results.sort(function(a, b) { return a.prix - b.prix; });
+
+  var container = document.getElementById('compResultsList');
+  var resultsDiv = document.getElementById('compResults');
+  var title = document.getElementById('compResultsTitle');
+
+  if (results.length === 0) {
+    title.textContent = 'Aucun résultat trouvé';
+    container.innerHTML = '<p style="color:var(--rp-gray);font-size:.92rem;">Essayez avec d\'autres critères de recherche ou une marque différente.</p>';
+  } else {
+    title.textContent = results.length + ' résultat' + (results.length > 1 ? 's' : '') + ' trouvé' + (results.length > 1 ? 's' : '');
+    container.innerHTML = results.map(function(r, i) {
+      var bestLabel = i === 0 ? ' <span style="background:#dcfce7;color:#15803d;padding:2px 10px;border-radius:12px;font-size:.78rem;font-weight:500;margin-left:8px;">Meilleur prix</span>' : '';
+      return '<div class="rp-comparateur__result-card">' +
+        '<div class="rp-comparateur__result-info">' +
+        '<h4>' + r.fournisseur + bestLabel + '</h4>' +
+        '<p>' + r.marque + ' ' + r.modele + ' — ' + r.capacite + ' Wh — ' + r.tension + '</p>' +
+        '</div>' +
+        '<span class="rp-comparateur__result-price">' + r.prix + ',00 €</span>' +
+        '<a href="' + r.url + '" class="rp-btn rp-btn--outline-dark rp-btn--small rp-comparateur__result-link" target="_blank">Voir l\'offre</a>' +
+        '</div>';
+    }).join('');
+  }
+  resultsDiv.classList.add('is-visible');
+  resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 
 // ===== Télécharger QR Code (generates a simple page to print/save as PDF) =====
