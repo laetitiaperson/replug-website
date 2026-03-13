@@ -14,20 +14,6 @@
     /* ===== Dashboard styles ===== */
     .rp-dashboard { display: none; min-height: 80vh; padding-top: 72px; }
     .rp-dashboard.is-visible { display: block; }
-    .rp-dashboard__top { background: linear-gradient(135deg, var(--rp-dark) 0%, #1a2e1a 100%); padding: 48px 24px 32px; }
-    .rp-dashboard__top-inner { max-width: 1080px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
-    .rp-dashboard__welcome h1 { color: #fff; font-size: 1.6rem; margin-bottom: 6px; }
-    .rp-dashboard__welcome p { color: rgba(255,255,255,.65); font-size: .95rem; }
-
-    /* Tabs */
-    .rp-dashboard__nav { background: #fff; border-bottom: 1px solid #e8e8e8; position: sticky; top: 72px; z-index: 10; }
-    .rp-dashboard__nav-inner { max-width: 1080px; margin: 0 auto; display: flex; align-items: center; gap: 0; overflow-x: auto; padding: 0 24px; }
-    .rp-dashboard__tab { padding: 16px 24px; font-size: .95rem; font-weight: 500; color: var(--rp-gray); background: none; border: none; border-bottom: 3px solid transparent; cursor: pointer; white-space: nowrap; transition: all .2s; }
-    .rp-dashboard__tab:hover { color: var(--rp-dark); }
-    .rp-dashboard__tab.is-active { color: var(--rp-green); border-bottom-color: var(--rp-green); font-weight: 600; }
-    @media (max-width: 600px) {
-      .rp-dashboard__tab { padding: 14px 16px; font-size: .88rem; }
-    }
 
     /* Tab panels */
     .rp-dashboard__content { max-width: 1080px; margin: 0 auto; padding: 40px 24px 80px; }
@@ -45,9 +31,80 @@
     .rp-dash-cta h2 { font-size: 1.25rem; margin-bottom: 8px; }
     .rp-dash-cta p { color: var(--rp-gray); margin-bottom: 20px; font-size: .95rem; }
 
-    /* Disconnect */
-    .rp-dashboard__logout { color: rgba(255,255,255,.6); background: none; border: 1px solid rgba(255,255,255,.25); padding: 8px 20px; border-radius: 8px; font-size: .88rem; cursor: pointer; transition: all .2s; }
-    .rp-dashboard__logout:hover { color: #fff; border-color: rgba(255,255,255,.5); }
+    /* ===== Unified header — partner mode ===== */
+    .rp-header--partner .rp-header__nav,
+    .rp-header--partner .rp-header__actions,
+    .rp-header--partner .rp-header__burger { display: none !important; }
+    .rp-header--partner .rp-header__partner-bar { display: flex !important; }
+
+    .rp-header__partner-bar {
+      display: none;
+      align-items: center;
+      gap: 0;
+      flex: 1;
+      margin-left: 40px;
+    }
+    .rp-header__partner-tabs {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+    }
+    .rp-header__partner-tab {
+      padding: 0 18px;
+      height: 72px;
+      line-height: 72px;
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(255,255,255,.65);
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all .2s;
+      font-family: inherit;
+    }
+    .rp-header__partner-tab:hover { color: #fff; }
+    .rp-header__partner-tab.is-active {
+      color: var(--rp-green);
+      border-bottom-color: var(--rp-green);
+      font-weight: 600;
+    }
+    .rp-header__partner-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-left: auto;
+    }
+    .rp-header__partner-name {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,.85);
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .rp-header__partner-name svg { width: 18px; height: 18px; opacity: .7; }
+    .rp-header__partner-logout {
+      color: rgba(255,255,255,.6);
+      background: none;
+      border: 1px solid rgba(255,255,255,.25);
+      padding: 6px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all .2s;
+    }
+    .rp-header__partner-logout:hover { color: #fff; border-color: rgba(255,255,255,.5); }
+
+    @media (max-width: 768px) {
+      .rp-header__partner-bar { margin-left: 16px; flex-wrap: wrap; }
+      .rp-header__partner-tab { padding: 0 12px; font-size: 13px; }
+      .rp-header__partner-name span { display: none; }
+      .rp-header__partner-logout { font-size: 12px; padding: 5px 12px; }
+    }
 
     /* ===== Devis sub-tabs ===== */
     .rp-devis-subtabs { display: flex; gap: 8px; margin-bottom: 28px; }
@@ -308,6 +365,23 @@
         <a href="trouver-un-reparateur.html" class="rp-btn rp-btn--primary rp-header__cta">Trouver un réparateur</a>
       </div>
       <button class="rp-header__burger" aria-label="Ouvrir le menu" aria-expanded="false"><span></span><span></span><span></span></button>
+
+      <!-- Partner bar (hidden until dashboard active) -->
+      <div class="rp-header__partner-bar">
+        <div class="rp-header__partner-tabs">
+          <button class="rp-header__partner-tab is-active" data-tab="commandes">Commandes</button>
+          <button class="rp-header__partner-tab" data-tab="devis">Devis</button>
+          <button class="rp-header__partner-tab" data-tab="comparateur">Comparateur</button>
+          <button class="rp-header__partner-tab" data-tab="parametres">Paramètres</button>
+        </div>
+        <div class="rp-header__partner-right">
+          <div class="rp-header__partner-name">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span id="partnerDisplayName">Jean Dupont</span>
+          </div>
+          <button class="rp-header__partner-logout" id="logoutBtn">Déconnexion</button>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -353,16 +427,6 @@
 
     <!-- ===== DASHBOARD (hidden until login) ===== -->
     <section class="rp-dashboard is-visible" id="dashboardSection">
-
-      <!-- Tab navigation -->
-      <nav class="rp-dashboard__nav" aria-label="Menu espace partenaire">
-        <div class="rp-dashboard__nav-inner">
-          <button class="rp-dashboard__tab is-active" data-tab="commandes">Commandes</button>
-          <button class="rp-dashboard__tab" data-tab="devis">Devis</button>
-          <button class="rp-dashboard__tab" data-tab="comparateur">Comparateur</button>
-          <button class="rp-dashboard__tab" data-tab="parametres">Paramètres</button>
-        </div>
-      </nav>
 
       <!-- Tab content -->
       <div class="rp-dashboard__content">
@@ -1285,35 +1349,47 @@ function rpAcceptCookies() { localStorage.setItem('rp_cookies','accepted'); docu
 function rpRefuseCookies() { localStorage.setItem('rp_cookies','refused'); document.getElementById('rp-cookie-banner').classList.remove('is-visible'); }
 (function(){ if(!localStorage.getItem('rp_cookies')){ document.getElementById('rp-cookie-banner').classList.add('is-visible'); } })();
 
-// Login → Dashboard (protégé pour le bypass)
+// ===== Partner mode: unified header =====
+function activatePartnerMode() {
+  document.querySelector('.rp-header').classList.add('rp-header--partner');
+  document.getElementById('loginSection').style.display = 'none';
+  document.getElementById('dashboardSection').classList.add('is-visible');
+}
+
+function deactivatePartnerMode() {
+  document.querySelector('.rp-header').classList.remove('rp-header--partner');
+  document.getElementById('dashboardSection').classList.remove('is-visible');
+  document.getElementById('loginSection').style.display = '';
+  var loginForm = document.getElementById('loginForm');
+  if (loginForm) loginForm.reset();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Auto-activate (login bypass)
+activatePartnerMode();
+
+// Login form (pour quand le login sera ré-activé)
 var loginForm = document.getElementById('loginForm');
 if (loginForm) {
   loginForm.addEventListener('submit', function(e) {
     e.preventDefault();
-    var email = document.getElementById('partner-email').value;
-    var dashEmail = document.getElementById('dashUserEmail');
-    if (dashEmail) dashEmail.textContent = email;
-    document.getElementById('loginSection').style.display = 'none';
-    document.getElementById('dashboardSection').classList.add('is-visible');
+    activatePartnerMode();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 }
 
-// Logout (désactivé temporairement — login bypass)
+// Logout
 var logoutBtn = document.getElementById('logoutBtn');
 if (logoutBtn) {
   logoutBtn.addEventListener('click', function() {
-    document.getElementById('dashboardSection').classList.remove('is-visible');
-    document.getElementById('loginSection').style.display = '';
-    document.getElementById('loginForm').reset();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    deactivatePartnerMode();
   });
 }
 
-// Tab switching
-document.querySelectorAll('.rp-dashboard__tab').forEach(function(tab) {
+// Tab switching (from header partner tabs)
+document.querySelectorAll('.rp-header__partner-tab').forEach(function(tab) {
   tab.addEventListener('click', function() {
-    document.querySelectorAll('.rp-dashboard__tab').forEach(function(t) { t.classList.remove('is-active'); });
+    document.querySelectorAll('.rp-header__partner-tab').forEach(function(t) { t.classList.remove('is-active'); });
     document.querySelectorAll('.rp-dashboard__panel').forEach(function(p) { p.classList.remove('is-active'); });
     this.classList.add('is-active');
     document.getElementById('panel-' + this.dataset.tab).classList.add('is-active');
@@ -1523,11 +1599,11 @@ document.querySelector('.rp-dash-cta .rp-btn').addEventListener('click', functio
   // Show the diagnostic panel, hide others
   document.querySelectorAll('.rp-dashboard__panel').forEach(function(p) { p.classList.remove('is-active'); });
   document.getElementById('panel-diagnostic').classList.add('is-active');
-  // Update tab nav — remove active from all tabs
-  document.querySelectorAll('.rp-dashboard__tab').forEach(function(t) { t.classList.remove('is-active'); });
-  // Hide CTA block and tab nav
+  // Update tab nav — remove active from all header tabs
+  document.querySelectorAll('.rp-header__partner-tab').forEach(function(t) { t.classList.remove('is-active'); });
+  // Hide CTA block and header partner tabs
   document.querySelector('.rp-dash-cta').style.display = 'none';
-  document.querySelector('.rp-dashboard__nav').style.display = 'none';
+  document.querySelector('.rp-header__partner-tabs').style.display = 'none';
   // Show the wizard
   document.getElementById('diagWizard').classList.add('is-visible');
   diagGoToStep(1);
@@ -1538,11 +1614,11 @@ document.querySelector('.rp-dash-cta .rp-btn').addEventListener('click', functio
 document.getElementById('diagBackDashboard').addEventListener('click', function() {
   document.getElementById('panel-diagnostic').classList.remove('is-active');
   document.getElementById('panel-commandes').classList.add('is-active');
-  document.querySelector('.rp-dashboard__tab[data-tab="commandes"]').classList.add('is-active');
+  document.querySelector('.rp-header__partner-tab[data-tab="commandes"]').classList.add('is-active');
   document.getElementById('diagWizard').classList.remove('is-visible');
-  // Restore CTA block and tab nav
+  // Restore CTA block and header partner tabs
   document.querySelector('.rp-dash-cta').style.display = '';
-  document.querySelector('.rp-dashboard__nav').style.display = '';
+  document.querySelector('.rp-header__partner-tabs').style.display = '';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
