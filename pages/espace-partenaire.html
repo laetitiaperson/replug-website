@@ -389,7 +389,7 @@
   <main id="main-content">
 
     <!-- ===== LOGIN SCREEN ===== -->
-    <section class="rp-partner-login" id="loginSection" style="display:none;">
+    <section class="rp-partner-login" id="loginSection">
       <div class="rp-partner-login__inner">
         <div style="width:72px;height:72px;margin:0 auto 24px;background-color:var(--rp-offwhite);border-radius:50%;display:flex;align-items:center;justify-content:center;">
           <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--rp-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
@@ -426,7 +426,7 @@
     </section>
 
     <!-- ===== DASHBOARD (hidden until login) ===== -->
-    <section class="rp-dashboard is-visible" id="dashboardSection">
+    <section class="rp-dashboard" id="dashboardSection">
 
       <!-- Tab content -->
       <div class="rp-dashboard__content">
@@ -1365,10 +1365,7 @@ function deactivatePartnerMode() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Auto-activate (login bypass)
-activatePartnerMode();
-
-// Login form (pour quand le login sera ré-activé)
+// Login form
 var loginForm = document.getElementById('loginForm');
 if (loginForm) {
   loginForm.addEventListener('submit', function(e) {
