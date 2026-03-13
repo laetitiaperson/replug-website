@@ -156,11 +156,123 @@
 
         <!-- Panel: Commandes -->
         <div class="rp-dashboard__panel is-active" id="panel-commandes">
-          <div class="rp-dash-empty">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
-            <h2>Commandes</h2>
-            <p>Vous n'avez pas encore de commande. Lancez un diagnostic pour créer votre première commande.</p>
+
+          <!-- Filters & search -->
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:24px;">
+            <h2 style="font-size:1.2rem;margin:0;">Mes commandes</h2>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <select class="rp-form__select" style="width:auto;padding:8px 32px 8px 12px;font-size:.88rem;" id="filterStatus">
+                <option value="">Tous les statuts</option>
+                <option value="en-cours">En cours</option>
+                <option value="livree">Livrée</option>
+                <option value="en-attente">En attente</option>
+              </select>
+              <input type="text" class="rp-form__input" placeholder="Rechercher un client..." style="width:200px;padding:8px 12px;font-size:.88rem;" id="searchClient">
+            </div>
           </div>
+
+          <!-- Orders table -->
+          <div style="overflow-x:auto;border-radius:12px;border:1px solid #e8e8e8;">
+            <table style="width:100%;border-collapse:collapse;font-size:.9rem;">
+              <thead>
+                <tr style="background:#f7f7f7;text-align:left;">
+                  <th style="padding:14px 16px;font-weight:600;white-space:nowrap;">N° commande</th>
+                  <th style="padding:14px 16px;font-weight:600;white-space:nowrap;">Client</th>
+                  <th style="padding:14px 16px;font-weight:600;white-space:nowrap;">Type de véhicule</th>
+                  <th style="padding:14px 16px;font-weight:600;white-space:nowrap;">Intervention</th>
+                  <th style="padding:14px 16px;font-weight:600;white-space:nowrap;">Date commande</th>
+                  <th style="padding:14px 16px;font-weight:600;white-space:nowrap;">Date livraison</th>
+                  <th style="padding:14px 16px;font-weight:600;white-space:nowrap;">Montant</th>
+                  <th style="padding:14px 16px;font-weight:600;white-space:nowrap;">Acompte versé</th>
+                  <th style="padding:14px 16px;font-weight:600;white-space:nowrap;">Solde dû</th>
+                  <th style="padding:14px 16px;font-weight:600;white-space:nowrap;">Statut</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-top:1px solid #eee;">
+                  <td style="padding:14px 16px;white-space:nowrap;font-weight:500;">#RP-2026-0042</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">Martin Dubois</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">Vélo électrique</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">Reconditionnement</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">08/03/2026</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">22/03/2026</td>
+                  <td style="padding:14px 16px;white-space:nowrap;font-weight:600;">389,00 €</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">194,50 €</td>
+                  <td style="padding:14px 16px;white-space:nowrap;font-weight:600;color:#d97706;">194,50 €</td>
+                  <td style="padding:14px 16px;white-space:nowrap;"><span style="background:#dcfce7;color:#15803d;padding:4px 12px;border-radius:20px;font-size:.82rem;font-weight:500;">En cours</span></td>
+                </tr>
+                <tr style="border-top:1px solid #eee;">
+                  <td style="padding:14px 16px;white-space:nowrap;font-weight:500;">#RP-2026-0041</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">Sophie Laurent</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">Trottinette</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">Réparation BMS</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">05/03/2026</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">12/03/2026</td>
+                  <td style="padding:14px 16px;white-space:nowrap;font-weight:600;">185,00 €</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">185,00 €</td>
+                  <td style="padding:14px 16px;white-space:nowrap;font-weight:600;color:#15803d;">0,00 €</td>
+                  <td style="padding:14px 16px;white-space:nowrap;"><span style="background:#dbeafe;color:#1d4ed8;padding:4px 12px;border-radius:20px;font-size:.82rem;font-weight:500;">Livrée</span></td>
+                </tr>
+                <tr style="border-top:1px solid #eee;">
+                  <td style="padding:14px 16px;white-space:nowrap;font-weight:500;">#RP-2026-0040</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">Pierre Moreau</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">Scooter électrique</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">Reconditionnement</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">01/03/2026</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">18/03/2026</td>
+                  <td style="padding:14px 16px;white-space:nowrap;font-weight:600;">620,00 €</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">310,00 €</td>
+                  <td style="padding:14px 16px;white-space:nowrap;font-weight:600;color:#d97706;">310,00 €</td>
+                  <td style="padding:14px 16px;white-space:nowrap;"><span style="background:#dcfce7;color:#15803d;padding:4px 12px;border-radius:20px;font-size:.82rem;font-weight:500;">En cours</span></td>
+                </tr>
+                <tr style="border-top:1px solid #eee;">
+                  <td style="padding:14px 16px;white-space:nowrap;font-weight:500;">#RP-2026-0039</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">Claire Petit</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">Vélo électrique</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">Remplacement cellules</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">25/02/2026</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">—</td>
+                  <td style="padding:14px 16px;white-space:nowrap;font-weight:600;">295,00 €</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">0,00 €</td>
+                  <td style="padding:14px 16px;white-space:nowrap;font-weight:600;color:#dc2626;">295,00 €</td>
+                  <td style="padding:14px 16px;white-space:nowrap;"><span style="background:#fef3c7;color:#92400e;padding:4px 12px;border-radius:20px;font-size:.82rem;font-weight:500;">En attente</span></td>
+                </tr>
+                <tr style="border-top:1px solid #eee;">
+                  <td style="padding:14px 16px;white-space:nowrap;font-weight:500;">#RP-2026-0038</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">Julien Bernard</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">Vélo cargo</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">Reconditionnement</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">20/02/2026</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">06/03/2026</td>
+                  <td style="padding:14px 16px;white-space:nowrap;font-weight:600;">475,00 €</td>
+                  <td style="padding:14px 16px;white-space:nowrap;">475,00 €</td>
+                  <td style="padding:14px 16px;white-space:nowrap;font-weight:600;color:#15803d;">0,00 €</td>
+                  <td style="padding:14px 16px;white-space:nowrap;"><span style="background:#dbeafe;color:#1d4ed8;padding:4px 12px;border-radius:20px;font-size:.82rem;font-weight:500;">Livrée</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Summary cards -->
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:28px;">
+            <div style="background:#f0f9f0;border-radius:12px;padding:20px;text-align:center;">
+              <p style="font-size:.82rem;color:var(--rp-gray);margin-bottom:4px;">Total commandes</p>
+              <p style="font-size:1.5rem;font-weight:700;color:var(--rp-dark);">5</p>
+            </div>
+            <div style="background:#f0f9f0;border-radius:12px;padding:20px;text-align:center;">
+              <p style="font-size:.82rem;color:var(--rp-gray);margin-bottom:4px;">Chiffre d'affaires</p>
+              <p style="font-size:1.5rem;font-weight:700;color:var(--rp-dark);">1 964,00 €</p>
+            </div>
+            <div style="background:#fef3c7;border-radius:12px;padding:20px;text-align:center;">
+              <p style="font-size:.82rem;color:var(--rp-gray);margin-bottom:4px;">Acomptes perçus</p>
+              <p style="font-size:1.5rem;font-weight:700;color:#92400e;">1 164,50 €</p>
+            </div>
+            <div style="background:#fee2e2;border-radius:12px;padding:20px;text-align:center;">
+              <p style="font-size:.82rem;color:var(--rp-gray);margin-bottom:4px;">Solde restant dû</p>
+              <p style="font-size:1.5rem;font-weight:700;color:#dc2626;">799,50 €</p>
+            </div>
+          </div>
+
         </div>
 
         <!-- Panel: Devis -->
