@@ -48,6 +48,68 @@
     /* Disconnect */
     .rp-dashboard__logout { color: rgba(255,255,255,.6); background: none; border: 1px solid rgba(255,255,255,.25); padding: 8px 20px; border-radius: 8px; font-size: .88rem; cursor: pointer; transition: all .2s; }
     .rp-dashboard__logout:hover { color: #fff; border-color: rgba(255,255,255,.5); }
+
+    /* ===== Devis sub-tabs ===== */
+    .rp-devis-subtabs { display: flex; gap: 8px; margin-bottom: 28px; }
+    .rp-devis-subtab { padding: 10px 24px; border-radius: 8px; font-size: .92rem; font-weight: 500; border: 2px solid #e8e8e8; background: #fff; color: var(--rp-gray); cursor: pointer; transition: all .2s; }
+    .rp-devis-subtab:hover { border-color: var(--rp-green); color: var(--rp-dark); }
+    .rp-devis-subtab.is-active { background: var(--rp-green); color: #fff; border-color: var(--rp-green); }
+    .rp-devis-subpanel { display: none; }
+    .rp-devis-subpanel.is-active { display: block; }
+
+    /* Devis filter bar */
+    .rp-devis-filters { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; background: #f9f9f9; border-radius: 12px; padding: 20px; }
+    .rp-devis-filters .rp-form__group { margin-bottom: 0; flex: 1; min-width: 160px; }
+    .rp-devis-filters .rp-form__label { font-size: .82rem; margin-bottom: 4px; display: block; }
+    .rp-devis-filters .rp-form__input,
+    .rp-devis-filters .rp-form__select { padding: 9px 12px; font-size: .88rem; }
+    .rp-devis-filter-actions { display: flex; gap: 8px; align-items: flex-end; }
+    .rp-devis-filter-actions .rp-btn { padding: 9px 20px; font-size: .88rem; white-space: nowrap; }
+
+    /* Devis cards list */
+    .rp-devis-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 20px 24px; margin-bottom: 12px; transition: box-shadow .2s; }
+    .rp-devis-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+    .rp-devis-card__header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .rp-devis-card__ref { font-weight: 600; font-size: 1rem; color: var(--rp-dark); }
+    .rp-devis-card__price { font-weight: 700; font-size: 1.15rem; color: var(--rp-dark); }
+    .rp-devis-card__details { display: flex; gap: 24px; flex-wrap: wrap; font-size: .88rem; color: var(--rp-gray); }
+    .rp-devis-card__details span { display: flex; flex-direction: column; }
+    .rp-devis-card__details strong { font-weight: 500; color: var(--rp-dark); font-size: .9rem; }
+    .rp-devis-card__badge { display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: .82rem; font-weight: 500; }
+    .rp-devis-card__badge--attente { background: #fef3c7; color: #92400e; }
+    .rp-devis-card__badge--approuve { background: #dcfce7; color: #15803d; }
+    .rp-devis-card__badge--commande { background: #dbeafe; color: #1d4ed8; }
+    .rp-devis-card__badge--refuse { background: #fee2e2; color: #dc2626; }
+
+    /* Suivi de devis - detail card */
+    .rp-suivi-search { max-width: 560px; margin: 0 auto 40px; text-align: center; }
+    .rp-suivi-search h3 { font-size: 1.25rem; margin-bottom: 6px; }
+    .rp-suivi-search p { color: var(--rp-gray); font-size: .92rem; margin-bottom: 20px; }
+    .rp-suivi-search__form { display: flex; gap: 10px; }
+    .rp-suivi-search__form input { flex: 1; padding: 10px 14px; font-size: .92rem; }
+
+    .rp-suivi-detail { max-width: 640px; margin: 0 auto; background: #f9fafb; border-radius: 16px; padding: 32px; display: none; }
+    .rp-suivi-detail.is-visible { display: block; }
+    .rp-suivi-detail__header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+    .rp-suivi-detail__header h3 { font-size: 1.2rem; margin-bottom: 4px; }
+    .rp-suivi-detail__header .rp-devis-ref { color: var(--rp-gray); font-size: .9rem; }
+    .rp-suivi-detail__qr { width: 80px; height: 80px; background: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; padding: 8px; }
+    .rp-suivi-detail__qr svg { width: 100%; height: 100%; }
+    .rp-suivi-detail__montant { font-size: .88rem; color: var(--rp-gray); margin-bottom: 2px; }
+    .rp-suivi-detail__price { font-size: 1.6rem; font-weight: 700; color: var(--rp-dark); margin-bottom: 8px; }
+    .rp-suivi-detail hr { border: none; border-top: 1px solid #e5e7eb; margin: 20px 0; }
+    .rp-suivi-detail__section-title { font-size: 1rem; font-weight: 600; margin-bottom: 12px; color: var(--rp-dark); }
+    .rp-suivi-detail__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 0; }
+    .rp-suivi-detail__field { font-size: .82rem; color: var(--rp-gray); }
+    .rp-suivi-detail__field strong { display: block; font-size: .9rem; font-weight: 500; color: var(--rp-dark); margin-top: 2px; }
+    .rp-suivi-detail__prestation { display: flex; justify-content: space-between; background: #fff; border-radius: 8px; padding: 12px 16px; font-size: .9rem; }
+    .rp-suivi-detail__prestation span:last-child { font-weight: 600; }
+    .rp-suivi-detail__actions { display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
+    @media (max-width: 600px) {
+      .rp-suivi-detail__grid { grid-template-columns: 1fr 1fr; }
+      .rp-devis-filters { flex-direction: column; }
+      .rp-devis-subtabs { flex-direction: column; }
+    }
   </style>
 </head>
 <body class="template-partner-login">
@@ -277,11 +339,165 @@
 
         <!-- Panel: Devis -->
         <div class="rp-dashboard__panel" id="panel-devis">
-          <div class="rp-dash-empty">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
-            <h2>Devis</h2>
-            <p>Vos devis générés automatiquement après chaque diagnostic apparaîtront ici.</p>
+
+          <!-- Sub-tab buttons -->
+          <div class="rp-devis-subtabs">
+            <button class="rp-devis-subtab is-active" data-devis-tab="admin">Administration des devis</button>
+            <button class="rp-devis-subtab" data-devis-tab="suivi">Suivi des devis</button>
           </div>
+
+          <!-- ====== Sub-panel: Administration des devis ====== -->
+          <div class="rp-devis-subpanel is-active" id="subpanel-admin">
+            <h2 style="font-size:1.2rem;margin-bottom:6px;">Administration des Devis</h2>
+            <p style="color:var(--rp-gray);font-size:.92rem;margin-bottom:24px;">Gérez vos devis de diagnostic batterie</p>
+
+            <!-- Filters -->
+            <div class="rp-devis-filters">
+              <div class="rp-form__group">
+                <label class="rp-form__label">Rechercher</label>
+                <input type="text" class="rp-form__input" placeholder="ID, nom, email..." id="devisSearch">
+              </div>
+              <div class="rp-form__group">
+                <label class="rp-form__label">Date de création</label>
+                <input type="date" class="rp-form__input" id="devisDate">
+              </div>
+              <div class="rp-form__group">
+                <label class="rp-form__label">Statut</label>
+                <select class="rp-form__select" id="devisStatut">
+                  <option value="">Tous</option>
+                  <option value="attente">En attente</option>
+                  <option value="approuve">Approuvé</option>
+                  <option value="commande">Commandé</option>
+                  <option value="refuse">Refusé</option>
+                </select>
+              </div>
+              <div class="rp-devis-filter-actions">
+                <button class="rp-btn rp-btn--primary rp-btn--small" id="devisActualiser">Actualiser</button>
+                <button class="rp-btn rp-btn--outline-dark rp-btn--small" id="devisEffacer">Effacer</button>
+              </div>
+            </div>
+
+            <!-- Devis list -->
+            <div id="devisList">
+
+              <div class="rp-devis-card" data-statut="attente" data-ref="X-00-20260219-602" data-client="" data-email="" data-batterie="batterie" data-date="2026-02-19" data-montant="220" data-prestation="Offre commerciale pour default_bms">
+                <div class="rp-devis-card__header">
+                  <span class="rp-devis-card__ref">X-00-20260219-602</span>
+                  <span class="rp-devis-card__price">220 EUR</span>
+                </div>
+                <div class="rp-devis-card__details">
+                  <span>Client<strong>—</strong></span>
+                  <span>Email<strong>—</strong></span>
+                  <span>Batterie<strong>batterie</strong></span>
+                  <span>Date<strong>19 févr. 2026</strong></span>
+                  <span>Statut<strong><span class="rp-devis-card__badge rp-devis-card__badge--attente">En attente</span></strong></span>
+                </div>
+              </div>
+
+              <div class="rp-devis-card" data-statut="attente" data-ref="X-00-20260217-319" data-client="" data-email="" data-batterie="batterie" data-date="2026-02-17" data-montant="220" data-prestation="Offre commerciale pour default_bms">
+                <div class="rp-devis-card__header">
+                  <span class="rp-devis-card__ref">X-00-20260217-319</span>
+                  <span class="rp-devis-card__price">220 EUR</span>
+                </div>
+                <div class="rp-devis-card__details">
+                  <span>Client<strong>—</strong></span>
+                  <span>Email<strong>—</strong></span>
+                  <span>Batterie<strong>batterie</strong></span>
+                  <span>Date<strong>17 févr. 2026</strong></span>
+                  <span>Statut<strong><span class="rp-devis-card__badge rp-devis-card__badge--attente">En attente</span></strong></span>
+                </div>
+              </div>
+
+              <div class="rp-devis-card" data-statut="commande" data-ref="M-78-20260213-454" data-client="MRBatterie" data-email="contact@mr-batterie.com" data-batterie="vélo 36V" data-date="2026-02-13" data-montant="220" data-type="velo" data-marque="NIU" data-voltage="36V" data-capacite="14" data-serie="SN453456454554" data-adresse="8 impasse des gendarmes" data-telephone="0662009013" data-ville="VERSAILLES" data-departement="78" data-prestation="Offre commerciale pour default_bms">
+                <div class="rp-devis-card__header">
+                  <span class="rp-devis-card__ref">M-78-20260213-454</span>
+                  <span class="rp-devis-card__price">220 EUR</span>
+                </div>
+                <div class="rp-devis-card__details">
+                  <span>Client<strong>MRBatterie</strong></span>
+                  <span>Email<strong>contact@mr-batterie.com</strong></span>
+                  <span>Batterie<strong>vélo 36V</strong></span>
+                  <span>Date<strong>13 févr. 2026</strong></span>
+                  <span>Statut<strong><span class="rp-devis-card__badge rp-devis-card__badge--commande">Commandé</span></strong></span>
+                </div>
+              </div>
+
+              <div class="rp-devis-card" data-statut="commande" data-ref="JS-75-20260213-372" data-client="Jeremie Strack" data-email="jeremie.strack@gma..." data-batterie="trottinette 60V" data-date="2026-02-13" data-montant="220" data-prestation="Offre commerciale pour default_bms">
+                <div class="rp-devis-card__header">
+                  <span class="rp-devis-card__ref">JS-75-20260213-372</span>
+                  <span class="rp-devis-card__price">220 EUR</span>
+                </div>
+                <div class="rp-devis-card__details">
+                  <span>Client<strong>Jeremie Strack</strong></span>
+                  <span>Email<strong>jeremie.strack@gma...</strong></span>
+                  <span>Batterie<strong>trottinette 60V</strong></span>
+                  <span>Date<strong>13 févr. 2026</strong></span>
+                  <span>Statut<strong><span class="rp-devis-card__badge rp-devis-card__badge--commande">Commandé</span></strong></span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- ====== Sub-panel: Suivi des devis ====== -->
+          <div class="rp-devis-subpanel" id="subpanel-suivi">
+
+            <div class="rp-suivi-search">
+              <h3>Suivi de Devis</h3>
+              <p>Suivez l'état de votre demande de devis en temps réel</p>
+              <div class="rp-suivi-search__form">
+                <input type="text" class="rp-form__input" placeholder="Entrez votre numéro de devis" id="suiviDevisInput">
+                <button class="rp-btn rp-btn--primary" id="suiviDevisBtn">Rechercher</button>
+              </div>
+              <p id="suiviDevisError" style="color:#dc2626;font-size:.88rem;margin-top:10px;display:none;">Aucun devis trouvé avec cette référence.</p>
+            </div>
+
+            <!-- Detail card (hidden by default, shown on search) -->
+            <div class="rp-suivi-detail" id="suiviDevisDetail">
+              <div class="rp-suivi-detail__header">
+                <div>
+                  <h3>Suivi de Devis</h3>
+                  <span class="rp-devis-ref" id="suiviRef"></span>
+                </div>
+                <div class="rp-suivi-detail__qr">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="3" height="3"/><line x1="21" y1="14" x2="21" y2="17"/><line x1="17" y1="21" x2="21" y2="21"/></svg>
+                </div>
+              </div>
+
+              <p class="rp-suivi-detail__montant">Montant</p>
+              <p class="rp-suivi-detail__price" id="suiviMontant"></p>
+              <span class="rp-devis-card__badge" id="suiviStatut"></span>
+
+              <hr>
+              <p class="rp-suivi-detail__section-title">Prestations</p>
+              <div class="rp-suivi-detail__prestation" id="suiviPrestation">
+                <span></span><span></span>
+              </div>
+
+              <hr>
+              <p class="rp-suivi-detail__section-title">Client</p>
+              <div class="rp-suivi-detail__grid" id="suiviClient">
+              </div>
+
+              <hr>
+              <p class="rp-suivi-detail__section-title">Batterie</p>
+              <div class="rp-suivi-detail__grid" id="suiviBatterie">
+              </div>
+
+              <hr>
+              <p class="rp-suivi-detail__section-title">Informations</p>
+              <div id="suiviInfos">
+              </div>
+
+              <div class="rp-suivi-detail__actions">
+                <button class="rp-btn rp-btn--primary rp-btn--small" id="btnDownloadQR">Télécharger le QR Code</button>
+                <button class="rp-btn rp-btn--outline-dark rp-btn--small" onclick="window.print()">Imprimer</button>
+                <button class="rp-btn rp-btn--outline-dark rp-btn--small" id="btnFermerSuivi">Fermer</button>
+              </div>
+            </div>
+
+          </div>
+
         </div>
 
         <!-- Panel: Comparateur -->
@@ -410,6 +626,149 @@ document.querySelectorAll('.rp-dashboard__tab').forEach(function(tab) {
     this.classList.add('is-active');
     document.getElementById('panel-' + this.dataset.tab).classList.add('is-active');
   });
+});
+
+// ===== Devis sub-tab switching =====
+document.querySelectorAll('.rp-devis-subtab').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.rp-devis-subtab').forEach(function(b) { b.classList.remove('is-active'); });
+    document.querySelectorAll('.rp-devis-subpanel').forEach(function(p) { p.classList.remove('is-active'); });
+    this.classList.add('is-active');
+    document.getElementById('subpanel-' + this.dataset.devisTab).classList.add('is-active');
+  });
+});
+
+// ===== Administration des devis — filter =====
+function filterDevis() {
+  var search = document.getElementById('devisSearch').value.toLowerCase();
+  var statut = document.getElementById('devisStatut').value;
+  var dateVal = document.getElementById('devisDate').value;
+  var cards = document.querySelectorAll('#devisList .rp-devis-card');
+  cards.forEach(function(card) {
+    var matchSearch = !search ||
+      card.dataset.ref.toLowerCase().includes(search) ||
+      card.dataset.client.toLowerCase().includes(search) ||
+      card.dataset.email.toLowerCase().includes(search);
+    var matchStatut = !statut || card.dataset.statut === statut;
+    var matchDate = !dateVal || card.dataset.date === dateVal;
+    card.style.display = (matchSearch && matchStatut && matchDate) ? '' : 'none';
+  });
+}
+document.getElementById('devisActualiser').addEventListener('click', filterDevis);
+document.getElementById('devisSearch').addEventListener('input', filterDevis);
+document.getElementById('devisStatut').addEventListener('change', filterDevis);
+document.getElementById('devisDate').addEventListener('change', filterDevis);
+document.getElementById('devisEffacer').addEventListener('click', function() {
+  document.getElementById('devisSearch').value = '';
+  document.getElementById('devisStatut').value = '';
+  document.getElementById('devisDate').value = '';
+  filterDevis();
+});
+
+// ===== Suivi des devis — search by reference =====
+var devisData = {};
+document.querySelectorAll('#devisList .rp-devis-card').forEach(function(card) {
+  devisData[card.dataset.ref] = {
+    ref: card.dataset.ref,
+    client: card.dataset.client || '—',
+    email: card.dataset.email || '—',
+    batterie: card.dataset.batterie || '—',
+    date: card.dataset.date || '—',
+    statut: card.dataset.statut,
+    montant: card.dataset.montant || '—',
+    type: card.dataset.type || '—',
+    marque: card.dataset.marque || '—',
+    voltage: card.dataset.voltage || '—',
+    capacite: card.dataset.capacite || '—',
+    serie: card.dataset.serie || '—',
+    adresse: card.dataset.adresse || '—',
+    telephone: card.dataset.telephone || '—',
+    ville: card.dataset.ville || '—',
+    departement: card.dataset.departement || '—',
+    prestation: card.dataset.prestation || 'Offre commerciale'
+  };
+});
+
+function formatDateFr(dateStr) {
+  if (!dateStr || dateStr === '—') return '—';
+  var d = new Date(dateStr + 'T12:00:00');
+  return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+var statutLabels = { attente: 'En attente', approuve: 'Approuvé', commande: 'Commandé', refuse: 'Refusé' };
+var statutClasses = { attente: 'rp-devis-card__badge--attente', approuve: 'rp-devis-card__badge--approuve', commande: 'rp-devis-card__badge--commande', refuse: 'rp-devis-card__badge--refuse' };
+
+function showSuiviDetail(ref) {
+  var d = devisData[ref];
+  if (!d) {
+    document.getElementById('suiviDevisError').style.display = 'block';
+    document.getElementById('suiviDevisDetail').classList.remove('is-visible');
+    return;
+  }
+  document.getElementById('suiviDevisError').style.display = 'none';
+  document.getElementById('suiviRef').textContent = d.ref;
+  document.getElementById('suiviMontant').textContent = d.montant + ' EUR';
+  var badge = document.getElementById('suiviStatut');
+  badge.textContent = statutLabels[d.statut] || d.statut;
+  badge.className = 'rp-devis-card__badge ' + (statutClasses[d.statut] || '');
+
+  // Prestation
+  var prest = document.getElementById('suiviPrestation');
+  prest.innerHTML = '<span>' + d.prestation + '</span><span>' + d.montant + ' EUR</span>';
+
+  // Client
+  document.getElementById('suiviClient').innerHTML =
+    '<div class="rp-suivi-detail__field">Nom<strong>' + d.client + '</strong></div>' +
+    '<div class="rp-suivi-detail__field">Adresse<strong>' + d.adresse + '</strong></div>' +
+    '<div class="rp-suivi-detail__field">Email<strong>' + d.email + '</strong></div>' +
+    '<div class="rp-suivi-detail__field">Téléphone<strong>' + d.telephone + '</strong></div>' +
+    '<div class="rp-suivi-detail__field">Ville<strong>' + d.ville + '</strong></div>' +
+    '<div class="rp-suivi-detail__field">Département<strong>' + d.departement + '</strong></div>';
+
+  // Batterie
+  document.getElementById('suiviBatterie').innerHTML =
+    '<div class="rp-suivi-detail__field">Type<strong>' + d.type + '</strong></div>' +
+    '<div class="rp-suivi-detail__field">Marque<strong>' + d.marque + '</strong></div>' +
+    '<div class="rp-suivi-detail__field">Voltage<strong>' + d.voltage + '</strong></div>' +
+    '<div class="rp-suivi-detail__field">Capacité<strong>' + d.capacite + '</strong></div>' +
+    '<div class="rp-suivi-detail__field">N° de série<strong>' + d.serie + '</strong></div>';
+
+  // Informations
+  document.getElementById('suiviInfos').innerHTML =
+    '<div class="rp-suivi-detail__field">Date de création<strong>' + formatDateFr(d.date) + '</strong></div>';
+
+  document.getElementById('suiviDevisDetail').classList.add('is-visible');
+}
+
+document.getElementById('suiviDevisBtn').addEventListener('click', function() {
+  var val = document.getElementById('suiviDevisInput').value.trim();
+  showSuiviDetail(val);
+});
+document.getElementById('suiviDevisInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') { e.preventDefault(); document.getElementById('suiviDevisBtn').click(); }
+});
+document.getElementById('btnFermerSuivi').addEventListener('click', function() {
+  document.getElementById('suiviDevisDetail').classList.remove('is-visible');
+  document.getElementById('suiviDevisInput').value = '';
+});
+
+// ===== Télécharger QR Code (generates a simple page to print/save as PDF) =====
+document.getElementById('btnDownloadQR').addEventListener('click', function() {
+  var ref = document.getElementById('suiviRef').textContent;
+  var montant = document.getElementById('suiviMontant').textContent;
+  var w = window.open('', '_blank');
+  w.document.write('<!DOCTYPE html><html><head><title>QR Code - ' + ref + '</title>' +
+    '<style>body{font-family:DM Sans,Arial,sans-serif;text-align:center;padding:60px 40px;}' +
+    'h1{font-size:1.5rem;margin-bottom:16px;}p{color:#555;margin-bottom:8px;font-size:1rem;}' +
+    '.qr{width:240px;height:240px;margin:32px auto;background:#f5f5f5;border:2px solid #ddd;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:.9rem;color:#999;}' +
+    '.url{font-size:.85rem;color:#888;margin-top:24px;word-break:break-all;}</style></head><body>' +
+    '<h1>QR Code de traçabilité batterie</h1>' +
+    '<p><strong>ID Devis :</strong> ' + ref + '</p>' +
+    '<p><strong>Montant :</strong> ' + montant + '</p>' +
+    '<div class="qr">[QR Code]</div>' +
+    '<p class="url">https://re-plug.fr/pages/suivi-de-devis?id=' + ref + '</p>' +
+    '</body></html>');
+  w.document.close();
 });
 </script>
 </body>
