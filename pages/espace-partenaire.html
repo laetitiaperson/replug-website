@@ -124,7 +124,6 @@
     .rp-diag-history-card__badge { display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: .82rem; font-weight: 500; }
     .rp-diag-history-card__badge--attente { background: #fef3c7; color: #92400e; }
     .rp-diag-history-card__badge--valide { background: #dcfce7; color: #15803d; }
-    .rp-diag-history-card__badge--devis { background: #dbeafe; color: #1d4ed8; }
     .rp-diag-history-card__badge--archive { background: #f3f4f6; color: #6b7280; }
     .rp-diag-history-card__body { margin-bottom: 14px; }
     .rp-diag-history-card__info { display: flex; gap: 24px; flex-wrap: wrap; font-size: .88rem; color: var(--rp-gray); }
@@ -591,7 +590,6 @@
                 <option value="">Tous les statuts</option>
                 <option value="attente">En attente</option>
                 <option value="valide">Validé</option>
-                <option value="devis">Devis généré</option>
                 <option value="archive">Archivé</option>
               </select>
               <input type="text" class="rp-form__input" placeholder="Rechercher un client ou réf..." style="width:220px;padding:8px 12px;font-size:.88rem;" id="searchDiag">
@@ -624,11 +622,11 @@
               </div>
             </div>
 
-            <div class="rp-diag-history-card" data-status="valide" data-search="sophie laurent diag-2026-0014 yamaha pw-x3">
+            <div class="rp-diag-history-card" data-status="attente" data-search="sophie laurent diag-2026-0014 yamaha pw-x3">
               <div class="rp-diag-history-card__header">
                 <div>
                   <span class="rp-diag-history-card__ref">DIAG-2026-0014</span>
-                  <span class="rp-diag-history-card__badge rp-diag-history-card__badge--valide">Validé</span>
+                  <span class="rp-diag-history-card__badge rp-diag-history-card__badge--attente">En attente</span>
                 </div>
                 <span class="rp-diag-history-card__date">10/03/2026</span>
               </div>
@@ -646,11 +644,11 @@
               </div>
             </div>
 
-            <div class="rp-diag-history-card" data-status="devis" data-search="pierre moreau diag-2026-0012 shimano steps e8000">
+            <div class="rp-diag-history-card" data-status="valide" data-search="pierre moreau diag-2026-0012 shimano steps e8000">
               <div class="rp-diag-history-card__header">
                 <div>
                   <span class="rp-diag-history-card__ref">DIAG-2026-0012</span>
-                  <span class="rp-diag-history-card__badge rp-diag-history-card__badge--devis">Devis généré</span>
+                  <span class="rp-diag-history-card__badge rp-diag-history-card__badge--valide">Validé</span>
                 </div>
                 <span class="rp-diag-history-card__date">05/03/2026</span>
               </div>
@@ -700,15 +698,15 @@
             </div>
             <div style="background:#fef3c7;border-radius:12px;padding:20px;text-align:center;">
               <p style="font-size:.82rem;color:var(--rp-gray);margin-bottom:4px;">En attente</p>
-              <p style="font-size:1.5rem;font-weight:700;color:#92400e;">1</p>
+              <p style="font-size:1.5rem;font-weight:700;color:#92400e;">2</p>
             </div>
             <div style="background:#dcfce7;border-radius:12px;padding:20px;text-align:center;">
               <p style="font-size:.82rem;color:var(--rp-gray);margin-bottom:4px;">Validés</p>
               <p style="font-size:1.5rem;font-weight:700;color:#15803d;">1</p>
             </div>
-            <div style="background:#dbeafe;border-radius:12px;padding:20px;text-align:center;">
-              <p style="font-size:.82rem;color:var(--rp-gray);margin-bottom:4px;">Devis générés</p>
-              <p style="font-size:1.5rem;font-weight:700;color:#1d4ed8;">1</p>
+            <div style="background:#f3f4f6;border-radius:12px;padding:20px;text-align:center;">
+              <p style="font-size:.82rem;color:var(--rp-gray);margin-bottom:4px;">Archivés</p>
+              <p style="font-size:1.5rem;font-weight:700;color:#6b7280;">1</p>
             </div>
           </div>
 
