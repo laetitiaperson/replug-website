@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Devenir partenaire — Re-plug</title>
+  <meta name="description" content="Rejoignez le réseau Re-plug en tant que revendeur partenaire. Inscrivez-vous pour accéder aux tarifs préférentiels et au service de reconditionnement de batteries.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400;1,9..40,700&display=swap" rel="stylesheet">
+  <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../css/replug.css">
+  <style>
+    .rp-partner-form { max-width: 680px; margin: 0 auto; padding: 48px 0 80px; }
+    .rp-partner-form__card { background: #fff; border-radius: 16px; padding: 40px 36px; box-shadow: 0 2px 16px rgba(0,0,0,.07); }
+    .rp-partner-form__section-title { font-size: 1.15rem; font-weight: 700; color: var(--rp-dark); margin: 32px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--rp-green); }
+    .rp-partner-form__section-title:first-of-type { margin-top: 0; }
+    .rp-partner-form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .rp-partner-form__row--3 { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 16px; }
+    @media (max-width: 600px) {
+      .rp-partner-form__row, .rp-partner-form__row--3 { grid-template-columns: 1fr; }
+      .rp-partner-form__card { padding: 28px 20px; }
+    }
+    .rp-partner-form .rp-form__group { margin-bottom: 16px; }
+    .rp-partner-form .rp-form__hint { font-size: .8rem; color: #888; margin-top: 4px; }
+    .rp-checkbox-group { display: flex; flex-wrap: wrap; gap: 16px 24px; margin-top: 8px; }
+    .rp-checkbox-group label { display: flex; align-items: center; gap: 8px; font-size: .95rem; cursor: pointer; }
+    .rp-checkbox-group input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--rp-green); }
+    .rp-option-card { background: var(--rp-light); border: 1px solid #e0e0e0; border-radius: 10px; padding: 14px 18px; margin-top: 12px; display: flex; align-items: flex-start; gap: 12px; }
+    .rp-option-card input[type="checkbox"] { width: 18px; height: 18px; margin-top: 3px; accent-color: var(--rp-green); }
+    .rp-option-card__text strong { display: block; font-size: .95rem; }
+    .rp-option-card__text span { font-size: .85rem; color: #666; }
+    .rp-partner-form .rp-form__textarea { min-height: 100px; }
+    .rp-partner-form__legal { display: flex; align-items: flex-start; gap: 10px; margin: 24px 0 28px; font-size: .88rem; color: #555; }
+    .rp-partner-form__legal input { margin-top: 3px; width: 18px; height: 18px; accent-color: var(--rp-green); }
+    .rp-partner-form__legal a { color: var(--rp-green); }
+    .rp-partner-form__footer { text-align: center; margin-top: 16px; font-size: .9rem; color: #888; }
+    .rp-partner-form__footer a { color: var(--rp-green); }
+    .rp-partner-form__success { display: none; text-align: center; padding: 60px 24px; }
+    .rp-partner-form__success.is-visible { display: block; }
+    .rp-partner-form__success svg { width: 64px; height: 64px; color: var(--rp-green); margin-bottom: 20px; }
+    .rp-partner-form__success h2 { font-size: 1.5rem; margin-bottom: 12px; }
+    .rp-partner-form__success p { color: #555; max-width: 460px; margin: 0 auto; }
+  </style>
+</head>
+<body>
+  <a class="rp-sr-only" href="#main-content">Aller au contenu principal</a>
+  <header class="rp-header"><div class="rp-header__inner"><a href="../index.html" class="rp-header__logo" aria-label="Re-plug — Accueil"><img src="../images/logo-replug.png" alt="Re-plug" class="rp-header__logo-img" width="120" height="40"></a><nav class="rp-header__nav" aria-label="Navigation principale"><a href="qui-sommes-nous.html" class="rp-header__nav-link">Qui sommes-nous</a><a href="notre-expertise.html" class="rp-header__nav-link">Notre expertise</a><a href="ressources.html" class="rp-header__nav-link">Ressources</a><a href="blog.html" class="rp-header__nav-link">Blog</a><a href="contact.html" class="rp-header__nav-link">Contact</a><a href="trouver-un-reparateur.html" class="rp-btn rp-btn--primary rp-header__nav-cta">Trouver un réparateur</a></nav><div class="rp-header__actions"><a href="espace-partenaire.html" class="rp-header__partner-link" aria-label="Espace Partenaires"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Espace Partenaires</span></a><a href="trouver-un-reparateur.html" class="rp-btn rp-btn--primary rp-header__cta">Trouver un réparateur</a></div><button class="rp-header__burger" aria-label="Ouvrir le menu" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+
+  <main id="main-content">
+    <section class="rp-page-hero rp-page-hero--green">
+      <div class="rp-page-hero__inner">
+        <h1 class="rp-page-hero__title">Inscription revendeur</h1>
+        <p class="rp-page-hero__subtitle">Rejoignez le réseau Re-plug et proposez le reconditionnement de batteries à vos clients.</p>
+      </div>
+    </section>
+
+    <section class="rp-partner-form">
+      <div class="rp-partner-form__card" id="partnerFormCard">
+        <form id="partnerForm" action="#" method="post" novalidate>
+
+          <!-- Informations personnelles -->
+          <h3 class="rp-partner-form__section-title">Informations personnelles</h3>
+          <div class="rp-partner-form__row">
+            <div class="rp-form__group">
+              <label for="prenom" class="rp-form__label">Prénom *</label>
+              <input type="text" id="prenom" name="prenom" class="rp-form__input" required>
+            </div>
+            <div class="rp-form__group">
+              <label for="nom" class="rp-form__label">Nom *</label>
+              <input type="text" id="nom" name="nom" class="rp-form__input" required>
+            </div>
+          </div>
+          <div class="rp-form__group">
+            <label for="email" class="rp-form__label">Email professionnel *</label>
+            <input type="email" id="email" name="email" class="rp-form__input" required>
+          </div>
+          <div class="rp-form__group">
+            <label for="password" class="rp-form__label">Mot de passe *</label>
+            <input type="password" id="password" name="password" class="rp-form__input" minlength="6" required>
+            <p class="rp-form__hint">Minimum 6 caractères</p>
+          </div>
+          <div class="rp-form__group">
+            <label for="telephone" class="rp-form__label">Téléphone</label>
+            <input type="tel" id="telephone" name="telephone" class="rp-form__input">
+          </div>
+
+          <!-- Informations entreprise -->
+          <h3 class="rp-partner-form__section-title">Informations entreprise</h3>
+          <div class="rp-form__group">
+            <label for="entreprise" class="rp-form__label">Nom de l'entreprise</label>
+            <input type="text" id="entreprise" name="entreprise" class="rp-form__input">
+          </div>
+          <div class="rp-form__group">
+            <label for="siret" class="rp-form__label">Numéro de SIRET *</label>
+            <input type="text" id="siret" name="siret" class="rp-form__input" required>
+          </div>
+          <div class="rp-form__group">
+            <label for="adresse" class="rp-form__label">Adresse</label>
+            <input type="text" id="adresse" name="adresse" class="rp-form__input">
+          </div>
+          <div class="rp-partner-form__row--3">
+            <div class="rp-form__group">
+              <label for="ville" class="rp-form__label">Ville</label>
+              <input type="text" id="ville" name="ville" class="rp-form__input">
+            </div>
+            <div class="rp-form__group">
+              <label for="cp" class="rp-form__label">Code postal</label>
+              <input type="text" id="cp" name="cp" class="rp-form__input">
+            </div>
+            <div class="rp-form__group">
+              <label for="pays" class="rp-form__label">Pays</label>
+              <input type="text" id="pays" name="pays" class="rp-form__input" value="France">
+            </div>
+          </div>
+
+          <!-- Spécialisation -->
+          <h3 class="rp-partner-form__section-title">Spécialisation</h3>
+          <div class="rp-checkbox-group">
+            <label><input type="checkbox" name="specialisation" value="velos"> Vélos</label>
+            <label><input type="checkbox" name="specialisation" value="trottinettes"> Trottinettes</label>
+            <label><input type="checkbox" name="specialisation" value="scooters"> Scooters</label>
+            <label><input type="checkbox" name="specialisation" value="autre"> Autre</label>
+          </div>
+
+          <!-- Options -->
+          <h3 class="rp-partner-form__section-title">Options</h3>
+          <div class="rp-option-card">
+            <input type="checkbox" id="compte-client" name="compte_client" value="oui">
+            <label for="compte-client" class="rp-option-card__text">
+              <strong>Créer automatiquement un compte client sur cette boutique</strong>
+              <span>Accès direct aux tarifs préférentiels et commandes en ligne</span>
+            </label>
+          </div>
+
+          <!-- Activité -->
+          <div class="rp-form__group" style="margin-top: 24px;">
+            <label for="activite" class="rp-form__label">Parlez-nous de votre activité</label>
+            <textarea id="activite" name="activite" class="rp-form__textarea" rows="4" placeholder="Décrivez votre entreprise, et votre nombre de batteries à réparer par mois..."></textarea>
+          </div>
+
+          <!-- CGV -->
+          <div class="rp-partner-form__legal">
+            <input type="checkbox" id="cgv" name="cgv" required>
+            <label for="cgv">J'ai lu et j'accepte les <a href="cgv-professionnels.html">conditions générales de vente</a> *</label>
+          </div>
+
+          <button type="submit" class="rp-btn rp-btn--primary" style="width:100%;">Envoyer ma demande</button>
+
+          <p class="rp-partner-form__footer">
+            Vous avez déjà un compte ? <a href="espace-partenaire.html">Se connecter au portail pro</a>
+          </p>
+        </form>
+
+        <!-- Success message -->
+        <div class="rp-partner-form__success" id="partnerSuccess">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <h2>Merci pour votre inscription !</h2>
+          <p>Bienvenue dans le réseau des partenaires de Re-plug. Notre équipe prendra contact avec vous dans les meilleurs délais.</p>
+          <a href="../index.html" class="rp-btn rp-btn--primary" style="margin-top:28px;">Retour à l'accueil</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rp-footer"><div class="rp-footer__inner"><div class="rp-footer__grid"><div class="rp-footer__brand"><img src="../images/logo-replug.png" alt="Re-plug" class="rp-footer__logo-img" width="120" height="40"><p class="rp-footer__brand-text">Re-plug prolonge la vie des batteries.</p></div><div><p class="rp-footer__col-title">Navigation</p><ul class="rp-footer__links"><li><a href="qui-sommes-nous.html">Qui sommes-nous</a></li><li><a href="notre-expertise.html">Notre expertise</a></li><li><a href="ressources.html">Ressources</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div><div><p class="rp-footer__col-title">Services</p><ul class="rp-footer__links"><li><a href="trouver-un-reparateur.html">Trouver un réparateur</a></li><li><a href="devenir-partenaire.html">Devenir partenaire</a></li><li><a href="espace-partenaire.html">Espace partenaires</a></li></ul></div><div><p class="rp-footer__col-title">Contact</p><ul class="rp-footer__links"><li>Re-plug SAS</li><li>8, rue Lemercier, 75017 Paris</li><li><a href="mailto:admin@re-plug.fr">admin@re-plug.fr</a></li></ul></div></div><div class="rp-footer__bottom"><p class="rp-footer__copy">&copy; 2026 Re-plug SAS.</p><ul class="rp-footer__legal-links"><li><a href="mentions-legales.html">Mentions légales</a></li><li><a href="cgv-professionnels.html">CGV</a></li><li><a href="politique-de-confidentialite.html">Confidentialité</a></li><li><a href="politique-de-cookies.html">Cookies</a></li><li><a href="politique-de-garantie.html">Garantie</a></li><li><a href="politique-de-livraison.html">Livraison et retour</a></li></ul></div></div></footer>
+
+<!-- Cookie Banner -->
+<div id="rp-cookie-banner" class="rp-cookie-banner" role="dialog" aria-label="Gestion des cookies">
+  <div class="rp-cookie-banner__inner">
+    <p class="rp-cookie-banner__text">
+      Ce site utilise des cookies pour assurer son bon fonctionnement et analyser son audience.
+      En cliquant sur « Accepter », vous consentez au dépôt de cookies non essentiels.
+      <a href="politique-de-cookies.html">En savoir plus</a>.
+    </p>
+    <div class="rp-cookie-banner__actions">
+      <button class="rp-btn rp-btn--primary rp-btn--small" onclick="rpAcceptCookies()">Accepter</button>
+      <button class="rp-btn rp-btn--outline rp-btn--small" onclick="rpRefuseCookies()">Refuser</button>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelector('.rp-header__burger').addEventListener('click',function(){var h=document.querySelector('.rp-header');h.classList.toggle('rp-header--open');this.setAttribute('aria-expanded',h.classList.contains('rp-header--open'));});
+function rpAcceptCookies(){localStorage.setItem('rp_cookies','accepted');document.getElementById('rp-cookie-banner').classList.remove('is-visible');}
+function rpRefuseCookies(){localStorage.setItem('rp_cookies','refused');document.getElementById('rp-cookie-banner').classList.remove('is-visible');}
+(function(){if(!localStorage.getItem('rp_cookies')){document.getElementById('rp-cookie-banner').classList.add('is-visible');}})();
+
+// Form submission → show success message
+document.getElementById('partnerForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  this.style.display = 'none';
+  document.getElementById('partnerSuccess').classList.add('is-visible');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+</script>
+</body>
+</html>
