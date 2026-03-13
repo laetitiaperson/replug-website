@@ -1295,13 +1295,16 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// Logout
-document.getElementById('logoutBtn').addEventListener('click', function() {
-  document.getElementById('dashboardSection').classList.remove('is-visible');
-  document.getElementById('loginSection').style.display = '';
-  document.getElementById('loginForm').reset();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+// Logout (désactivé temporairement — login bypass)
+var logoutBtn = document.getElementById('logoutBtn');
+if (logoutBtn) {
+  logoutBtn.addEventListener('click', function() {
+    document.getElementById('dashboardSection').classList.remove('is-visible');
+    document.getElementById('loginSection').style.display = '';
+    document.getElementById('loginForm').reset();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
 
 // Tab switching
 document.querySelectorAll('.rp-dashboard__tab').forEach(function(tab) {
