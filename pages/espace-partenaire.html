@@ -173,6 +173,113 @@
     @media (max-width: 600px) {
       .rp-params__row, .rp-params__row--3 { grid-template-columns: 1fr; }
     }
+
+    /* ===== Diagnostic Wizard ===== */
+    .rp-diag { display: none; }
+    .rp-diag.is-visible { display: block; }
+    .rp-diag__back-dashboard { display: inline-flex; align-items: center; gap: 6px; color: var(--rp-gray); font-size: .9rem; font-weight: 500; background: none; border: none; cursor: pointer; margin-bottom: 24px; padding: 0; transition: color .2s; }
+    .rp-diag__back-dashboard:hover { color: var(--rp-dark); }
+    .rp-diag__back-dashboard svg { width: 18px; height: 18px; }
+    .rp-diag__title { font-size: 1.4rem; font-weight: 700; margin-bottom: 8px; color: var(--rp-dark); }
+    .rp-diag__subtitle { color: var(--rp-gray); font-size: .95rem; margin-bottom: 32px; }
+
+    /* Steps indicator */
+    .rp-diag__steps { display: flex; align-items: center; gap: 0; margin-bottom: 36px; }
+    .rp-diag__step { display: flex; align-items: center; gap: 10px; flex: 1; }
+    .rp-diag__step-num { width: 32px; height: 32px; border-radius: 50%; background: #e8e8e8; color: var(--rp-gray); display: flex; align-items: center; justify-content: center; font-size: .85rem; font-weight: 600; flex-shrink: 0; transition: all .3s; }
+    .rp-diag__step.is-active .rp-diag__step-num { background: var(--rp-green); color: #fff; }
+    .rp-diag__step.is-done .rp-diag__step-num { background: var(--rp-green); color: #fff; }
+    .rp-diag__step-label { font-size: .85rem; color: var(--rp-gray); font-weight: 500; white-space: nowrap; }
+    .rp-diag__step.is-active .rp-diag__step-label { color: var(--rp-dark); font-weight: 600; }
+    .rp-diag__step.is-done .rp-diag__step-label { color: var(--rp-dark); }
+    .rp-diag__step-line { flex: 1; height: 2px; background: #e8e8e8; margin: 0 12px; }
+    .rp-diag__step.is-done + .rp-diag__step-line,
+    .rp-diag__step-line.is-done { background: var(--rp-green); }
+
+    /* Collapsible sections */
+    .rp-diag__section { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; margin-bottom: 16px; overflow: hidden; }
+    .rp-diag__section-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; cursor: pointer; }
+    .rp-diag__section-header h3 { font-size: 1.1rem; font-weight: 700; color: var(--rp-dark); margin: 0; }
+    .rp-diag__section-toggle { background: var(--rp-green); color: #fff; border: none; padding: 6px 16px; border-radius: 20px; font-size: .82rem; font-weight: 500; cursor: pointer; transition: opacity .2s; }
+    .rp-diag__section-toggle:hover { opacity: .85; }
+    .rp-diag__section-body { padding: 0 24px 24px; }
+    .rp-diag__section.is-collapsed .rp-diag__section-body { display: none; }
+
+    /* Form grid */
+    .rp-diag__form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .rp-diag__form-group { margin-bottom: 0; }
+    .rp-diag__form-group label { display: block; font-size: .85rem; font-weight: 500; color: var(--rp-dark); margin-bottom: 6px; }
+    .rp-diag__form-group input,
+    .rp-diag__form-group select { width: 100%; padding: 10px 14px; border: 1px solid #ddd; border-radius: 8px; font-size: .9rem; font-family: inherit; background: #f9f9f9; transition: border-color .2s; box-sizing: border-box; }
+    .rp-diag__form-group input:focus,
+    .rp-diag__form-group select:focus { outline: none; border-color: var(--rp-green); background: #fff; }
+    .rp-diag__form-group--full { grid-column: 1 / -1; }
+
+    /* Battery card */
+    .rp-diag__battery-card { background: #f9fafb; border: 1px solid #e8e8e8; border-radius: 12px; padding: 20px; margin-bottom: 16px; position: relative; }
+    .rp-diag__battery-remove { position: absolute; top: 12px; right: 12px; width: 28px; height: 28px; border-radius: 50%; background: #ef4444; color: #fff; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 700; line-height: 1; }
+    .rp-diag__battery-remove:hover { background: #dc2626; }
+    .rp-diag__add-battery { display: inline-flex; align-items: center; gap: 6px; background: var(--rp-green); color: #fff; border: none; padding: 10px 20px; border-radius: 24px; font-size: .88rem; font-weight: 500; cursor: pointer; transition: opacity .2s; }
+    .rp-diag__add-battery:hover { opacity: .85; }
+
+    /* Photo upload areas */
+    .rp-diag__photos { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+    .rp-diag__photo-upload { border: 2px dashed #d1d5db; border-radius: 12px; padding: 32px 16px; text-align: center; cursor: pointer; transition: border-color .2s, background .2s; position: relative; }
+    .rp-diag__photo-upload:hover { border-color: var(--rp-green); background: #f0fdf4; }
+    .rp-diag__photo-upload input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .rp-diag__photo-upload svg { width: 24px; height: 24px; color: var(--rp-gray); margin-bottom: 8px; }
+    .rp-diag__photo-upload p { font-size: .85rem; color: var(--rp-gray); margin: 0; }
+    .rp-diag__photo-label { font-size: .85rem; font-weight: 500; color: var(--rp-dark); margin-bottom: 8px; }
+
+    /* Radio checks */
+    .rp-diag__checks h4 { font-size: 1rem; font-weight: 600; margin: 24px 0 12px; color: var(--rp-dark); }
+    .rp-diag__check-group { margin-bottom: 16px; }
+    .rp-diag__check-group-title { font-size: .92rem; font-weight: 500; color: var(--rp-dark); margin-bottom: 8px; }
+    .rp-diag__radio-item { display: flex; align-items: center; justify-content: space-between; background: #f9f9f9; border-radius: 10px; padding: 12px 16px; margin-bottom: 6px; cursor: pointer; transition: background .2s; }
+    .rp-diag__radio-item:hover { background: #f0f0f0; }
+    .rp-diag__radio-item input[type="radio"] { accent-color: var(--rp-green); margin-right: 10px; flex-shrink: 0; }
+    .rp-diag__radio-item .rp-diag__radio-label { font-size: .9rem; color: var(--rp-dark); flex: 1; }
+    .rp-diag__radio-item .rp-diag__radio-desc { font-size: .82rem; color: var(--rp-gray); font-style: italic; }
+
+    /* Step 2: Problèmes */
+    .rp-diag__problem-item { display: flex; align-items: center; justify-content: space-between; background: #f5f5f5; border-radius: 12px; padding: 16px 20px; margin-bottom: 10px; cursor: pointer; transition: background .2s; }
+    .rp-diag__problem-item:hover { background: #efefef; }
+    .rp-diag__problem-item input[type="checkbox"] { accent-color: var(--rp-green); width: 18px; height: 18px; margin-right: 14px; flex-shrink: 0; }
+    .rp-diag__problem-item .rp-diag__problem-label { font-size: .95rem; font-weight: 500; color: var(--rp-dark); flex: 1; }
+    .rp-diag__problem-item .rp-diag__problem-desc { font-size: .82rem; color: var(--rp-gray); }
+
+    /* Step 3: Results */
+    .rp-diag__result-summary { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 24px; margin-bottom: 24px; }
+    .rp-diag__result-summary .rp-diag__result-offer { font-size: .9rem; color: var(--rp-gray); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+    .rp-diag__result-summary .rp-diag__result-offer::before { content: '🤝'; }
+    .rp-diag__result-prestation { font-size: .88rem; color: var(--rp-gray); margin-bottom: 2px; }
+    .rp-diag__result-price { font-size: 1.4rem; font-weight: 700; color: var(--rp-dark); margin-bottom: 16px; }
+    .rp-diag__result-bar { margin-top: 16px; }
+    .rp-diag__result-bar-label { font-size: .85rem; font-weight: 600; margin-bottom: 6px; color: var(--rp-dark); }
+    .rp-diag__result-bar-track { height: 8px; background: #e8e8e8; border-radius: 4px; overflow: hidden; }
+    .rp-diag__result-bar-fill { height: 100%; background: var(--rp-green); border-radius: 4px; transition: width .5s; }
+    .rp-diag__result-badge { display: inline-block; background: #dcfce7; color: #15803d; padding: 2px 10px; border-radius: 12px; font-size: .78rem; font-weight: 500; margin-left: 6px; }
+
+    .rp-diag__fault-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 20px 24px; margin-bottom: 12px; }
+    .rp-diag__fault-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; color: var(--rp-dark); }
+    .rp-diag__fault-card p { font-size: .85rem; color: var(--rp-gray); margin-bottom: 4px; line-height: 1.5; }
+    .rp-diag__fault-card p strong { color: var(--rp-dark); }
+
+    .rp-diag__acompte { background: #fef3c7; border-radius: 10px; padding: 14px 20px; font-size: .88rem; color: #92400e; margin-top: 24px; font-weight: 500; }
+
+    /* Wizard buttons */
+    .rp-diag__actions { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
+    .rp-diag__btn-back { display: inline-flex; align-items: center; gap: 6px; background: var(--rp-green); color: #fff; border: none; padding: 12px 24px; border-radius: 24px; font-size: .92rem; font-weight: 500; cursor: pointer; transition: opacity .2s; }
+    .rp-diag__btn-back:hover { opacity: .85; }
+    .rp-diag__btn-reset { background: var(--rp-green); color: #fff; border: none; padding: 12px 24px; border-radius: 24px; font-size: .92rem; font-weight: 500; cursor: pointer; transition: opacity .2s; }
+    .rp-diag__btn-reset:hover { opacity: .85; }
+
+    @media (max-width: 768px) {
+      .rp-diag__form-grid { grid-template-columns: 1fr; }
+      .rp-diag__photos { grid-template-columns: 1fr; }
+      .rp-diag__steps { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .rp-diag__step-line { display: none; }
+    }
   </style>
 </head>
 <body class="template-partner-login">
@@ -622,6 +729,317 @@
             <div class="rp-comparateur__results" id="compResults">
               <h3 class="rp-comparateur__results-title" id="compResultsTitle"></h3>
               <div id="compResultsList"></div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Panel: Diagnostic -->
+        <div class="rp-dashboard__panel" id="panel-diagnostic">
+          <div class="rp-diag" id="diagWizard">
+
+            <button class="rp-diag__back-dashboard" id="diagBackDashboard">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+              Retour au tableau de bord
+            </button>
+
+            <h2 class="rp-diag__title">Diagnostic Batterie</h2>
+            <p class="rp-diag__subtitle">Identifiez la panne et obtenez un devis instantané pour la réparation.</p>
+
+            <!-- Steps indicator -->
+            <div class="rp-diag__steps">
+              <div class="rp-diag__step is-active" data-step="1">
+                <span class="rp-diag__step-num">1</span>
+                <span class="rp-diag__step-label">Informations</span>
+              </div>
+              <div class="rp-diag__step-line"></div>
+              <div class="rp-diag__step" data-step="2">
+                <span class="rp-diag__step-num">2</span>
+                <span class="rp-diag__step-label">Problèmes</span>
+              </div>
+              <div class="rp-diag__step-line"></div>
+              <div class="rp-diag__step" data-step="3">
+                <span class="rp-diag__step-num">3</span>
+                <span class="rp-diag__step-label">Résultats</span>
+              </div>
+            </div>
+
+            <!-- ====== STEP 1: Infos + Config + Vérifications ====== -->
+            <div class="rp-diag__page" id="diagStep1">
+
+              <!-- Informations Client -->
+              <div class="rp-diag__section" id="diagSectionClient">
+                <div class="rp-diag__section-header" onclick="toggleDiagSection('diagSectionClient')">
+                  <h3>Informations Client</h3>
+                  <button class="rp-diag__section-toggle" type="button">Masquer</button>
+                </div>
+                <div class="rp-diag__section-body">
+                  <div class="rp-diag__form-grid">
+                    <div class="rp-diag__form-group">
+                      <label>Nom complet *</label>
+                      <input type="text" id="diagClientNom" placeholder="" required>
+                    </div>
+                    <div class="rp-diag__form-group">
+                      <label>Email</label>
+                      <input type="email" id="diagClientEmail" placeholder="">
+                    </div>
+                    <div class="rp-diag__form-group">
+                      <label>Téléphone</label>
+                      <input type="tel" id="diagClientTel" placeholder="">
+                    </div>
+                    <div class="rp-diag__form-group">
+                      <label>Adresse</label>
+                      <input type="text" id="diagClientAdresse" placeholder="Numéro et rue">
+                    </div>
+                    <div class="rp-diag__form-group">
+                      <label>Ville</label>
+                      <input type="text" id="diagClientVille" placeholder="">
+                    </div>
+                    <div class="rp-diag__form-group">
+                      <label>Département</label>
+                      <input type="text" id="diagClientDept" placeholder="Ex: 75, 13, etc.">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Configuration Batteries -->
+              <div class="rp-diag__section" id="diagSectionBatteries">
+                <div class="rp-diag__section-header" onclick="toggleDiagSection('diagSectionBatteries')">
+                  <h3>Configuration Batteries</h3>
+                  <button class="rp-diag__section-toggle" type="button">Masquer</button>
+                </div>
+                <div class="rp-diag__section-body">
+                  <button class="rp-diag__add-battery" id="diagAddBattery" type="button">+ Ajouter une batterie</button>
+                  <div id="diagBatteriesList">
+                    <div class="rp-diag__battery-card" data-battery-index="0">
+                      <button class="rp-diag__battery-remove" type="button" onclick="removeBattery(this)" title="Supprimer">&times;</button>
+                      <div class="rp-diag__form-grid">
+                        <div class="rp-diag__form-group">
+                          <label>Type</label>
+                          <input type="text" value="Batterie" placeholder="Batterie">
+                        </div>
+                        <div class="rp-diag__form-group">
+                          <label>Fabricant</label>
+                          <input type="text" placeholder="Constructeur / OEM">
+                        </div>
+                        <div class="rp-diag__form-group rp-diag__form-group--full">
+                          <label>Marque</label>
+                          <input type="text" placeholder="">
+                        </div>
+                        <div class="rp-diag__form-group">
+                          <label>Voltage (V)</label>
+                          <select>
+                            <option value="">-- Sélectionner tension --</option>
+                            <option value="24">24V</option>
+                            <option value="36">36V</option>
+                            <option value="48">48V</option>
+                          </select>
+                        </div>
+                        <div class="rp-diag__form-group">
+                          <label>Capacité (Wh/Ah)</label>
+                          <input type="text" placeholder="ex: 360Wh ou 10Ah (≈ 360Wh)">
+                        </div>
+                        <div class="rp-diag__form-group">
+                          <label>Puissance (W)</label>
+                          <input type="text" placeholder="">
+                        </div>
+                        <div class="rp-diag__form-group">
+                          <label>Âge (années)</label>
+                          <input type="text" placeholder="">
+                        </div>
+                        <div class="rp-diag__form-group">
+                          <label>Numéro de série (optionnel)</label>
+                          <input type="text" placeholder="ex: SN123456789">
+                        </div>
+                        <div class="rp-diag__form-group">
+                          <label>Date de fabrication (optionnel)</label>
+                          <input type="date" placeholder="jj/mm/aaaa">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Diagnostic: Photos + Vérifications -->
+              <div class="rp-diag__section" id="diagSectionDiag">
+                <div class="rp-diag__section-header" onclick="toggleDiagSection('diagSectionDiag')">
+                  <h3>Diagnostic</h3>
+                  <button class="rp-diag__section-toggle" type="button">Masquer</button>
+                </div>
+                <div class="rp-diag__section-body">
+                  <h4 style="font-size:1rem;font-weight:600;margin-bottom:12px;color:var(--rp-dark);">Photos</h4>
+                  <div class="rp-diag__photos">
+                    <div>
+                      <p class="rp-diag__photo-label">Photo générale</p>
+                      <div class="rp-diag__photo-upload">
+                        <input type="file" accept="image/*" id="diagPhotoGen">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        <p>Ajouter photo</p>
+                      </div>
+                    </div>
+                    <div>
+                      <p class="rp-diag__photo-label">Étiquette batterie</p>
+                      <div class="rp-diag__photo-upload">
+                        <input type="file" accept="image/*" id="diagPhotoEtiq">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        <p>Ajouter étiquette</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="rp-diag__checks">
+                    <h4>Vérifications préliminaires</h4>
+
+                    <div class="rp-diag__check-group">
+                      <p class="rp-diag__check-group-title">État visuel</p>
+                      <label class="rp-diag__radio-item">
+                        <input type="radio" name="diagVisuel" value="bon">
+                        <span class="rp-diag__radio-label">Bon état visuel</span>
+                        <span class="rp-diag__radio-desc">(Pas de dommage visible)</span>
+                      </label>
+                      <label class="rp-diag__radio-item">
+                        <input type="radio" name="diagVisuel" value="endommage">
+                        <span class="rp-diag__radio-label">Endommagé</span>
+                        <span class="rp-diag__radio-desc">(Fissures, bosses, corrosion)</span>
+                      </label>
+                      <label class="rp-diag__radio-item">
+                        <input type="radio" name="diagVisuel" value="gonfle">
+                        <span class="rp-diag__radio-label">Gonflé</span>
+                        <span class="rp-diag__radio-desc">(Déformation visible)</span>
+                      </label>
+                    </div>
+
+                    <div class="rp-diag__check-group">
+                      <p class="rp-diag__check-group-title">État connecteur de charge</p>
+                      <label class="rp-diag__radio-item">
+                        <input type="radio" name="diagCharge" value="bon">
+                        <span class="rp-diag__radio-label">Bon état</span>
+                        <span class="rp-diag__radio-desc">(Contact propre, pas d'usure)</span>
+                      </label>
+                      <label class="rp-diag__radio-item">
+                        <input type="radio" name="diagCharge" value="use">
+                        <span class="rp-diag__radio-label">Usé</span>
+                        <span class="rp-diag__radio-desc">(Traces d'usure, contact dégradé)</span>
+                      </label>
+                      <label class="rp-diag__radio-item">
+                        <input type="radio" name="diagCharge" value="endommage">
+                        <span class="rp-diag__radio-label">Endommagé</span>
+                        <span class="rp-diag__radio-desc">(Corrosion, déformation)</span>
+                      </label>
+                    </div>
+
+                    <div class="rp-diag__check-group">
+                      <p class="rp-diag__check-group-title">État connecteur de décharge</p>
+                      <label class="rp-diag__radio-item">
+                        <input type="radio" name="diagDecharge" value="bon">
+                        <span class="rp-diag__radio-label">Bon état</span>
+                        <span class="rp-diag__radio-desc">(Contact propre, pas d'usure)</span>
+                      </label>
+                      <label class="rp-diag__radio-item">
+                        <input type="radio" name="diagDecharge" value="use">
+                        <span class="rp-diag__radio-label">Usé</span>
+                        <span class="rp-diag__radio-desc">(Traces d'usure, contact dégradé)</span>
+                      </label>
+                      <label class="rp-diag__radio-item">
+                        <input type="radio" name="diagDecharge" value="endommage">
+                        <span class="rp-diag__radio-label">Endommagé</span>
+                        <span class="rp-diag__radio-desc">(Corrosion, déformation)</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="rp-diag__actions">
+                <button class="rp-btn rp-btn--primary" id="diagContinueBtn" type="button">Continuer</button>
+              </div>
+            </div>
+
+            <!-- ====== STEP 2: Tension + Problèmes rencontrés ====== -->
+            <div class="rp-diag__page" id="diagStep2" style="display:none;">
+
+              <button class="rp-diag__btn-back" id="diagBackStep1" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                Précédent
+              </button>
+
+              <div style="margin-top:24px;">
+                <div class="rp-diag__form-group" style="max-width:400px;margin-bottom:28px;">
+                  <label style="display:block;font-size:.92rem;font-weight:500;color:var(--rp-dark);margin-bottom:8px;">Tension mesurée (V)</label>
+                  <input type="text" id="diagTension" placeholder="Ex: 36.5" style="width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:10px;font-size:.95rem;background:#f5f5f5;font-family:inherit;box-sizing:border-box;">
+                </div>
+
+                <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:16px;color:var(--rp-dark);">Problèmes rencontrés</h3>
+
+                <label class="rp-diag__problem-item">
+                  <input type="checkbox" name="diagProbleme" value="charge">
+                  <span class="rp-diag__problem-label">Ne se charge pas</span>
+                  <span class="rp-diag__problem-desc">(Le chargeur ne démarre pas la charge)</span>
+                </label>
+
+                <label class="rp-diag__problem-item">
+                  <input type="checkbox" name="diagProbleme" value="allume">
+                  <span class="rp-diag__problem-label">Ne s'allume pas / ne démarre pas</span>
+                  <span class="rp-diag__problem-desc">(Aucune mise sous tension)</span>
+                </label>
+
+                <label class="rp-diag__problem-item">
+                  <input type="checkbox" name="diagProbleme" value="autonomie">
+                  <span class="rp-diag__problem-label">Perte d'autonomie</span>
+                  <span class="rp-diag__problem-desc">(Durée très courte par rapport à la normale)</span>
+                </label>
+
+                <label class="rp-diag__problem-item">
+                  <input type="checkbox" name="diagProbleme" value="gonflement">
+                  <span class="rp-diag__problem-label">Gonflement / déformation</span>
+                  <span class="rp-diag__problem-desc">(Indicateur de risque sécurité)</span>
+                </label>
+
+                <label class="rp-diag__problem-item">
+                  <input type="checkbox" name="diagProbleme" value="surchauffe">
+                  <span class="rp-diag__problem-label">Surchauffe</span>
+                  <span class="rp-diag__problem-desc">(Chaude au toucher pendant l'usage)</span>
+                </label>
+              </div>
+
+              <div class="rp-diag__actions">
+                <button class="rp-btn rp-btn--primary" id="diagLaunchBtn" type="button">Lancer le diagnostic</button>
+                <button class="rp-diag__btn-reset" id="diagResetBtn" type="button">Réinitialiser</button>
+              </div>
+            </div>
+
+            <!-- ====== STEP 3: Résultats ====== -->
+            <div class="rp-diag__page" id="diagStep3" style="display:none;">
+
+              <h3 style="font-size:1.3rem;font-weight:700;margin-bottom:24px;color:var(--rp-dark);">Résultats du diagnostic</h3>
+
+              <!-- Summary -->
+              <div class="rp-diag__result-summary" id="diagResultSummary">
+                <p class="rp-diag__result-offer">Offre commerciale (confiance: <span id="diagConfiance">100</span>%)</p>
+                <p class="rp-diag__result-prestation">Prestation estimée pour résoudre: <strong id="diagPrestationType">default_bms</strong></p>
+                <p class="rp-diag__result-price"><span id="diagResultPrice">220</span> EUR</p>
+                <button class="rp-btn rp-btn--primary" id="diagDemandeDevis" type="button">Demander devis</button>
+                <div class="rp-diag__result-bar">
+                  <p class="rp-diag__result-bar-label" id="diagMainFaultLabel">Défaut BMS <span class="rp-diag__result-badge" id="diagMainFaultBadge">100%</span></p>
+                  <div class="rp-diag__result-bar-track">
+                    <div class="rp-diag__result-bar-fill" id="diagMainFaultBar" style="width:100%;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Fault cards -->
+              <div id="diagFaultCards"></div>
+
+              <!-- Acompte mention -->
+              <div class="rp-diag__acompte">
+                Un acompte de 50 % est exigible à la commande. Le solde sera payé avant la livraison retour.
+              </div>
+
+              <div class="rp-diag__actions">
+                <button class="rp-diag__btn-back" id="diagNewDiag" type="button">Nouveau diagnostic</button>
+              </div>
             </div>
 
           </div>
@@ -1084,6 +1502,285 @@ document.getElementById('compSearchBtn').addEventListener('click', function() {
   }
   resultsDiv.classList.add('is-visible');
   resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
+// ===== Diagnostic Wizard =====
+var diagCurrentStep = 1;
+
+// Open diagnostic from CTA button
+document.querySelector('.rp-dash-cta .rp-btn').addEventListener('click', function(e) {
+  e.preventDefault();
+  // Show the diagnostic panel, hide others
+  document.querySelectorAll('.rp-dashboard__panel').forEach(function(p) { p.classList.remove('is-active'); });
+  document.getElementById('panel-diagnostic').classList.add('is-active');
+  // Update tab nav — remove active from all tabs
+  document.querySelectorAll('.rp-dashboard__tab').forEach(function(t) { t.classList.remove('is-active'); });
+  // Hide CTA block and tab nav
+  document.querySelector('.rp-dash-cta').style.display = 'none';
+  document.querySelector('.rp-dashboard__nav').style.display = 'none';
+  // Show the wizard
+  document.getElementById('diagWizard').classList.add('is-visible');
+  diagGoToStep(1);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Back to dashboard
+document.getElementById('diagBackDashboard').addEventListener('click', function() {
+  document.getElementById('panel-diagnostic').classList.remove('is-active');
+  document.getElementById('panel-commandes').classList.add('is-active');
+  document.querySelector('.rp-dashboard__tab[data-tab="commandes"]').classList.add('is-active');
+  document.getElementById('diagWizard').classList.remove('is-visible');
+  // Restore CTA block and tab nav
+  document.querySelector('.rp-dash-cta').style.display = '';
+  document.querySelector('.rp-dashboard__nav').style.display = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Toggle collapsible sections
+function toggleDiagSection(sectionId) {
+  var section = document.getElementById(sectionId);
+  section.classList.toggle('is-collapsed');
+  var btn = section.querySelector('.rp-diag__section-toggle');
+  btn.textContent = section.classList.contains('is-collapsed') ? 'Afficher' : 'Masquer';
+}
+
+// Add battery
+var batteryCount = 1;
+document.getElementById('diagAddBattery').addEventListener('click', function() {
+  batteryCount++;
+  var card = document.createElement('div');
+  card.className = 'rp-diag__battery-card';
+  card.dataset.batteryIndex = batteryCount;
+  card.innerHTML = '<button class="rp-diag__battery-remove" type="button" onclick="removeBattery(this)" title="Supprimer">&times;</button>' +
+    '<div class="rp-diag__form-grid">' +
+    '<div class="rp-diag__form-group"><label>Type</label><input type="text" value="Batterie" placeholder="Batterie"></div>' +
+    '<div class="rp-diag__form-group"><label>Fabricant</label><input type="text" placeholder="Constructeur / OEM"></div>' +
+    '<div class="rp-diag__form-group rp-diag__form-group--full"><label>Marque</label><input type="text" placeholder=""></div>' +
+    '<div class="rp-diag__form-group"><label>Voltage (V)</label><select><option value="">-- Sélectionner tension --</option><option value="24">24V</option><option value="36">36V</option><option value="48">48V</option></select></div>' +
+    '<div class="rp-diag__form-group"><label>Capacité (Wh/Ah)</label><input type="text" placeholder="ex: 360Wh ou 10Ah (≈ 360Wh)"></div>' +
+    '<div class="rp-diag__form-group"><label>Puissance (W)</label><input type="text" placeholder=""></div>' +
+    '<div class="rp-diag__form-group"><label>Âge (années)</label><input type="text" placeholder=""></div>' +
+    '<div class="rp-diag__form-group"><label>Numéro de série (optionnel)</label><input type="text" placeholder="ex: SN123456789"></div>' +
+    '<div class="rp-diag__form-group"><label>Date de fabrication (optionnel)</label><input type="date" placeholder="jj/mm/aaaa"></div>' +
+    '</div>';
+  document.getElementById('diagBatteriesList').appendChild(card);
+});
+
+function removeBattery(btn) {
+  var card = btn.closest('.rp-diag__battery-card');
+  var list = document.getElementById('diagBatteriesList');
+  if (list.children.length > 1) {
+    card.remove();
+  } else {
+    alert('Au moins une batterie est requise.');
+  }
+}
+
+// Step navigation
+function diagGoToStep(step) {
+  diagCurrentStep = step;
+  // Show/hide pages
+  document.getElementById('diagStep1').style.display = step === 1 ? '' : 'none';
+  document.getElementById('diagStep2').style.display = step === 2 ? '' : 'none';
+  document.getElementById('diagStep3').style.display = step === 3 ? '' : 'none';
+  // Update step indicators
+  document.querySelectorAll('.rp-diag__step').forEach(function(s) {
+    var sNum = parseInt(s.dataset.step);
+    s.classList.remove('is-active', 'is-done');
+    if (sNum === step) s.classList.add('is-active');
+    if (sNum < step) s.classList.add('is-done');
+  });
+  document.querySelectorAll('.rp-diag__step-line').forEach(function(line, i) {
+    line.classList.toggle('is-done', i < step - 1);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Step 1 → Step 2
+document.getElementById('diagContinueBtn').addEventListener('click', function() {
+  diagGoToStep(2);
+});
+
+// Step 2 → Step 1
+document.getElementById('diagBackStep1').addEventListener('click', function() {
+  diagGoToStep(1);
+});
+
+// Reset step 2
+document.getElementById('diagResetBtn').addEventListener('click', function() {
+  document.getElementById('diagTension').value = '';
+  document.querySelectorAll('input[name="diagProbleme"]').forEach(function(cb) { cb.checked = false; });
+});
+
+// Launch diagnostic (Step 2 → Step 3)
+document.getElementById('diagLaunchBtn').addEventListener('click', function() {
+  // Gather checked problems
+  var problems = [];
+  document.querySelectorAll('input[name="diagProbleme"]:checked').forEach(function(cb) {
+    problems.push(cb.value);
+  });
+
+  // Get visual checks
+  var visuel = document.querySelector('input[name="diagVisuel"]:checked');
+  var charge = document.querySelector('input[name="diagCharge"]:checked');
+  var decharge = document.querySelector('input[name="diagDecharge"]:checked');
+
+  // Generate diagnostic results based on inputs (simulated)
+  var faults = [];
+
+  // Always show BMS fault
+  faults.push({
+    name: 'Défaut BMS',
+    confidence: 100,
+    context: 'Panne BMS',
+    causes: 'Décharge profonde, Déséquilibrage, Défaut cellule, Court circuit faisceau, Température anomale, Mauvais chargeur',
+    checks: 'Contrôle tension au multi-mètre, Code erreur',
+    solution: 'Remplacement BMS'
+  });
+
+  // Connector fault if connector issues selected
+  if ((charge && charge.value !== 'bon') || (decharge && decharge.value !== 'bon')) {
+    faults.push({
+      name: 'Défaut connecteur',
+      confidence: 100,
+      context: 'Défaut connecteur',
+      causes: 'Contact oxydé, Contact endommagés, Mécanique, Câblage abîmé',
+      checks: 'Inspection visuelle',
+      solution: 'Remplacement connecteur'
+    });
+  } else {
+    faults.push({
+      name: 'Défaut connecteur',
+      confidence: 100,
+      context: 'Défaut connecteur',
+      causes: 'Contact oxydé, Contact endommagés, Mécanique, Câblage abîmé',
+      checks: 'Inspection visuelle',
+      solution: 'Remplacement connecteur'
+    });
+  }
+
+  // Cell fault
+  faults.push({
+    name: 'Défaut cellule',
+    confidence: 100,
+    context: 'Cellule défaillante',
+    causes: 'Cellule défaillante, Court-circuit interne, Déséquilibrage sévère',
+    checks: 'Contrôle tension au multi-mètre, Test de capacité cellule par cellule',
+    solution: 'Remplacement ou équilibrage des cellules; diagnostic approfondi'
+  });
+
+  // Charger fault (lower confidence)
+  faults.push({
+    name: 'Défaut chargeur',
+    confidence: 80,
+    context: 'Vieillesse',
+    causes: '',
+    checks: 'Inspection visuelle',
+    solution: 'Remplacement chargeur'
+  });
+
+  // Main fault
+  var mainFault = faults[0];
+  document.getElementById('diagConfiance').textContent = mainFault.confidence;
+  document.getElementById('diagPrestationType').textContent = 'default_bms';
+  document.getElementById('diagResultPrice').textContent = '220';
+  document.getElementById('diagMainFaultLabel').innerHTML = mainFault.name + ' <span class="rp-diag__result-badge">' + mainFault.confidence + '%</span>';
+  document.getElementById('diagMainFaultBar').style.width = mainFault.confidence + '%';
+
+  // Build fault cards
+  var cardsHtml = '';
+  faults.forEach(function(f) {
+    cardsHtml += '<div class="rp-diag__fault-card">' +
+      '<h4>' + f.name + ' — confiance ' + f.confidence + '%</h4>' +
+      (f.context ? '<p>Exception/Contexte: ' + f.context + '</p>' : '') +
+      (f.causes ? '<p>Causes probables: ' + f.causes + '</p>' : '') +
+      (f.checks ? '<p>Checks recommandés: ' + f.checks + '</p>' : '') +
+      '<p><strong>Solution: ' + f.solution + '</strong></p>' +
+      '</div>';
+  });
+  document.getElementById('diagFaultCards').innerHTML = cardsHtml;
+
+  diagGoToStep(3);
+});
+
+// Demander devis (generates PDF-like page)
+document.getElementById('diagDemandeDevis').addEventListener('click', function() {
+  var clientNom = document.getElementById('diagClientNom').value || '—';
+  var clientEmail = document.getElementById('diagClientEmail').value || '—';
+  var clientTel = document.getElementById('diagClientTel').value || '—';
+  var clientAdresse = document.getElementById('diagClientAdresse').value || '—';
+  var clientVille = document.getElementById('diagClientVille').value || '—';
+  var clientDept = document.getElementById('diagClientDept').value || '—';
+  var prestation = document.getElementById('diagPrestationType').textContent;
+  var prix = document.getElementById('diagResultPrice').textContent;
+  var ref = 'DG-' + clientDept.replace(/\D/g,'').substring(0,2) + '-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' + Math.floor(Math.random()*900+100);
+
+  var w = window.open('', '_blank');
+  w.document.write('<!DOCTYPE html><html><head><title>Devis ' + ref + ' — Re-plug</title>' +
+    '<style>' +
+    'body{font-family:DM Sans,Arial,sans-serif;padding:40px;max-width:800px;margin:0 auto;color:#1a1a1a;line-height:1.6;}' +
+    'h1{color:#2d6a2e;font-size:1.6rem;margin-bottom:4px;}' +
+    '.ref{color:#666;font-size:.9rem;margin-bottom:32px;}' +
+    '.section{margin-bottom:28px;}' +
+    '.section h2{font-size:1.1rem;border-bottom:2px solid #2d6a2e;padding-bottom:6px;margin-bottom:14px;color:#2d6a2e;}' +
+    '.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 32px;}' +
+    '.field{font-size:.9rem;}.field span{color:#666;display:block;font-size:.82rem;}' +
+    '.total{background:#f0f9f0;border-radius:10px;padding:20px;margin-top:20px;}' +
+    '.total .price{font-size:1.5rem;font-weight:700;}' +
+    '.acompte{background:#fef3c7;border-radius:8px;padding:12px 16px;font-size:.88rem;color:#92400e;margin-top:16px;}' +
+    '.footer{margin-top:48px;border-top:1px solid #ddd;padding-top:16px;font-size:.82rem;color:#888;text-align:center;}' +
+    '@media print{body{padding:20px;}}' +
+    '</style></head><body>' +
+    '<h1>Devis Re-plug</h1>' +
+    '<p class="ref">Référence: ' + ref + ' — Date: ' + new Date().toLocaleDateString('fr-FR') + '</p>' +
+    '<div class="section"><h2>Client</h2><div class="grid">' +
+    '<div class="field"><span>Nom</span>' + clientNom + '</div>' +
+    '<div class="field"><span>Email</span>' + clientEmail + '</div>' +
+    '<div class="field"><span>Téléphone</span>' + clientTel + '</div>' +
+    '<div class="field"><span>Adresse</span>' + clientAdresse + '</div>' +
+    '<div class="field"><span>Ville</span>' + clientVille + '</div>' +
+    '<div class="field"><span>Département</span>' + clientDept + '</div>' +
+    '</div></div>' +
+    '<div class="section"><h2>Prestation</h2>' +
+    '<p>Offre commerciale pour ' + prestation + '</p>' +
+    '<div class="total"><p>Montant total</p><p class="price">' + prix + ' EUR</p></div>' +
+    '<p class="acompte">Un acompte de 50 % est exigible à la commande. Le solde sera payé avant la livraison retour.</p>' +
+    '</div>' +
+    '<div class="footer"><p>Re-plug SAS — 8, rue Lemercier, 75017 Paris — admin@re-plug.fr</p></div>' +
+    '</body></html>');
+  w.document.close();
+});
+
+// New diagnostic (reset all)
+document.getElementById('diagNewDiag').addEventListener('click', function() {
+  // Reset all form fields
+  document.getElementById('diagClientNom').value = '';
+  document.getElementById('diagClientEmail').value = '';
+  document.getElementById('diagClientTel').value = '';
+  document.getElementById('diagClientAdresse').value = '';
+  document.getElementById('diagClientVille').value = '';
+  document.getElementById('diagClientDept').value = '';
+  document.getElementById('diagTension').value = '';
+  document.querySelectorAll('input[name="diagProbleme"]').forEach(function(cb) { cb.checked = false; });
+  document.querySelectorAll('input[name="diagVisuel"]').forEach(function(r) { r.checked = false; });
+  document.querySelectorAll('input[name="diagCharge"]').forEach(function(r) { r.checked = false; });
+  document.querySelectorAll('input[name="diagDecharge"]').forEach(function(r) { r.checked = false; });
+  // Reset batteries to one empty card
+  var list = document.getElementById('diagBatteriesList');
+  while (list.children.length > 1) { list.lastChild.remove(); }
+  var firstCard = list.querySelector('.rp-diag__battery-card');
+  if (firstCard) {
+    firstCard.querySelectorAll('input').forEach(function(inp) {
+      if (inp.type === 'text' || inp.type === 'date') inp.value = inp.placeholder === 'Batterie' ? 'Batterie' : '';
+    });
+    firstCard.querySelectorAll('select').forEach(function(sel) { sel.selectedIndex = 0; });
+  }
+  // Expand all sections
+  document.querySelectorAll('.rp-diag__section.is-collapsed').forEach(function(s) {
+    s.classList.remove('is-collapsed');
+    s.querySelector('.rp-diag__section-toggle').textContent = 'Masquer';
+  });
+  diagGoToStep(1);
 });
 
 // ===== Télécharger QR Code (generates a simple page to print/save as PDF) =====
