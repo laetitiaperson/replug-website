@@ -410,7 +410,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr style="border-top:1px solid #eee;">
+                <tr style="border-top:1px solid #eee;" data-client="martin dubois" data-status="en-cours">
                   <td style="padding:14px 16px;white-space:nowrap;font-weight:500;">#RP-2026-0042</td>
                   <td style="padding:14px 16px;white-space:nowrap;">Martin Dubois</td>
                   <td style="padding:14px 16px;white-space:nowrap;">Vélo électrique</td>
@@ -422,7 +422,7 @@
                   <td style="padding:14px 16px;white-space:nowrap;font-weight:600;color:#d97706;">194,50 €</td>
                   <td style="padding:14px 16px;white-space:nowrap;"><span style="background:#dcfce7;color:#15803d;padding:4px 12px;border-radius:20px;font-size:.82rem;font-weight:500;">En cours</span></td>
                 </tr>
-                <tr style="border-top:1px solid #eee;">
+                <tr style="border-top:1px solid #eee;" data-client="sophie laurent" data-status="livree">
                   <td style="padding:14px 16px;white-space:nowrap;font-weight:500;">#RP-2026-0041</td>
                   <td style="padding:14px 16px;white-space:nowrap;">Sophie Laurent</td>
                   <td style="padding:14px 16px;white-space:nowrap;">Trottinette</td>
@@ -434,7 +434,7 @@
                   <td style="padding:14px 16px;white-space:nowrap;font-weight:600;color:#15803d;">0,00 €</td>
                   <td style="padding:14px 16px;white-space:nowrap;"><span style="background:#dbeafe;color:#1d4ed8;padding:4px 12px;border-radius:20px;font-size:.82rem;font-weight:500;">Livrée</span></td>
                 </tr>
-                <tr style="border-top:1px solid #eee;">
+                <tr style="border-top:1px solid #eee;" data-client="pierre moreau" data-status="en-cours">
                   <td style="padding:14px 16px;white-space:nowrap;font-weight:500;">#RP-2026-0040</td>
                   <td style="padding:14px 16px;white-space:nowrap;">Pierre Moreau</td>
                   <td style="padding:14px 16px;white-space:nowrap;">Scooter électrique</td>
@@ -446,7 +446,7 @@
                   <td style="padding:14px 16px;white-space:nowrap;font-weight:600;color:#d97706;">310,00 €</td>
                   <td style="padding:14px 16px;white-space:nowrap;"><span style="background:#dcfce7;color:#15803d;padding:4px 12px;border-radius:20px;font-size:.82rem;font-weight:500;">En cours</span></td>
                 </tr>
-                <tr style="border-top:1px solid #eee;">
+                <tr style="border-top:1px solid #eee;" data-client="claire petit" data-status="en-attente">
                   <td style="padding:14px 16px;white-space:nowrap;font-weight:500;">#RP-2026-0039</td>
                   <td style="padding:14px 16px;white-space:nowrap;">Claire Petit</td>
                   <td style="padding:14px 16px;white-space:nowrap;">Vélo électrique</td>
@@ -458,7 +458,7 @@
                   <td style="padding:14px 16px;white-space:nowrap;font-weight:600;color:#dc2626;">295,00 €</td>
                   <td style="padding:14px 16px;white-space:nowrap;"><span style="background:#fef3c7;color:#92400e;padding:4px 12px;border-radius:20px;font-size:.82rem;font-weight:500;">En attente</span></td>
                 </tr>
-                <tr style="border-top:1px solid #eee;">
+                <tr style="border-top:1px solid #eee;" data-client="julien bernard" data-status="livree">
                   <td style="padding:14px 16px;white-space:nowrap;font-weight:500;">#RP-2026-0038</td>
                   <td style="padding:14px 16px;white-space:nowrap;">Julien Bernard</td>
                   <td style="padding:14px 16px;white-space:nowrap;">Vélo cargo</td>
@@ -1285,15 +1285,19 @@ function rpAcceptCookies() { localStorage.setItem('rp_cookies','accepted'); docu
 function rpRefuseCookies() { localStorage.setItem('rp_cookies','refused'); document.getElementById('rp-cookie-banner').classList.remove('is-visible'); }
 (function(){ if(!localStorage.getItem('rp_cookies')){ document.getElementById('rp-cookie-banner').classList.add('is-visible'); } })();
 
-// Login → Dashboard
-document.getElementById('loginForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  var email = document.getElementById('partner-email').value;
-  document.getElementById('dashUserEmail').textContent = email;
-  document.getElementById('loginSection').style.display = 'none';
-  document.getElementById('dashboardSection').classList.add('is-visible');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+// Login → Dashboard (protégé pour le bypass)
+var loginForm = document.getElementById('loginForm');
+if (loginForm) {
+  loginForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var email = document.getElementById('partner-email').value;
+    var dashEmail = document.getElementById('dashUserEmail');
+    if (dashEmail) dashEmail.textContent = email;
+    document.getElementById('loginSection').style.display = 'none';
+    document.getElementById('dashboardSection').classList.add('is-visible');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
 
 // Logout (désactivé temporairement — login bypass)
 var logoutBtn = document.getElementById('logoutBtn');
@@ -1315,6 +1319,20 @@ document.querySelectorAll('.rp-dashboard__tab').forEach(function(tab) {
     document.getElementById('panel-' + this.dataset.tab).classList.add('is-active');
   });
 });
+
+// ===== Commandes — filter by status & search client =====
+function filterCommandes() {
+  var status = document.getElementById('filterStatus').value;
+  var search = document.getElementById('searchClient').value.toLowerCase();
+  var rows = document.querySelectorAll('#panel-commandes tbody tr');
+  rows.forEach(function(row) {
+    var matchStatus = !status || row.dataset.status === status;
+    var matchSearch = !search || row.dataset.client.includes(search);
+    row.style.display = (matchStatus && matchSearch) ? '' : 'none';
+  });
+}
+document.getElementById('filterStatus').addEventListener('change', filterCommandes);
+document.getElementById('searchClient').addEventListener('input', filterCommandes);
 
 // ===== Devis sub-tab switching =====
 document.querySelectorAll('.rp-devis-subtab').forEach(function(btn) {
