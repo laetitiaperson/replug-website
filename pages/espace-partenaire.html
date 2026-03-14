@@ -1772,6 +1772,11 @@ document.querySelectorAll('.rp-header__partner-tab').forEach(function(tab) {
     if (diagDetail) { diagDetail.style.display = 'none'; }
     var diagCards = document.getElementById('diagCardsList');
     if (diagCards) { diagCards.style.display = ''; }
+    // Close diagnostic wizard if open
+    var diagWizard = document.getElementById('diagWizard');
+    if (diagWizard) { diagWizard.classList.remove('is-visible'); }
+    var dashCta = document.querySelector('.rp-dash-cta');
+    if (dashCta) { dashCta.style.display = ''; }
   });
 });
 
@@ -1809,7 +1814,6 @@ function launchDiagnosticWizard() {
   document.getElementById('panel-diagnostic').classList.add('is-active');
   document.querySelectorAll('.rp-header__partner-tab').forEach(function(t) { t.classList.remove('is-active'); });
   document.querySelector('.rp-dash-cta').style.display = 'none';
-  document.querySelector('.rp-header__partner-tabs').style.display = 'none';
   document.getElementById('diagWizard').classList.add('is-visible');
   diagGoToStep(1);
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2277,9 +2281,8 @@ document.getElementById('diagBackDashboard').addEventListener('click', function(
   document.getElementById('panel-diagnostics').classList.add('is-active');
   document.querySelector('.rp-header__partner-tab[data-tab="diagnostics"]').classList.add('is-active');
   document.getElementById('diagWizard').classList.remove('is-visible');
-  // Restore CTA block and header partner tabs
+  // Restore CTA block
   document.querySelector('.rp-dash-cta').style.display = '';
-  document.querySelector('.rp-header__partner-tabs').style.display = '';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
