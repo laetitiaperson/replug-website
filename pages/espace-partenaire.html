@@ -1762,6 +1762,16 @@ document.querySelectorAll('.rp-header__partner-tab').forEach(function(tab) {
     document.querySelectorAll('.rp-dashboard__panel').forEach(function(p) { p.classList.remove('is-active'); });
     this.classList.add('is-active');
     document.getElementById('panel-' + this.dataset.tab).classList.add('is-active');
+
+    // Reset detail panels when switching tabs
+    var devisDetail = document.getElementById('devisDetailPanel');
+    if (devisDetail) { devisDetail.style.display = 'none'; }
+    var devisList = document.getElementById('devisList');
+    if (devisList) { devisList.style.display = ''; }
+    var diagDetail = document.getElementById('diagDetailPanel');
+    if (diagDetail) { diagDetail.style.display = 'none'; }
+    var diagCards = document.getElementById('diagCardsList');
+    if (diagCards) { diagCards.style.display = ''; }
   });
 });
 
