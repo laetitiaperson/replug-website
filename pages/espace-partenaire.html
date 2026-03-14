@@ -708,6 +708,46 @@
 
           </div>
 
+          <!-- Detail panel (hidden by default) -->
+          <div class="rp-suivi-detail" id="diagDetailPanel" style="display:none;">
+            <div class="rp-suivi-detail__header">
+              <div>
+                <h3 style="margin-bottom:4px;">Détail du diagnostic</h3>
+                <span class="rp-devis-ref" id="diagDetailRef"></span>
+              </div>
+              <span class="rp-devis-card__badge" id="diagDetailBadge"></span>
+            </div>
+
+            <p class="rp-suivi-detail__montant">Estimation</p>
+            <p class="rp-suivi-detail__price" id="diagDetailPrice"></p>
+
+            <hr>
+            <p class="rp-suivi-detail__section-title">Client</p>
+            <div class="rp-suivi-detail__grid" id="diagDetailClient"></div>
+
+            <hr>
+            <p class="rp-suivi-detail__section-title">Batterie</p>
+            <div class="rp-suivi-detail__grid" id="diagDetailBatterie"></div>
+
+            <hr>
+            <p class="rp-suivi-detail__section-title">Résultat du diagnostic</p>
+            <div id="diagDetailResultat" style="background:#fff;border-radius:8px;padding:12px 16px;font-size:.9rem;margin-bottom:8px;"></div>
+
+            <hr>
+            <p class="rp-suivi-detail__section-title">Prestations recommandées</p>
+            <div id="diagDetailPrestations"></div>
+
+            <div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:12px 16px;font-size:.82rem;color:#92400e;margin-top:16px;">
+              ⚠️ Un acompte de 50 % est exigible à la commande. Le solde sera payé avant la livraison retour.
+            </div>
+
+            <div class="rp-suivi-detail__actions" style="margin-top:20px;">
+              <button class="rp-btn rp-btn--primary rp-btn--small" id="btnDiagDevis">Demander un devis</button>
+              <button class="rp-btn rp-btn--outline-dark rp-btn--small" onclick="window.print()">Imprimer</button>
+              <button class="rp-btn rp-btn--outline-dark rp-btn--small" id="btnFermerDiagDetail">Fermer</button>
+            </div>
+          </div>
+
           <!-- Summary cards -->
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-top:28px;">
             <div style="background:#f0f9f0;border-radius:12px;padding:20px;text-align:center;">
@@ -1647,6 +1687,109 @@ function launchDiagnosticWizard() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 document.getElementById('diagNewFromList').addEventListener('click', launchDiagnosticWizard);
+
+// ===== Diagnostic — Voir détails =====
+var DIAG_DATA = {
+  'DIAG-2026-0015': {
+    ref: 'DIAG-2026-0015', date: '12/03/2026', status: 'attente', statusLabel: 'En attente',
+    client: 'Martin Dubois', email: 'martin.dubois@email.fr', tel: '06 12 34 56 78', ville: 'Paris', departement: '75',
+    batterie: 'Bosch PowerPack 500', tension: '36V', capacite: '500Wh', serie: 'SN-BP500-2024-1234',
+    resultat: 'Défaut BMS détecté — Probabilité 100%', resultatDetail: 'Le système de gestion de batterie (BMS) présente un dysfonctionnement empêchant la charge complète. Remplacement du module BMS recommandé.',
+    prestations: [{ label: 'Remplacement module BMS', prix: '180 €' }, { label: 'Main d\'œuvre + test', prix: '40 €' }],
+    total: '220 €'
+  },
+  'DIAG-2026-0014': {
+    ref: 'DIAG-2026-0014', date: '10/03/2026', status: 'attente', statusLabel: 'En attente',
+    client: 'Sophie Laurent', email: 'sophie.laurent@email.fr', tel: '06 98 76 54 32', ville: 'Lyon', departement: '69',
+    batterie: 'Yamaha PW-X3 600Wh', tension: '36V', capacite: '600Wh', serie: 'SN-YAM-PWX3-5678',
+    resultat: 'Cellules défectueuses — Probabilité 85%', resultatDetail: 'Plusieurs cellules présentent une capacité réduite. Remplacement des cellules défectueuses nécessaire pour restaurer l\'autonomie.',
+    prestations: [{ label: 'Remplacement cellules (x4)', prix: '240 €' }, { label: 'Main d\'œuvre + recalibrage', prix: '55 €' }],
+    total: '295 €'
+  },
+  'DIAG-2026-0012': {
+    ref: 'DIAG-2026-0012', date: '05/03/2026', status: 'valide', statusLabel: 'Validé',
+    client: 'Pierre Moreau', email: 'pierre.moreau@email.fr', tel: '06 55 44 33 22', ville: 'Marseille', departement: '13',
+    batterie: 'Shimano STEPS E8000', tension: '36V', capacite: '504Wh', serie: 'SN-SHI-E8K-9012',
+    resultat: 'Défaut connecteur — Probabilité 90%', resultatDetail: 'Le connecteur de décharge présente des traces d\'usure avancée provoquant des coupures intermittentes. Remplacement du connecteur recommandé.',
+    prestations: [{ label: 'Remplacement connecteur de décharge', prix: '145 €' }, { label: 'Main d\'œuvre + test', prix: '40 €' }],
+    total: '185 €'
+  },
+  'DIAG-2026-0009': {
+    ref: 'DIAG-2026-0009', date: '25/02/2026', status: 'archive', statusLabel: 'Archivé',
+    client: 'Claire Petit', email: 'claire.petit@email.fr', tel: '06 11 22 33 44', ville: 'Bordeaux', departement: '33',
+    batterie: 'Bosch PowerTube 625', tension: '36V', capacite: '625Wh', serie: 'SN-BP625-2023-5566',
+    resultat: 'Défaut BMS — Probabilité 95%', resultatDetail: 'Module BMS défaillant empêchant l\'équilibrage des cellules. Le diagnostic a été archivé sans suite.',
+    prestations: [{ label: 'Remplacement module BMS', prix: '180 €' }, { label: 'Main d\'œuvre + test', prix: '40 €' }],
+    total: '220 €'
+  }
+};
+
+function showDiagDetail(ref) {
+  var d = DIAG_DATA[ref];
+  if (!d) return;
+  document.getElementById('diagDetailRef').textContent = d.ref + ' — ' + d.date;
+  document.getElementById('diagDetailPrice').textContent = d.total;
+
+  var badge = document.getElementById('diagDetailBadge');
+  badge.textContent = d.statusLabel;
+  badge.className = 'rp-devis-card__badge rp-diag-history-card__badge--' + d.status;
+
+  document.getElementById('diagDetailClient').innerHTML =
+    '<div class="rp-suivi-detail__field">Nom<strong>' + d.client + '</strong></div>' +
+    '<div class="rp-suivi-detail__field">Email<strong>' + d.email + '</strong></div>' +
+    '<div class="rp-suivi-detail__field">Téléphone<strong>' + d.tel + '</strong></div>' +
+    '<div class="rp-suivi-detail__field">Ville<strong>' + d.ville + '</strong></div>' +
+    '<div class="rp-suivi-detail__field">Département<strong>' + d.departement + '</strong></div>';
+
+  document.getElementById('diagDetailBatterie').innerHTML =
+    '<div class="rp-suivi-detail__field">Modèle<strong>' + d.batterie + '</strong></div>' +
+    '<div class="rp-suivi-detail__field">Tension<strong>' + d.tension + '</strong></div>' +
+    '<div class="rp-suivi-detail__field">Capacité<strong>' + d.capacite + '</strong></div>' +
+    '<div class="rp-suivi-detail__field">N° de série<strong>' + d.serie + '</strong></div>';
+
+  document.getElementById('diagDetailResultat').innerHTML =
+    '<strong style="display:block;margin-bottom:4px;">' + d.resultat + '</strong>' +
+    '<span style="color:var(--rp-gray);">' + d.resultatDetail + '</span>';
+
+  var prestHtml = '';
+  d.prestations.forEach(function(p) {
+    prestHtml += '<div class="rp-suivi-detail__prestation" style="margin-bottom:6px;"><span>' + p.label + '</span><span>' + p.prix + '</span></div>';
+  });
+  prestHtml += '<div class="rp-suivi-detail__prestation" style="background:var(--rp-green);color:#fff;font-weight:600;margin-top:8px;"><span>Total estimé</span><span>' + d.total + '</span></div>';
+  document.getElementById('diagDetailPrestations').innerHTML = prestHtml;
+
+  // Show panel, hide cards
+  document.getElementById('diagCardsList').style.display = 'none';
+  document.getElementById('diagDetailPanel').style.display = 'block';
+  window.scrollTo({ top: document.getElementById('diagDetailPanel').offsetTop - 80, behavior: 'smooth' });
+}
+
+// Bind "Voir détails" buttons
+document.querySelectorAll('.rp-diag-history-card').forEach(function(card) {
+  var btn = card.querySelector('.rp-btn');
+  var ref = card.querySelector('.rp-diag-history-card__ref').textContent.trim();
+  btn.addEventListener('click', function() { showDiagDetail(ref); });
+});
+
+// Close detail
+document.getElementById('btnFermerDiagDetail').addEventListener('click', function() {
+  document.getElementById('diagDetailPanel').style.display = 'none';
+  document.getElementById('diagCardsList').style.display = '';
+});
+
+// "Demander un devis" → switch to Devis tab
+document.getElementById('btnDiagDevis').addEventListener('click', function() {
+  alert('Devis généré avec succès ! Vous pouvez le retrouver dans l\'onglet Devis.');
+  document.getElementById('diagDetailPanel').style.display = 'none';
+  document.getElementById('diagCardsList').style.display = '';
+  // Switch to Devis tab
+  document.querySelectorAll('.rp-header__partner-tab').forEach(function(t) { t.classList.remove('is-active'); });
+  document.querySelectorAll('.rp-dashboard__panel').forEach(function(p) { p.classList.remove('is-active'); });
+  var devisTab = document.querySelector('.rp-header__partner-tab[data-tab="devis"]');
+  if (devisTab) devisTab.classList.add('is-active');
+  document.getElementById('panel-devis').classList.add('is-active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
 
 // ===== Devis sub-tab switching =====
 document.querySelectorAll('.rp-devis-subtab').forEach(function(btn) {
