@@ -361,6 +361,13 @@
       .rp-diag__steps { flex-direction: column; align-items: flex-start; gap: 8px; }
       .rp-diag__step-line { display: none; }
     }
+
+    /* Shake animation for login error */
+    @keyframes rp-shake {
+      0%, 100% { transform: translateX(0); }
+      15%, 45%, 75% { transform: translateX(-6px); }
+      30%, 60%, 90% { transform: translateX(6px); }
+    }
   </style>
 </head>
 <body class="template-partner-login">
@@ -436,8 +443,12 @@
               <input type="checkbox" name="remember" style="accent-color:var(--rp-green);">
               Se souvenir de moi
             </label>
-            <a href="#" style="color:var(--rp-green);font-weight:500;">Mot de passe oublié ?</a>
+            <a href="#" id="forgotPasswordLink" style="color:var(--rp-green);font-weight:500;">Mot de passe oublié ?</a>
           </div>
+          <!-- Error message -->
+          <div id="loginError" style="display:none;background:#fef2f2;border:1px solid #fca5a5;color:#dc2626;border-radius:8px;padding:12px 16px;font-size:.88rem;margin-top:8px;text-align:center;"></div>
+          <!-- Forgot password message -->
+          <div id="forgotPasswordMsg" style="display:none;background:#eff6ff;border:1px solid #93c5fd;color:#1d4ed8;border-radius:8px;padding:12px 16px;font-size:.88rem;margin-top:8px;text-align:center;"></div>
           <div class="rp-form__group" style="margin-top:24px;">
             <button type="submit" class="rp-btn rp-btn--primary" style="width:100%;">Se connecter</button>
           </div>
@@ -1524,12 +1535,56 @@ function deactivatePartnerMode() {
 }
 
 // Login form
+// Demo credentials
+var DEMO_ACCOUNTS = [
+  { email: 'jean.dupont@velostore.fr', password: 'replug2026' },
+  { email: 'demo@replug.fr', password: 'demo' }
+];
+
 var loginForm = document.getElementById('loginForm');
 if (loginForm) {
   loginForm.addEventListener('submit', function(e) {
     e.preventDefault();
-    activatePartnerMode();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    var email = document.getElementById('partner-email').value.trim();
+    var password = document.getElementById('partner-password').value;
+    var errorDiv = document.getElementById('loginError');
+    var forgotDiv = document.getElementById('forgotPasswordMsg');
+    errorDiv.style.display = 'none';
+    forgotDiv.style.display = 'none';
+
+    var valid = DEMO_ACCOUNTS.some(function(acc) {
+      return acc.email === email && acc.password === password;
+    });
+
+    if (valid) {
+      activatePartnerMode();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      errorDiv.textContent = 'Identifiants incorrects. Vérifiez votre email et mot de passe.';
+      errorDiv.style.display = 'block';
+      // Shake animation
+      loginForm.style.animation = 'none';
+      loginForm.offsetHeight; // force reflow
+      loginForm.style.animation = 'rp-shake .4s ease';
+    }
+  });
+}
+
+// Forgot password link
+var forgotLink = document.getElementById('forgotPasswordLink');
+if (forgotLink) {
+  forgotLink.addEventListener('click', function(e) {
+    e.preventDefault();
+    var errorDiv = document.getElementById('loginError');
+    var forgotDiv = document.getElementById('forgotPasswordMsg');
+    var email = document.getElementById('partner-email').value.trim();
+    errorDiv.style.display = 'none';
+    if (email && email.includes('@')) {
+      forgotDiv.innerHTML = 'Un lien de réinitialisation a été envoyé à <strong>' + email + '</strong>. Vérifiez votre boîte de réception.';
+    } else {
+      forgotDiv.textContent = 'Saisissez votre adresse email ci-dessus, puis cliquez à nouveau sur « Mot de passe oublié ? ».';
+    }
+    forgotDiv.style.display = 'block';
   });
 }
 
