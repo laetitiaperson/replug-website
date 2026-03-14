@@ -27,9 +27,12 @@
     .rp-dash-empty p { color: var(--rp-gray); font-size: .95rem; max-width: 400px; margin: 0 auto; }
 
     /* Diagnostic CTA */
-    .rp-dash-cta { background: linear-gradient(135deg, #f0f9f0 0%, #e8f5e8 100%); border: 2px solid var(--rp-green); border-radius: 16px; padding: 32px; text-align: center; margin-bottom: 40px; }
-    .rp-dash-cta h2 { font-size: 1.25rem; margin-bottom: 8px; }
-    .rp-dash-cta p { color: var(--rp-gray); margin-bottom: 20px; font-size: .95rem; }
+    .rp-dash-cta { background: linear-gradient(135deg, #f0f9f0 0%, #e8f5e8 100%); border: 1px solid var(--rp-green); border-radius: 10px; padding: 12px 24px; display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+    .rp-dash-cta svg { flex-shrink: 0; width: 24px; height: 24px; }
+    .rp-dash-cta h2 { font-size: .95rem; margin: 0; white-space: nowrap; }
+    .rp-dash-cta p { color: var(--rp-gray); margin: 0; font-size: .85rem; flex: 1; }
+    .rp-dash-cta .rp-btn { padding: 8px 20px; font-size: .85rem; white-space: nowrap; flex-shrink: 0; }
+    @media (max-width: 768px) { .rp-dash-cta { flex-wrap: wrap; } .rp-dash-cta p { display: none; } }
 
     /* ===== Unified header — partner mode ===== */
     .rp-header--partner .rp-header__nav,
@@ -455,9 +458,9 @@
 
         <!-- CTA Diagnostic -->
         <div class="rp-dash-cta">
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--rp-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:12px;"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6"/><path d="M8 11h6"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--rp-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6"/><path d="M8 11h6"/></svg>
           <h2>Diagnostiquer une batterie</h2>
-          <p>Lancez un diagnostic assisté pour identifier la panne et générer un devis instantané.</p>
+          <p>Identifiez la panne et générez un devis instantané.</p>
           <a href="#" class="rp-btn rp-btn--primary">Faire un diagnostic</a>
         </div>
 
