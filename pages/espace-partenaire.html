@@ -329,6 +329,9 @@
     .rp-diag__problem-item input[type="checkbox"] { accent-color: var(--rp-green); width: 18px; height: 18px; margin-right: 14px; flex-shrink: 0; }
     .rp-diag__problem-item .rp-diag__problem-label { font-size: .95rem; font-weight: 500; color: var(--rp-dark); flex: 1; }
     .rp-diag__problem-item .rp-diag__problem-desc { font-size: .82rem; color: var(--rp-gray); }
+    .rp-diag__problem-category { font-size: .88rem; font-weight: 600; color: var(--rp-green); margin: 20px 0 10px 0; padding-bottom: 6px; border-bottom: 1px solid #e8e8e8; text-transform: uppercase; letter-spacing: .5px; }
+    .rp-diag__problem-category:first-of-type { margin-top: 0; }
+    #diagStep2 textarea:focus { outline: none; border-color: var(--rp-green); background: #fff; }
 
     /* Step 3: Results */
     .rp-diag__result-summary { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 24px; margin-bottom: 24px; }
@@ -1169,7 +1172,7 @@
                       <input type="tel" id="diagClientTel" placeholder="">
                     </div>
                     <div class="rp-diag__form-group">
-                      <label>Adresse</label>
+                      <label>Adresse <span style="color:#dc2626;">*</span></label>
                       <input type="text" id="diagClientAdresse" placeholder="Numéro et rue">
                     </div>
                     <div class="rp-diag__form-group">
@@ -1338,7 +1341,7 @@
               </div>
             </div>
 
-            <!-- ====== STEP 2: Tension + Problèmes rencontrés ====== -->
+            <!-- ====== STEP 2: Mesures + Problèmes + Contexte ====== -->
             <div class="rp-diag__page" id="diagStep2" style="display:none;">
 
               <button class="rp-diag__btn-back" id="diagBackStep1" type="button">
@@ -1346,43 +1349,196 @@
                 Précédent
               </button>
 
-              <div style="margin-top:24px;">
-                <div class="rp-diag__form-group" style="max-width:400px;margin-bottom:28px;">
-                  <label style="display:block;font-size:.92rem;font-weight:500;color:var(--rp-dark);margin-bottom:8px;">Tension mesurée (V)</label>
-                  <input type="text" id="diagTension" placeholder="Ex: 36.5" style="width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:10px;font-size:.95rem;background:#f5f5f5;font-family:inherit;box-sizing:border-box;">
+              <!-- Section: Mesures électriques -->
+              <div class="rp-diag__section" id="diagSectionMesures" style="margin-top:24px;">
+                <div class="rp-diag__section-header" onclick="toggleDiagSection('diagSectionMesures')">
+                  <h3>Mesures électriques</h3>
+                  <button class="rp-diag__section-toggle" type="button">Masquer</button>
                 </div>
+                <div class="rp-diag__section-body">
+                  <div class="rp-diag__form-grid">
+                    <div class="rp-diag__form-group">
+                      <label>Tension mesurée (V) <span style="color:#dc2626;">*</span></label>
+                      <input type="text" id="diagTension" placeholder="Ex: 36.5">
+                    </div>
+                    <div class="rp-diag__form-group">
+                      <label>Tension du chargeur (V)</label>
+                      <input type="text" id="diagTensionChargeur" placeholder="Ex: 42.0">
+                    </div>
+                    <div class="rp-diag__form-group">
+                      <label>Courant de charge (A)</label>
+                      <input type="text" id="diagCourantCharge" placeholder="Ex: 2.0">
+                    </div>
+                    <div class="rp-diag__form-group">
+                      <label>Code erreur affiché</label>
+                      <input type="text" id="diagCodeErreur" placeholder="Ex: E04, clignotement 3x...">
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-                <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:16px;color:var(--rp-dark);">Problèmes rencontrés</h3>
+              <!-- Section: Problèmes rencontrés -->
+              <div class="rp-diag__section" id="diagSectionProblemes">
+                <div class="rp-diag__section-header" onclick="toggleDiagSection('diagSectionProblemes')">
+                  <h3>Problèmes rencontrés <span style="color:#dc2626;">*</span></h3>
+                  <button class="rp-diag__section-toggle" type="button">Masquer</button>
+                </div>
+                <div class="rp-diag__section-body">
+                  <p style="font-size:.85rem;color:var(--rp-gray);margin-bottom:16px;">Cochez un ou plusieurs problèmes observés sur la batterie.</p>
 
-                <label class="rp-diag__problem-item">
-                  <input type="checkbox" name="diagProbleme" value="charge">
-                  <span class="rp-diag__problem-label">Ne se charge pas</span>
-                  <span class="rp-diag__problem-desc">(Le chargeur ne démarre pas la charge)</span>
-                </label>
+                  <h4 class="rp-diag__problem-category">Alimentation & charge</h4>
 
-                <label class="rp-diag__problem-item">
-                  <input type="checkbox" name="diagProbleme" value="allume">
-                  <span class="rp-diag__problem-label">Ne s'allume pas / ne démarre pas</span>
-                  <span class="rp-diag__problem-desc">(Aucune mise sous tension)</span>
-                </label>
+                  <label class="rp-diag__problem-item">
+                    <input type="checkbox" name="diagProbleme" value="charge">
+                    <span class="rp-diag__problem-label">Ne se charge pas</span>
+                    <span class="rp-diag__problem-desc">(Le chargeur ne démarre pas la charge)</span>
+                  </label>
 
-                <label class="rp-diag__problem-item">
-                  <input type="checkbox" name="diagProbleme" value="autonomie">
-                  <span class="rp-diag__problem-label">Perte d'autonomie</span>
-                  <span class="rp-diag__problem-desc">(Durée très courte par rapport à la normale)</span>
-                </label>
+                  <label class="rp-diag__problem-item">
+                    <input type="checkbox" name="diagProbleme" value="charge_partielle">
+                    <span class="rp-diag__problem-label">Charge incomplète</span>
+                    <span class="rp-diag__problem-desc">(La charge s'arrête avant 100%)</span>
+                  </label>
 
-                <label class="rp-diag__problem-item">
-                  <input type="checkbox" name="diagProbleme" value="gonflement">
-                  <span class="rp-diag__problem-label">Gonflement / déformation</span>
-                  <span class="rp-diag__problem-desc">(Indicateur de risque sécurité)</span>
-                </label>
+                  <label class="rp-diag__problem-item">
+                    <input type="checkbox" name="diagProbleme" value="allume">
+                    <span class="rp-diag__problem-label">Ne s'allume pas / ne démarre pas</span>
+                    <span class="rp-diag__problem-desc">(Aucune mise sous tension)</span>
+                  </label>
 
-                <label class="rp-diag__problem-item">
-                  <input type="checkbox" name="diagProbleme" value="surchauffe">
-                  <span class="rp-diag__problem-label">Surchauffe</span>
-                  <span class="rp-diag__problem-desc">(Chaude au toucher pendant l'usage)</span>
-                </label>
+                  <label class="rp-diag__problem-item">
+                    <input type="checkbox" name="diagProbleme" value="coupures">
+                    <span class="rp-diag__problem-label">Coupures intermittentes</span>
+                    <span class="rp-diag__problem-desc">(La batterie se coupe pendant l'utilisation)</span>
+                  </label>
+
+                  <h4 class="rp-diag__problem-category">Performance</h4>
+
+                  <label class="rp-diag__problem-item">
+                    <input type="checkbox" name="diagProbleme" value="autonomie">
+                    <span class="rp-diag__problem-label">Perte d'autonomie</span>
+                    <span class="rp-diag__problem-desc">(Durée très courte par rapport à la normale)</span>
+                  </label>
+
+                  <label class="rp-diag__problem-item">
+                    <input type="checkbox" name="diagProbleme" value="puissance">
+                    <span class="rp-diag__problem-label">Perte de puissance</span>
+                    <span class="rp-diag__problem-desc">(L'assistance ou le moteur est plus faible)</span>
+                  </label>
+
+                  <h4 class="rp-diag__problem-category">Sécurité</h4>
+
+                  <label class="rp-diag__problem-item">
+                    <input type="checkbox" name="diagProbleme" value="gonflement">
+                    <span class="rp-diag__problem-label">Gonflement / déformation</span>
+                    <span class="rp-diag__problem-desc">(Indicateur de risque sécurité)</span>
+                  </label>
+
+                  <label class="rp-diag__problem-item">
+                    <input type="checkbox" name="diagProbleme" value="surchauffe">
+                    <span class="rp-diag__problem-label">Surchauffe</span>
+                    <span class="rp-diag__problem-desc">(Chaude au toucher pendant l'usage ou la charge)</span>
+                  </label>
+
+                  <label class="rp-diag__problem-item">
+                    <input type="checkbox" name="diagProbleme" value="odeur">
+                    <span class="rp-diag__problem-label">Odeur suspecte</span>
+                    <span class="rp-diag__problem-desc">(Odeur de brûlé, chimique ou inhabituelle)</span>
+                  </label>
+
+                  <label class="rp-diag__problem-item">
+                    <input type="checkbox" name="diagProbleme" value="bruit">
+                    <span class="rp-diag__problem-label">Bruit anormal</span>
+                    <span class="rp-diag__problem-desc">(Cliquetis, grésillement ou sifflement)</span>
+                  </label>
+
+                  <h4 class="rp-diag__problem-category">Connectique & affichage</h4>
+
+                  <label class="rp-diag__problem-item">
+                    <input type="checkbox" name="diagProbleme" value="connecteur">
+                    <span class="rp-diag__problem-label">Connecteur endommagé</span>
+                    <span class="rp-diag__problem-desc">(Broches tordues, oxydation, jeu excessif)</span>
+                  </label>
+
+                  <label class="rp-diag__problem-item">
+                    <input type="checkbox" name="diagProbleme" value="erreur_affichage">
+                    <span class="rp-diag__problem-label">Erreur affichée / voyant clignotant</span>
+                    <span class="rp-diag__problem-desc">(Code erreur ou LED de défaut)</span>
+                  </label>
+
+                  <label class="rp-diag__problem-item">
+                    <input type="checkbox" name="diagProbleme" value="autre">
+                    <span class="rp-diag__problem-label">Autre problème</span>
+                    <span class="rp-diag__problem-desc">(Non listé ci-dessus)</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Section: Contexte d'utilisation -->
+              <div class="rp-diag__section" id="diagSectionContexte">
+                <div class="rp-diag__section-header" onclick="toggleDiagSection('diagSectionContexte')">
+                  <h3>Contexte d'utilisation</h3>
+                  <button class="rp-diag__section-toggle" type="button">Masquer</button>
+                </div>
+                <div class="rp-diag__section-body">
+                  <div class="rp-diag__form-grid">
+                    <div class="rp-diag__form-group">
+                      <label>Fréquence d'utilisation <span style="color:#dc2626;">*</span></label>
+                      <select id="diagFrequence">
+                        <option value="">-- Sélectionner --</option>
+                        <option value="quotidien">Quotidienne</option>
+                        <option value="hebdomadaire">Hebdomadaire</option>
+                        <option value="occasionnel">Occasionnelle</option>
+                        <option value="saisonnier">Saisonnière</option>
+                      </select>
+                    </div>
+                    <div class="rp-diag__form-group">
+                      <label>Conditions de stockage</label>
+                      <select id="diagStockage">
+                        <option value="">-- Sélectionner --</option>
+                        <option value="interieur">Intérieur (tempéré)</option>
+                        <option value="garage">Garage / cave</option>
+                        <option value="exterieur">Extérieur</option>
+                        <option value="inconnu">Ne sait pas</option>
+                      </select>
+                    </div>
+                    <div class="rp-diag__form-group">
+                      <label>Dernier usage fonctionnel</label>
+                      <select id="diagDernierUsage">
+                        <option value="">-- Sélectionner --</option>
+                        <option value="recent">Moins d'une semaine</option>
+                        <option value="1mois">Moins d'un mois</option>
+                        <option value="3mois">1 à 3 mois</option>
+                        <option value="6mois">3 à 6 mois</option>
+                        <option value="plus">Plus de 6 mois</option>
+                      </select>
+                    </div>
+                    <div class="rp-diag__form-group">
+                      <label>Réparation antérieure</label>
+                      <select id="diagReparation">
+                        <option value="">-- Sélectionner --</option>
+                        <option value="non">Non, jamais réparée</option>
+                        <option value="oui_replug">Oui, par Re-Plug</option>
+                        <option value="oui_autre">Oui, par un tiers</option>
+                        <option value="inconnu">Ne sait pas</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Section: Observations -->
+              <div class="rp-diag__section" id="diagSectionObservations">
+                <div class="rp-diag__section-header" onclick="toggleDiagSection('diagSectionObservations')">
+                  <h3>Observations complémentaires</h3>
+                  <button class="rp-diag__section-toggle" type="button">Masquer</button>
+                </div>
+                <div class="rp-diag__section-body">
+                  <div class="rp-diag__form-group" style="margin-bottom:0;">
+                    <label>Commentaires libres</label>
+                    <textarea id="diagCommentaires" rows="4" placeholder="Décrivez tout élément utile : circonstances de la panne, comportement observé, historique de la batterie..." style="width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:10px;font-size:.9rem;font-family:inherit;background:#f9f9f9;resize:vertical;box-sizing:border-box;transition:border-color .2s;"></textarea>
+                  </div>
+                </div>
               </div>
 
               <div class="rp-diag__actions">
