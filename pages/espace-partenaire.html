@@ -823,7 +823,7 @@
                 <select class="rp-form__select" id="devisStatut">
                   <option value="">Tous</option>
                   <option value="attente">En attente</option>
-                  <option value="approuve">Approuvé</option>
+                  <option value="approuve">Validé</option>
                   <option value="commande">Commandé</option>
                   <option value="refuse">Refusé</option>
                 </select>
@@ -1890,7 +1890,7 @@ function formatDateFr(dateStr) {
   return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
-var statutLabels = { attente: 'En attente', approuve: 'Approuvé', commande: 'Commandé', refuse: 'Refusé' };
+var statutLabels = { attente: 'En attente', approuve: 'Validé', commande: 'Commandé', refuse: 'Refusé' };
 var statutClasses = { attente: 'rp-devis-card__badge--attente', approuve: 'rp-devis-card__badge--approuve', commande: 'rp-devis-card__badge--commande', refuse: 'rp-devis-card__badge--refuse' };
 
 function showSuiviDetail(ref) {
