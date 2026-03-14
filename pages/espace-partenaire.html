@@ -333,24 +333,33 @@
     .rp-diag__problem-category:first-of-type { margin-top: 0; }
     #diagStep2 textarea:focus { outline: none; border-color: var(--rp-green); background: #fff; }
 
-    /* Step 3: Results */
-    .rp-diag__result-summary { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 24px; margin-bottom: 24px; }
-    .rp-diag__result-summary .rp-diag__result-offer { font-size: .9rem; color: var(--rp-gray); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
-    .rp-diag__result-summary .rp-diag__result-offer::before { content: '🤝'; }
-    .rp-diag__result-prestation { font-size: .88rem; color: var(--rp-gray); margin-bottom: 2px; }
-    .rp-diag__result-price { font-size: 1.4rem; font-weight: 700; color: var(--rp-dark); margin-bottom: 16px; }
-    .rp-diag__result-bar { margin-top: 16px; }
-    .rp-diag__result-bar-label { font-size: .85rem; font-weight: 600; margin-bottom: 6px; color: var(--rp-dark); }
-    .rp-diag__result-bar-track { height: 8px; background: #e8e8e8; border-radius: 4px; overflow: hidden; }
-    .rp-diag__result-bar-fill { height: 100%; background: var(--rp-green); border-radius: 4px; transition: width .5s; }
-    .rp-diag__result-badge { display: inline-block; background: #dcfce7; color: #15803d; padding: 2px 10px; border-radius: 12px; font-size: .78rem; font-weight: 500; margin-left: 6px; }
-
-    .rp-diag__fault-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 20px 24px; margin-bottom: 12px; }
-    .rp-diag__fault-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; color: var(--rp-dark); }
-    .rp-diag__fault-card p { font-size: .85rem; color: var(--rp-gray); margin-bottom: 4px; line-height: 1.5; }
-    .rp-diag__fault-card p strong { color: var(--rp-dark); }
-
-    .rp-diag__acompte { background: #fef3c7; border-radius: 10px; padding: 14px 20px; font-size: .88rem; color: #92400e; margin-top: 24px; font-weight: 500; }
+    /* Step 3: Results — fiche style */
+    .rp-diag-result { max-width: 640px; margin: 0 auto; background: #f9fafb; border-radius: 16px; padding: 32px; }
+    .rp-diag-result__header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+    .rp-diag-result__header h3 { font-size: 1.2rem; font-weight: 700; color: var(--rp-dark); margin-bottom: 4px; }
+    .rp-diag-result__ref { color: var(--rp-gray); font-size: .9rem; }
+    .rp-diag-result__badge { display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: .82rem; font-weight: 500; background: #fef3c7; color: #92400e; }
+    .rp-diag-result__montant { font-size: .88rem; color: var(--rp-gray); margin-bottom: 2px; }
+    .rp-diag-result__price { font-size: 1.6rem; font-weight: 700; color: var(--rp-dark); margin-bottom: 8px; }
+    .rp-diag-result hr { border: none; border-top: 1px solid #e5e7eb; margin: 20px 0; }
+    .rp-diag-result__section-title { font-size: 1rem; font-weight: 600; margin-bottom: 12px; color: var(--rp-dark); }
+    .rp-diag-result__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 0; }
+    .rp-diag-result__field { font-size: .82rem; color: var(--rp-gray); }
+    .rp-diag-result__field strong { display: block; font-size: .9rem; font-weight: 500; color: var(--rp-dark); margin-top: 2px; }
+    .rp-diag-result__resultat { background: #fff; border-radius: 8px; padding: 12px 16px; font-size: .9rem; margin-bottom: 8px; }
+    .rp-diag-result__prestation { display: flex; justify-content: space-between; background: #fff; border-radius: 8px; padding: 12px 16px; font-size: .9rem; margin-bottom: 6px; }
+    .rp-diag-result__prestation span:last-child { font-weight: 600; }
+    .rp-diag-result__prestation--total { background: var(--rp-green); color: #fff; font-weight: 600; margin-top: 8px; }
+    .rp-diag-result__acompte { background: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; padding: 12px 16px; font-size: .82rem; color: #92400e; margin-top: 16px; }
+    .rp-diag-result__actions { display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
+    .rp-diag-result__fault-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 16px 20px; margin-bottom: 10px; }
+    .rp-diag-result__fault-card h4 { font-size: .95rem; font-weight: 700; margin-bottom: 6px; color: var(--rp-dark); }
+    .rp-diag-result__fault-card p { font-size: .82rem; color: var(--rp-gray); margin-bottom: 3px; line-height: 1.5; }
+    .rp-diag-result__fault-card p strong { color: var(--rp-dark); }
+    @media (max-width: 600px) {
+      .rp-diag-result__grid { grid-template-columns: 1fr 1fr; }
+      .rp-diag-result { padding: 20px; }
+    }
 
     /* Wizard buttons */
     .rp-diag__actions { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
@@ -1550,33 +1559,65 @@
             <!-- ====== STEP 3: Résultats ====== -->
             <div class="rp-diag__page" id="diagStep3" style="display:none;">
 
-              <h3 style="font-size:1.3rem;font-weight:700;margin-bottom:24px;color:var(--rp-dark);">Résultats du diagnostic</h3>
+              <div class="rp-diag-result" id="diagResultPanel">
 
-              <!-- Summary -->
-              <div class="rp-diag__result-summary" id="diagResultSummary">
-                <p class="rp-diag__result-offer">Offre commerciale (confiance: <span id="diagConfiance">100</span>%)</p>
-                <p class="rp-diag__result-prestation">Prestation estimée pour résoudre: <strong id="diagPrestationType">default_bms</strong></p>
-                <p class="rp-diag__result-price"><span id="diagResultPrice">220</span> EUR</p>
-                <button class="rp-btn rp-btn--primary" id="diagDemandeDevis" type="button">Demander devis</button>
-                <div class="rp-diag__result-bar">
-                  <p class="rp-diag__result-bar-label" id="diagMainFaultLabel">Défaut BMS <span class="rp-diag__result-badge" id="diagMainFaultBadge">100%</span></p>
-                  <div class="rp-diag__result-bar-track">
-                    <div class="rp-diag__result-bar-fill" id="diagMainFaultBar" style="width:100%;"></div>
+                <!-- Header -->
+                <div class="rp-diag-result__header">
+                  <div>
+                    <h3>Résultat du diagnostic</h3>
+                    <span class="rp-diag-result__ref" id="diagResultRef"></span>
                   </div>
+                  <span class="rp-diag-result__badge">En attente</span>
                 </div>
+
+                <!-- Prix total -->
+                <p class="rp-diag-result__montant">Estimation</p>
+                <p class="rp-diag-result__price" id="diagResultPrice"></p>
+
+                <hr>
+
+                <!-- Client -->
+                <p class="rp-diag-result__section-title">Client</p>
+                <div class="rp-diag-result__grid" id="diagResultClient"></div>
+
+                <hr>
+
+                <!-- Batterie -->
+                <p class="rp-diag-result__section-title">Batterie</p>
+                <div class="rp-diag-result__grid" id="diagResultBatterie"></div>
+
+                <hr>
+
+                <!-- Résultat du diagnostic -->
+                <p class="rp-diag-result__section-title">Résultat du diagnostic</p>
+                <div class="rp-diag-result__resultat" id="diagResultResultat"></div>
+
+                <hr>
+
+                <!-- Pannes détectées -->
+                <p class="rp-diag-result__section-title">Pannes détectées</p>
+                <div id="diagResultFaultCards"></div>
+
+                <hr>
+
+                <!-- Prestations recommandées -->
+                <p class="rp-diag-result__section-title">Prestations recommandées</p>
+                <div id="diagResultPrestations"></div>
+
+                <!-- Acompte -->
+                <div class="rp-diag-result__acompte">
+                  ⚠️ Un acompte de 50 % est exigible à la commande. Le solde sera payé avant la livraison retour.
+                </div>
+
+                <!-- Actions -->
+                <div class="rp-diag-result__actions">
+                  <button class="rp-btn rp-btn--primary rp-btn--small" id="diagDemandeDevis" type="button">Demander un devis</button>
+                  <button class="rp-btn rp-btn--outline-dark rp-btn--small" onclick="window.print()">Imprimer</button>
+                  <button class="rp-btn rp-btn--outline-dark rp-btn--small" id="diagNewDiag" type="button">Nouveau diagnostic</button>
+                </div>
+
               </div>
 
-              <!-- Fault cards -->
-              <div id="diagFaultCards"></div>
-
-              <!-- Acompte mention -->
-              <div class="rp-diag__acompte">
-                Un acompte de 50 % est exigible à la commande. Le solde sera payé avant la livraison retour.
-              </div>
-
-              <div class="rp-diag__actions">
-                <button class="rp-diag__btn-back" id="diagNewDiag" type="button">Nouveau diagnostic</button>
-              </div>
             </div>
 
           </div>
@@ -2612,74 +2653,136 @@ document.getElementById('diagLaunchBtn').addEventListener('click', function() {
 
   // Main fault
   var mainFault = faults[0];
-  document.getElementById('diagConfiance').textContent = mainFault.confidence;
-  document.getElementById('diagPrestationType').textContent = 'default_bms';
-  document.getElementById('diagResultPrice').textContent = '220';
-  document.getElementById('diagMainFaultLabel').innerHTML = mainFault.name + ' <span class="rp-diag__result-badge">' + mainFault.confidence + '%</span>';
-  document.getElementById('diagMainFaultBar').style.width = mainFault.confidence + '%';
 
-  // Build fault cards
-  var cardsHtml = '';
-  faults.forEach(function(f) {
-    cardsHtml += '<div class="rp-diag__fault-card">' +
-      '<h4>' + f.name + ' — confiance ' + f.confidence + '%</h4>' +
-      (f.context ? '<p>Exception/Contexte: ' + f.context + '</p>' : '') +
-      (f.causes ? '<p>Causes probables: ' + f.causes + '</p>' : '') +
-      (f.checks ? '<p>Checks recommandés: ' + f.checks + '</p>' : '') +
-      '<p><strong>Solution: ' + f.solution + '</strong></p>' +
-      '</div>';
-  });
-  document.getElementById('diagFaultCards').innerHTML = cardsHtml;
-
-  diagGoToStep(3);
-});
-
-// Demander devis (generates PDF-like page)
-document.getElementById('diagDemandeDevis').addEventListener('click', function() {
+  // --- Récupérer les infos saisies ---
   var clientNom = document.getElementById('diagClientNom').value || '—';
   var clientEmail = document.getElementById('diagClientEmail').value || '—';
   var clientTel = document.getElementById('diagClientTel').value || '—';
   var clientAdresse = document.getElementById('diagClientAdresse').value || '—';
   var clientVille = document.getElementById('diagClientVille').value || '—';
   var clientDept = document.getElementById('diagClientDept').value || '—';
-  var prestation = document.getElementById('diagPrestationType').textContent;
-  var prix = document.getElementById('diagResultPrice').textContent;
-  var ref = 'DG-' + clientDept.replace(/\D/g,'').substring(0,2) + '-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' + Math.floor(Math.random()*900+100);
+  var tensionMesuree = document.getElementById('diagTension').value || '—';
 
-  var w = window.open('', '_blank');
-  w.document.write('<!DOCTYPE html><html><head><title>Devis ' + ref + ' — Re-plug</title>' +
-    '<style>' +
-    'body{font-family:DM Sans,Arial,sans-serif;padding:40px;max-width:800px;margin:0 auto;color:#1a1a1a;line-height:1.6;}' +
-    'h1{color:#2d6a2e;font-size:1.6rem;margin-bottom:4px;}' +
-    '.ref{color:#666;font-size:.9rem;margin-bottom:32px;}' +
-    '.section{margin-bottom:28px;}' +
-    '.section h2{font-size:1.1rem;border-bottom:2px solid #2d6a2e;padding-bottom:6px;margin-bottom:14px;color:#2d6a2e;}' +
-    '.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 32px;}' +
-    '.field{font-size:.9rem;}.field span{color:#666;display:block;font-size:.82rem;}' +
-    '.total{background:#f0f9f0;border-radius:10px;padding:20px;margin-top:20px;}' +
-    '.total .price{font-size:1.5rem;font-weight:700;}' +
-    '.acompte{background:#fef3c7;border-radius:8px;padding:12px 16px;font-size:.88rem;color:#92400e;margin-top:16px;}' +
-    '.footer{margin-top:48px;border-top:1px solid #ddd;padding-top:16px;font-size:.82rem;color:#888;text-align:center;}' +
-    '@media print{body{padding:20px;}}' +
-    '</style></head><body>' +
-    '<h1>Devis Re-plug</h1>' +
-    '<p class="ref">Référence: ' + ref + ' — Date: ' + new Date().toLocaleDateString('fr-FR') + '</p>' +
-    '<div class="section"><h2>Client</h2><div class="grid">' +
-    '<div class="field"><span>Nom</span>' + clientNom + '</div>' +
-    '<div class="field"><span>Email</span>' + clientEmail + '</div>' +
-    '<div class="field"><span>Téléphone</span>' + clientTel + '</div>' +
-    '<div class="field"><span>Adresse</span>' + clientAdresse + '</div>' +
-    '<div class="field"><span>Ville</span>' + clientVille + '</div>' +
-    '<div class="field"><span>Département</span>' + clientDept + '</div>' +
-    '</div></div>' +
-    '<div class="section"><h2>Prestation</h2>' +
-    '<p>Offre commerciale pour ' + prestation + '</p>' +
-    '<div class="total"><p>Montant total</p><p class="price">' + prix + ' EUR</p></div>' +
-    '<p class="acompte">Un acompte de 50 % est exigible à la commande. Le solde sera payé avant la livraison retour.</p>' +
-    '</div>' +
-    '<div class="footer"><p>Re-plug SAS — 8, rue Lemercier, 75017 Paris — admin@re-plug.fr</p></div>' +
-    '</body></html>');
-  w.document.close();
+  // Récupérer infos batterie (première carte)
+  var battCard = document.querySelector('#diagBatteriesList .rp-diag__battery-card');
+  var battInputs = battCard ? battCard.querySelectorAll('input, select') : [];
+  var battType = battInputs[0] ? battInputs[0].value || '—' : '—';
+  var battFabricant = battInputs[1] ? battInputs[1].value || '—' : '—';
+  var battMarque = battInputs[2] ? battInputs[2].value || '—' : '—';
+  var battVoltage = battInputs[3] ? (battInputs[3].options ? battInputs[3].options[battInputs[3].selectedIndex].text : battInputs[3].value) || '—' : '—';
+  var battCapacite = battInputs[4] ? battInputs[4].value || '—' : '—';
+  var battSerie = battInputs[7] ? battInputs[7].value || 'Non renseigné' : 'Non renseigné';
+
+  // Générer référence diagnostic
+  var diagRef = 'DIAG-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random()*9000+1000));
+  var diagDate = new Date().toLocaleDateString('fr-FR');
+
+  // Déterminer prestations selon les pannes
+  var prestations = [];
+  if (mainFault.name === 'Défaut BMS') {
+    prestations.push({ label: 'Remplacement module BMS', prix: '180 €' });
+    prestations.push({ label: 'Main d\'œuvre + test', prix: '40 €' });
+  } else if (mainFault.name === 'Défaut connecteur') {
+    prestations.push({ label: 'Remplacement connecteur de décharge', prix: '145 €' });
+    prestations.push({ label: 'Main d\'œuvre + test', prix: '40 €' });
+  } else if (mainFault.name === 'Défaut cellule') {
+    prestations.push({ label: 'Remplacement cellules défectueuses', prix: '240 €' });
+    prestations.push({ label: 'Main d\'œuvre + recalibrage', prix: '55 €' });
+  } else {
+    prestations.push({ label: 'Diagnostic approfondi', prix: '95 €' });
+    prestations.push({ label: 'Main d\'œuvre', prix: '40 €' });
+  }
+  var totalNum = 0;
+  prestations.forEach(function(p) { totalNum += parseInt(p.prix); });
+  var totalStr = totalNum + ' €';
+
+  // --- Remplir la fiche résultat ---
+
+  // Référence + prix
+  document.getElementById('diagResultRef').textContent = diagRef + ' — ' + diagDate;
+  document.getElementById('diagResultPrice').textContent = totalStr;
+
+  // Client
+  document.getElementById('diagResultClient').innerHTML =
+    '<div class="rp-diag-result__field">Nom<strong>' + clientNom + '</strong></div>' +
+    '<div class="rp-diag-result__field">Email<strong>' + clientEmail + '</strong></div>' +
+    '<div class="rp-diag-result__field">Téléphone<strong>' + clientTel + '</strong></div>' +
+    '<div class="rp-diag-result__field">Adresse<strong>' + clientAdresse + '</strong></div>' +
+    '<div class="rp-diag-result__field">Ville<strong>' + clientVille + '</strong></div>' +
+    '<div class="rp-diag-result__field">Département<strong>' + clientDept + '</strong></div>';
+
+  // Batterie
+  document.getElementById('diagResultBatterie').innerHTML =
+    '<div class="rp-diag-result__field">Type<strong>' + battType + '</strong></div>' +
+    '<div class="rp-diag-result__field">Fabricant<strong>' + battFabricant + '</strong></div>' +
+    '<div class="rp-diag-result__field">Marque<strong>' + battMarque + '</strong></div>' +
+    '<div class="rp-diag-result__field">Tension<strong>' + battVoltage + '</strong></div>' +
+    '<div class="rp-diag-result__field">Capacité<strong>' + battCapacite + '</strong></div>' +
+    '<div class="rp-diag-result__field">N° de série<strong>' + battSerie + '</strong></div>';
+
+  // Résultat principal
+  var resultatDetail = '';
+  if (mainFault.name === 'Défaut BMS') {
+    resultatDetail = 'Le système de gestion de batterie (BMS) présente un dysfonctionnement. Remplacement du module BMS recommandé.';
+  } else if (mainFault.name === 'Défaut connecteur') {
+    resultatDetail = 'Le connecteur présente des traces d\'usure provoquant des coupures intermittentes. Remplacement du connecteur recommandé.';
+  } else if (mainFault.name === 'Défaut cellule') {
+    resultatDetail = 'Plusieurs cellules présentent une capacité réduite. Remplacement des cellules défectueuses nécessaire.';
+  } else {
+    resultatDetail = 'Diagnostic complémentaire nécessaire pour identifier précisément la cause de la panne.';
+  }
+  document.getElementById('diagResultResultat').innerHTML =
+    '<strong style="display:block;margin-bottom:4px;">' + mainFault.name + ' — Probabilité ' + mainFault.confidence + '%</strong>' +
+    '<span style="color:var(--rp-gray);">' + resultatDetail + '</span>';
+
+  // Pannes détectées (fault cards)
+  var cardsHtml = '';
+  faults.forEach(function(f) {
+    cardsHtml += '<div class="rp-diag-result__fault-card">' +
+      '<h4>' + f.name + ' — confiance ' + f.confidence + '%</h4>' +
+      (f.context ? '<p>Contexte : ' + f.context + '</p>' : '') +
+      (f.causes ? '<p>Causes probables : ' + f.causes + '</p>' : '') +
+      (f.checks ? '<p>Vérifications : ' + f.checks + '</p>' : '') +
+      '<p><strong>Solution : ' + f.solution + '</strong></p>' +
+      '</div>';
+  });
+  document.getElementById('diagResultFaultCards').innerHTML = cardsHtml;
+
+  // Prestations recommandées
+  var prestHtml = '';
+  prestations.forEach(function(p) {
+    prestHtml += '<div class="rp-diag-result__prestation"><span>' + p.label + '</span><span>' + p.prix + '</span></div>';
+  });
+  prestHtml += '<div class="rp-diag-result__prestation rp-diag-result__prestation--total"><span>Total estimé</span><span>' + totalStr + '</span></div>';
+  document.getElementById('diagResultPrestations').innerHTML = prestHtml;
+
+  // Stocker les données pour le bouton "Demander un devis"
+  window._lastDiagResult = {
+    ref: diagRef, date: diagDate, clientNom: clientNom, clientEmail: clientEmail,
+    clientTel: clientTel, clientAdresse: clientAdresse, clientVille: clientVille,
+    clientDept: clientDept, batterie: battMarque + ' ' + battCapacite,
+    tension: battVoltage, capacite: battCapacite, serie: battSerie,
+    resultat: mainFault.name + ' — Probabilité ' + mainFault.confidence + '%',
+    resultatDetail: resultatDetail, prestations: prestations, total: totalStr
+  };
+
+  diagGoToStep(3);
+});
+
+// Demander devis → alerte + switch vers onglet Devis
+document.getElementById('diagDemandeDevis').addEventListener('click', function() {
+  alert('Devis généré avec succès ! Vous pouvez le retrouver dans l\'onglet Devis.');
+  // Switch to Devis tab
+  document.querySelectorAll('.rp-header__partner-tab').forEach(function(t) {
+    t.classList.remove('is-active');
+    if (t.dataset.tab === 'devis') t.classList.add('is-active');
+  });
+  document.querySelectorAll('.rp-dashboard__panel').forEach(function(p) { p.style.display = 'none'; });
+  document.getElementById('panel-devis').style.display = '';
+  // Hide diagnostic wizard
+  document.getElementById('panel-diagnostic').style.display = 'none';
+  var ctaBar = document.querySelector('.rp-cta-bar');
+  if (ctaBar) ctaBar.style.display = '';
 });
 
 // New diagnostic (reset all)
