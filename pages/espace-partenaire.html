@@ -1957,7 +1957,10 @@ document.getElementById('devisEffacer').addEventListener('click', function() {
 // ===== Devis — Voir détails =====
 var DEVIS_STATUS_LABELS = { attente: 'En attente', reparation: 'En réparation', approuve: 'Validé', refuse: 'Refusé' };
 
+var currentDevisCard = null;
+
 function showDevisDetail(card) {
+  currentDevisCard = card;
   var devisRef = card.querySelector('.rp-devis-card__ref').textContent.trim();
   var diagRef = card.dataset.diagRef;
   var statut = card.dataset.statut;
@@ -2057,14 +2060,52 @@ document.querySelectorAll('input[name="devisPayMethod"]').forEach(function(radio
   });
 });
 
-// Pay button
+// Pay button — updates devis status after payment
 document.getElementById('btnDevisPayer').addEventListener('click', function() {
   var method = document.querySelector('input[name="devisPayMethod"]:checked').value;
   var isSolde = currentDevisStatut === 'reparation';
-  if (method === 'cb') {
-    alert(isSolde ? 'Paiement du solde simulé — La livraison retour sera enclenchée.' : 'Paiement de l\'acompte simulé — La réparation va être lancée.');
+
+  if (isSolde) {
+    // Solde payé → livraison enclenchée
+    alert(method === 'cb'
+      ? 'Paiement du solde confirmé ! La livraison retour de la batterie est enclenchée.'
+      : 'Merci ! La livraison retour sera enclenchée dès réception du virement.');
+    // Pas de changement de statut supplémentaire ici (livraison = fin du cycle)
   } else {
-    alert(isSolde ? 'Merci ! La livraison retour sera enclenchée dès réception du virement.' : 'Merci ! La réparation débutera dès réception du virement.');
+    // Acompte payé → passe en "En réparation"
+    alert(method === 'cb'
+      ? 'Acompte confirmé ! La réparation de la batterie va être lancée.'
+      : 'Merci ! La réparation débutera dès réception du virement.');
+
+    // Update card status in the list
+    if (currentDevisCard) {
+      currentDevisCard.dataset.statut = 'reparation';
+      var badge = currentDevisCard.querySelector('.rp-devis-card__badge');
+      if (badge) {
+        badge.className = 'rp-devis-card__badge rp-devis-card__badge--reparation';
+        badge.textContent = 'En réparation';
+      }
+    }
+
+    // Update detail panel to reflect new status
+    currentDevisStatut = 'reparation';
+    var detailBadge = document.getElementById('devisDetailBadge');
+    detailBadge.className = 'rp-devis-card__badge rp-devis-card__badge--reparation';
+    detailBadge.textContent = 'En réparation';
+
+    // Update payment section for solde
+    var totalText = document.getElementById('devisDetailPrice').textContent;
+    var totalNum = parseFloat(totalText.replace(/[^0-9,\.]/g, '').replace(',', '.')) || 0;
+    var halfAmount = (totalNum / 2).toFixed(2).replace('.', ',') + ' €';
+    document.getElementById('devisPaymentNotice').innerHTML = '⚠️ La réparation de votre batterie est terminée. Réglez le solde restant de <strong>' + halfAmount + '</strong> pour enclencher la livraison retour.';
+    document.getElementById('devisPaymentSection').querySelector('p').innerHTML = 'Solde restant à régler : <strong id="devisAcompteAmount" style="color:var(--rp-green);">' + halfAmount + '</strong>';
+    document.getElementById('btnDevisPayer').textContent = 'Payer le solde et lancer la livraison';
+
+    // Reset to CB
+    var cbRadio = document.querySelector('input[name="devisPayMethod"][value="cb"]');
+    if (cbRadio) cbRadio.checked = true;
+    document.getElementById('devisPayCB').style.display = '';
+    document.getElementById('devisPayVirement').style.display = 'none';
   }
 });
 
