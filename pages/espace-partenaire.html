@@ -1170,27 +1170,27 @@
                   <div class="rp-diag__form-grid">
                     <div class="rp-diag__form-group">
                       <label>Nom complet <span style="color:#dc2626;">*</span></label>
-                      <input type="text" id="diagClientNom" placeholder="" required>
+                      <input type="text" id="diagClientNom" placeholder="" value="Martin Dubois" required>
                     </div>
                     <div class="rp-diag__form-group">
                       <label>Email <span style="color:#dc2626;">*</span></label>
-                      <input type="email" id="diagClientEmail" placeholder="">
+                      <input type="email" id="diagClientEmail" placeholder="" value="martin.dubois@email.fr">
                     </div>
                     <div class="rp-diag__form-group">
                       <label>Téléphone <span style="color:#dc2626;">*</span></label>
-                      <input type="tel" id="diagClientTel" placeholder="">
+                      <input type="tel" id="diagClientTel" placeholder="" value="06 12 34 56 78">
                     </div>
                     <div class="rp-diag__form-group">
                       <label>Adresse <span style="color:#dc2626;">*</span></label>
-                      <input type="text" id="diagClientAdresse" placeholder="Numéro et rue">
+                      <input type="text" id="diagClientAdresse" placeholder="Numéro et rue" value="24, avenue des Champs-Élysées">
                     </div>
                     <div class="rp-diag__form-group">
                       <label>Ville <span style="color:#dc2626;">*</span></label>
-                      <input type="text" id="diagClientVille" placeholder="">
+                      <input type="text" id="diagClientVille" placeholder="" value="Paris">
                     </div>
                     <div class="rp-diag__form-group">
                       <label>Département <span style="color:#dc2626;">*</span></label>
-                      <input type="text" id="diagClientDept" placeholder="Ex: 75, 13, etc.">
+                      <input type="text" id="diagClientDept" placeholder="Ex: 75, 13, etc." value="75">
                     </div>
                   </div>
                 </div>
@@ -1210,40 +1210,40 @@
                       <div class="rp-diag__form-grid">
                         <div class="rp-diag__form-group">
                           <label>Type <span style="color:#dc2626;">*</span></label>
-                          <input type="text" value="Batterie" placeholder="Batterie">
+                          <input type="text" value="Batterie lithium-ion" placeholder="Batterie">
                         </div>
                         <div class="rp-diag__form-group">
                           <label>Fabricant <span style="color:#dc2626;">*</span></label>
-                          <input type="text" placeholder="Constructeur / OEM">
+                          <input type="text" placeholder="Constructeur / OEM" value="Bosch">
                         </div>
                         <div class="rp-diag__form-group rp-diag__form-group--full">
                           <label>Marque <span style="color:#dc2626;">*</span></label>
-                          <input type="text" placeholder="">
+                          <input type="text" placeholder="" value="PowerPack 500">
                         </div>
                         <div class="rp-diag__form-group">
                           <label>Voltage (V) <span style="color:#dc2626;">*</span></label>
                           <select>
                             <option value="">-- Sélectionner tension --</option>
                             <option value="24">24V</option>
-                            <option value="36">36V</option>
+                            <option value="36" selected>36V</option>
                             <option value="48">48V</option>
                           </select>
                         </div>
                         <div class="rp-diag__form-group">
                           <label>Capacité (Wh/Ah) <span style="color:#dc2626;">*</span></label>
-                          <input type="text" placeholder="ex: 360Wh ou 10Ah (≈ 360Wh)">
+                          <input type="text" placeholder="ex: 360Wh ou 10Ah (≈ 360Wh)" value="500Wh">
                         </div>
                         <div class="rp-diag__form-group">
                           <label>Puissance (W) <span style="color:#dc2626;">*</span></label>
-                          <input type="text" placeholder="">
+                          <input type="text" placeholder="" value="250W">
                         </div>
                         <div class="rp-diag__form-group">
                           <label>Âge (années) <span style="color:#dc2626;">*</span></label>
-                          <input type="text" placeholder="">
+                          <input type="text" placeholder="" value="3">
                         </div>
                         <div class="rp-diag__form-group">
                           <label>Numéro de série (optionnel)</label>
-                          <input type="text" placeholder="ex: SN123456789">
+                          <input type="text" placeholder="ex: SN123456789" value="SN-BP500-2024-1234">
                         </div>
                         <div class="rp-diag__form-group">
                           <label>Date de fabrication (optionnel)</label>
@@ -1368,7 +1368,7 @@
                   <div class="rp-diag__form-grid">
                     <div class="rp-diag__form-group">
                       <label>Tension mesurée (V) <span style="color:#dc2626;">*</span></label>
-                      <input type="text" id="diagTension" placeholder="Ex: 36.5">
+                      <input type="text" id="diagTension" placeholder="Ex: 36.5" value="34.2">
                     </div>
                     <div class="rp-diag__form-group">
                       <label>Tension du chargeur (V) <span style="color:#dc2626;">*</span></label>
@@ -2669,7 +2669,12 @@ document.getElementById('diagLaunchBtn').addEventListener('click', function() {
   var battType = battInputs[0] ? battInputs[0].value || '—' : '—';
   var battFabricant = battInputs[1] ? battInputs[1].value || '—' : '—';
   var battMarque = battInputs[2] ? battInputs[2].value || '—' : '—';
-  var battVoltage = battInputs[3] ? (battInputs[3].options ? battInputs[3].options[battInputs[3].selectedIndex].text : battInputs[3].value) || '—' : '—';
+  var battVoltage = '—';
+  if (battInputs[3] && battInputs[3].options) {
+    battVoltage = battInputs[3].value ? battInputs[3].options[battInputs[3].selectedIndex].text : '—';
+  } else if (battInputs[3]) {
+    battVoltage = battInputs[3].value || '—';
+  }
   var battCapacite = battInputs[4] ? battInputs[4].value || '—' : '—';
   var battSerie = battInputs[7] ? battInputs[7].value || 'Non renseigné' : 'Non renseigné';
 
@@ -2795,6 +2800,14 @@ document.getElementById('diagNewDiag').addEventListener('click', function() {
   document.getElementById('diagClientVille').value = '';
   document.getElementById('diagClientDept').value = '';
   document.getElementById('diagTension').value = '';
+  var tensionChargeur = document.getElementById('diagTensionChargeur'); if (tensionChargeur) tensionChargeur.value = '';
+  var courantCharge = document.getElementById('diagCourantCharge'); if (courantCharge) courantCharge.value = '';
+  var codeErreur = document.getElementById('diagCodeErreur'); if (codeErreur) codeErreur.value = '';
+  var diagFrequence = document.getElementById('diagFrequence'); if (diagFrequence) diagFrequence.selectedIndex = 0;
+  var diagStockage = document.getElementById('diagStockage'); if (diagStockage) diagStockage.selectedIndex = 0;
+  var diagDernierUsage = document.getElementById('diagDernierUsage'); if (diagDernierUsage) diagDernierUsage.selectedIndex = 0;
+  var diagReparation = document.getElementById('diagReparation'); if (diagReparation) diagReparation.selectedIndex = 0;
+  var diagCommentaires = document.getElementById('diagCommentaires'); if (diagCommentaires) diagCommentaires.value = '';
   document.querySelectorAll('input[name="diagProbleme"]').forEach(function(cb) { cb.checked = false; });
   document.querySelectorAll('input[name="diagVisuel"]').forEach(function(r) { r.checked = false; });
   document.querySelectorAll('input[name="diagCharge"]').forEach(function(r) { r.checked = false; });
