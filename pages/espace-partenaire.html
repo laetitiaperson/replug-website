@@ -128,6 +128,7 @@
     .rp-diag-history-card__badge--attente { background: #fef3c7; color: #92400e; }
     .rp-diag-history-card__badge--valide { background: #dcfce7; color: #15803d; }
     .rp-diag-history-card__badge--archive { background: #f3f4f6; color: #6b7280; }
+    .rp-diag-history-card__badge--refuse { background: #fee2e2; color: #dc2626; }
     .rp-diag-history-card__body { margin-bottom: 14px; }
     .rp-diag-history-card__info { display: flex; gap: 24px; flex-wrap: wrap; font-size: .88rem; color: var(--rp-gray); }
     .rp-diag-history-card__info span { display: flex; flex-direction: column; }
@@ -609,6 +610,7 @@
                 <option value="attente">En attente</option>
                 <option value="valide">Validé</option>
                 <option value="archive">Archivé</option>
+                <option value="refuse">Refusé</option>
               </select>
               <input type="text" class="rp-form__input" placeholder="Rechercher un client ou réf..." style="width:220px;padding:8px 12px;font-size:.88rem;" id="searchDiag">
               <button class="rp-btn rp-btn--primary" style="padding:8px 20px;font-size:.88rem;" id="diagNewFromList">+ Nouveau diagnostic</button>
@@ -706,6 +708,28 @@
               </div>
             </div>
 
+            <div class="rp-diag-history-card" data-status="refuse" data-search="thomas garcia diag-2026-0007 specialized turbo levo">
+              <div class="rp-diag-history-card__header">
+                <div>
+                  <span class="rp-diag-history-card__ref">DIAG-2026-0007</span>
+                  <span class="rp-diag-history-card__badge rp-diag-history-card__badge--refuse">Refusé</span>
+                </div>
+                <span class="rp-diag-history-card__date">18/02/2026</span>
+              </div>
+              <div class="rp-diag-history-card__body">
+                <div class="rp-diag-history-card__info">
+                  <span>Client <strong>Thomas Garcia</strong></span>
+                  <span>Batterie <strong>Specialized Turbo Levo 700Wh</strong></span>
+                  <span>Tension <strong>48V</strong></span>
+                  <span>Résultat <strong>Batterie irréparable — 98%</strong></span>
+                </div>
+              </div>
+              <div class="rp-diag-history-card__footer">
+                <span class="rp-diag-history-card__price">— €</span>
+                <button class="rp-btn rp-btn--outline-dark rp-btn--small">Voir détails</button>
+              </div>
+            </div>
+
           </div>
 
           <!-- Detail panel (hidden by default) -->
@@ -752,7 +776,7 @@
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-top:28px;">
             <div style="background:#f0f9f0;border-radius:12px;padding:20px;text-align:center;">
               <p style="font-size:.82rem;color:var(--rp-gray);margin-bottom:4px;">Total diagnostics</p>
-              <p style="font-size:1.5rem;font-weight:700;color:var(--rp-dark);">4</p>
+              <p style="font-size:1.5rem;font-weight:700;color:var(--rp-dark);">5</p>
             </div>
             <div style="background:#fef3c7;border-radius:12px;padding:20px;text-align:center;">
               <p style="font-size:.82rem;color:var(--rp-gray);margin-bottom:4px;">En attente</p>
@@ -1721,6 +1745,14 @@ var DIAG_DATA = {
     resultat: 'Défaut BMS — Probabilité 95%', resultatDetail: 'Module BMS défaillant empêchant l\'équilibrage des cellules. Le diagnostic a été archivé sans suite.',
     prestations: [{ label: 'Remplacement module BMS', prix: '180 €' }, { label: 'Main d\'œuvre + test', prix: '40 €' }],
     total: '220 €'
+  },
+  'DIAG-2026-0007': {
+    ref: 'DIAG-2026-0007', date: '18/02/2026', status: 'refuse', statusLabel: 'Refusé',
+    client: 'Thomas Garcia', email: 'thomas.garcia@email.fr', tel: '06 77 88 99 00', ville: 'Toulouse', departement: '31',
+    batterie: 'Specialized Turbo Levo 700Wh', tension: '48V', capacite: '700Wh', serie: 'SN-SPEC-TL700-3344',
+    resultat: 'Batterie irréparable — Probabilité 98%', resultatDetail: 'La batterie présente un gonflement avancé de plusieurs cellules avec risque de sécurité. La réparation est impossible et un remplacement complet de la batterie est recommandé. Le client a refusé le devis.',
+    prestations: [{ label: 'Diagnostic approfondi', prix: '45 €' }, { label: 'Frais de retour', prix: '15 €' }],
+    total: '60 €'
   }
 };
 
