@@ -2001,6 +2001,7 @@ function showDevisDetail(card) {
   var halfAmount = (totalNum / 2).toFixed(2).replace('.', ',') + ' €';
   var notice = document.getElementById('devisPaymentNotice');
   var paySection = document.getElementById('devisPaymentSection');
+  currentDevisStatut = statut;
 
   if (statut === 'reparation') {
     // Solde à régler pour déclencher livraison retour
@@ -2041,22 +2042,30 @@ document.getElementById('btnFermerDevisDetail').addEventListener('click', functi
   document.getElementById('devisList').style.display = '';
 });
 
-// Payment method toggle
+// Payment method toggle — respects current devis status
+var currentDevisStatut = 'attente';
+
 document.querySelectorAll('input[name="devisPayMethod"]').forEach(function(radio) {
   radio.addEventListener('change', function() {
     document.getElementById('devisPayCB').style.display = this.value === 'cb' ? '' : 'none';
     document.getElementById('devisPayVirement').style.display = this.value === 'virement' ? '' : 'none';
-    document.getElementById('btnDevisPayer').textContent = this.value === 'cb' ? 'Payer l\'acompte' : 'J\'ai effectué le virement';
+    var isSolde = currentDevisStatut === 'reparation';
+    if (this.value === 'cb') {
+      document.getElementById('btnDevisPayer').textContent = isSolde ? 'Payer le solde et lancer la livraison' : 'Payer l\'acompte';
+    } else {
+      document.getElementById('btnDevisPayer').textContent = 'J\'ai effectué le virement';
+    }
   });
 });
 
 // Pay button
 document.getElementById('btnDevisPayer').addEventListener('click', function() {
   var method = document.querySelector('input[name="devisPayMethod"]:checked').value;
+  var isSolde = currentDevisStatut === 'reparation';
   if (method === 'cb') {
-    alert('Paiement simulé — En production, vous seriez redirigé vers la passerelle de paiement sécurisée.');
+    alert(isSolde ? 'Paiement du solde simulé — La livraison retour sera enclenchée.' : 'Paiement de l\'acompte simulé — La réparation va être lancée.');
   } else {
-    alert('Merci ! Votre commande sera traitée dès réception du virement.');
+    alert(isSolde ? 'Merci ! La livraison retour sera enclenchée dès réception du virement.' : 'Merci ! La réparation débutera dès réception du virement.');
   }
 });
 
