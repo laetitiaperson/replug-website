@@ -940,8 +940,53 @@
                 ⚠️ Un acompte de 50 % est exigible à la commande. Le solde sera payé avant la livraison retour.
               </div>
 
+              <hr>
+              <p class="rp-suivi-detail__section-title">Paiement</p>
+              <div id="devisPaymentSection" style="background:#fff;border-radius:12px;border:1px solid #e8e8e8;padding:20px;">
+                <p style="font-size:.9rem;color:var(--rp-dark);margin-bottom:12px;font-weight:500;">Acompte de 50 % à régler : <strong id="devisAcompteAmount" style="color:var(--rp-green);"></strong></p>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
+                  <label style="flex:1;min-width:140px;display:flex;align-items:center;gap:8px;padding:12px 16px;border:2px solid #e8e8e8;border-radius:8px;cursor:pointer;font-size:.88rem;transition:border-color .2s;">
+                    <input type="radio" name="devisPayMethod" value="cb" checked style="accent-color:var(--rp-green);">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                    Carte bancaire
+                  </label>
+                  <label style="flex:1;min-width:140px;display:flex;align-items:center;gap:8px;padding:12px 16px;border:2px solid #e8e8e8;border-radius:8px;cursor:pointer;font-size:.88rem;transition:border-color .2s;">
+                    <input type="radio" name="devisPayMethod" value="virement" style="accent-color:var(--rp-green);">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
+                    Virement bancaire
+                  </label>
+                </div>
+                <div id="devisPayCB">
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+                    <div style="grid-column:1/-1;">
+                      <label style="font-size:.82rem;color:var(--rp-gray);margin-bottom:4px;display:block;">Numéro de carte</label>
+                      <input type="text" class="rp-form__input" placeholder="1234 5678 9012 3456" maxlength="19" style="font-size:.9rem;" disabled>
+                    </div>
+                    <div>
+                      <label style="font-size:.82rem;color:var(--rp-gray);margin-bottom:4px;display:block;">Expiration</label>
+                      <input type="text" class="rp-form__input" placeholder="MM/AA" maxlength="5" style="font-size:.9rem;" disabled>
+                    </div>
+                    <div>
+                      <label style="font-size:.82rem;color:var(--rp-gray);margin-bottom:4px;display:block;">CVV</label>
+                      <input type="text" class="rp-form__input" placeholder="123" maxlength="3" style="font-size:.9rem;" disabled>
+                    </div>
+                  </div>
+                  <p style="font-size:.78rem;color:var(--rp-gray);margin-bottom:12px;">🔒 Paiement sécurisé — Les données bancaires ne sont pas stockées.</p>
+                </div>
+                <div id="devisPayVirement" style="display:none;">
+                  <div style="background:#f8f9fa;border-radius:8px;padding:16px;font-size:.88rem;margin-bottom:12px;">
+                    <p style="font-weight:600;margin-bottom:8px;">Coordonnées bancaires Re-plug :</p>
+                    <p style="margin-bottom:4px;">IBAN : <strong>FR76 1234 5678 9012 3456 7890 123</strong></p>
+                    <p style="margin-bottom:4px;">BIC : <strong>REPLFRPP</strong></p>
+                    <p>Référence à indiquer : <strong id="devisPayVirementRef"></strong></p>
+                  </div>
+                  <p style="font-size:.78rem;color:var(--rp-gray);margin-bottom:12px;">Le traitement de votre commande débutera dès réception du virement.</p>
+                </div>
+                <button class="rp-btn rp-btn--primary" style="width:100%;" id="btnDevisPayer">Payer l'acompte</button>
+              </div>
+
               <div class="rp-suivi-detail__actions" style="margin-top:20px;">
-                <button class="rp-btn rp-btn--primary rp-btn--small" onclick="window.print()">Imprimer le devis</button>
+                <button class="rp-btn rp-btn--outline-dark rp-btn--small" onclick="window.print()">Imprimer le devis</button>
                 <button class="rp-btn rp-btn--outline-dark rp-btn--small" id="btnFermerDevisDetail">Fermer</button>
               </div>
             </div>
@@ -1953,6 +1998,19 @@ function showDevisDetail(card) {
   prestHtml += '<div class="rp-suivi-detail__prestation" style="background:var(--rp-green);color:#fff;font-weight:600;margin-top:8px;"><span>Total devis</span><span>' + d.total + '</span></div>';
   document.getElementById('devisDetailPrestations').innerHTML = prestHtml;
 
+  // Acompte amount (50% du total)
+  var totalNum = parseFloat(d.total.replace(/[^0-9,\.]/g, '').replace(',', '.')) || 0;
+  var acompte = (totalNum / 2).toFixed(2).replace('.', ',') + ' €';
+  document.getElementById('devisAcompteAmount').textContent = acompte;
+  document.getElementById('devisPayVirementRef').textContent = devisRef;
+
+  // Reset payment method to CB
+  var cbRadio = document.querySelector('input[name="devisPayMethod"][value="cb"]');
+  if (cbRadio) cbRadio.checked = true;
+  document.getElementById('devisPayCB').style.display = '';
+  document.getElementById('devisPayVirement').style.display = 'none';
+  document.getElementById('btnDevisPayer').textContent = 'Payer l\'acompte';
+
   document.getElementById('devisList').style.display = 'none';
   document.getElementById('devisDetailPanel').style.display = 'block';
   window.scrollTo({ top: document.getElementById('devisDetailPanel').offsetTop - 80, behavior: 'smooth' });
@@ -1967,6 +2025,25 @@ document.querySelectorAll('.rp-devis-voir-detail').forEach(function(btn) {
 document.getElementById('btnFermerDevisDetail').addEventListener('click', function() {
   document.getElementById('devisDetailPanel').style.display = 'none';
   document.getElementById('devisList').style.display = '';
+});
+
+// Payment method toggle
+document.querySelectorAll('input[name="devisPayMethod"]').forEach(function(radio) {
+  radio.addEventListener('change', function() {
+    document.getElementById('devisPayCB').style.display = this.value === 'cb' ? '' : 'none';
+    document.getElementById('devisPayVirement').style.display = this.value === 'virement' ? '' : 'none';
+    document.getElementById('btnDevisPayer').textContent = this.value === 'cb' ? 'Payer l\'acompte' : 'J\'ai effectué le virement';
+  });
+});
+
+// Pay button
+document.getElementById('btnDevisPayer').addEventListener('click', function() {
+  var method = document.querySelector('input[name="devisPayMethod"]:checked').value;
+  if (method === 'cb') {
+    alert('Paiement simulé — En production, vous seriez redirigé vers la passerelle de paiement sécurisée.');
+  } else {
+    alert('Merci ! Votre commande sera traitée dès réception du virement.');
+  }
 });
 
 // ===== Suivi des devis — search by reference =====
