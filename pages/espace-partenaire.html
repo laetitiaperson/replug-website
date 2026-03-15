@@ -1168,15 +1168,54 @@
                   <div class="rp-diag__form-grid">
                     <div class="rp-diag__form-group">
                       <label>Tension mesurée (V) <span style="color:#dc2626;">*</span></label>
-                      <input type="text" id="diagTension" placeholder="Ex: 36.5">
+                      <select id="diagTension">
+                        <option value="">-- Sélectionner --</option>
+                        <option value="0">0 V (aucune tension)</option>
+                        <option value="12">12 V</option>
+                        <option value="24">24 V</option>
+                        <option value="36">36 V</option>
+                        <option value="36.5">36.5 V</option>
+                        <option value="37">37 V</option>
+                        <option value="42">42 V</option>
+                        <option value="48">48 V</option>
+                        <option value="48.5">48.5 V</option>
+                        <option value="52">52 V</option>
+                        <option value="60">60 V</option>
+                        <option value="72">72 V</option>
+                        <option value="autre">Autre</option>
+                      </select>
                     </div>
                     <div class="rp-diag__form-group">
                       <label>Tension du chargeur (V) <span style="color:#dc2626;">*</span></label>
-                      <input type="text" id="diagTensionChargeur" placeholder="Ex: 42.0">
+                      <select id="diagTensionChargeur">
+                        <option value="">-- Sélectionner --</option>
+                        <option value="0">0 V (chargeur HS)</option>
+                        <option value="29.4">29.4 V</option>
+                        <option value="42">42 V</option>
+                        <option value="42.5">42.5 V</option>
+                        <option value="54.6">54.6 V</option>
+                        <option value="58.8">58.8 V</option>
+                        <option value="67.2">67.2 V</option>
+                        <option value="84">84 V</option>
+                        <option value="autre">Autre</option>
+                      </select>
                     </div>
                     <div class="rp-diag__form-group">
                       <label>Courant de charge (A) <span style="color:#dc2626;">*</span></label>
-                      <input type="text" id="diagCourantCharge" placeholder="Ex: 2.0">
+                      <select id="diagCourantCharge">
+                        <option value="">-- Sélectionner --</option>
+                        <option value="0">0 A (pas de charge)</option>
+                        <option value="1">1 A</option>
+                        <option value="1.5">1.5 A</option>
+                        <option value="2">2 A</option>
+                        <option value="3">3 A</option>
+                        <option value="4">4 A</option>
+                        <option value="5">5 A</option>
+                        <option value="6">6 A</option>
+                        <option value="8">8 A</option>
+                        <option value="10">10 A</option>
+                        <option value="autre">Autre</option>
+                      </select>
                     </div>
                     <div class="rp-diag__form-group">
                       <label>Code erreur affiché <span style="color:#dc2626;">*</span></label>
@@ -2416,6 +2455,11 @@ document.querySelectorAll('#diagSectionMesures input').forEach(function(input) {
     if (this.value.trim()) this.closest('.rp-diag__form-group').classList.remove('is-invalid');
   });
 });
+document.querySelectorAll('#diagSectionMesures select').forEach(function(sel) {
+  sel.addEventListener('change', function() {
+    if (this.value) this.closest('.rp-diag__form-group').classList.remove('is-invalid');
+  });
+});
 document.querySelectorAll('#diagSectionContexte select').forEach(function(sel) {
   sel.addEventListener('change', function() {
     if (this.value) this.closest('.rp-diag__form-group').classList.remove('is-invalid');
@@ -2590,7 +2634,8 @@ document.getElementById('diagLaunchBtn').addEventListener('click', function() {
   var clientAdresse = document.getElementById('diagClientAdresse').value || '—';
   var clientVille = document.getElementById('diagClientVille').value || '—';
   var clientDept = document.getElementById('diagClientDept').value || '—';
-  var tensionMesuree = document.getElementById('diagTension').value || '—';
+  var tensionSel = document.getElementById('diagTension');
+  var tensionMesuree = tensionSel && tensionSel.value ? tensionSel.options[tensionSel.selectedIndex].text : '—';
 
   // Récupérer infos batterie (première carte)
   var battCard = document.querySelector('#diagBatteriesList .rp-diag__battery-card');
