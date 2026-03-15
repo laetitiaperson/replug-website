@@ -209,6 +209,30 @@
       .rp-comparateur__features { grid-template-columns: 1fr; }
     }
 
+    /* ===== Facture overlay ===== */
+    .rp-facture-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 24px; }
+    .rp-facture-overlay.is-visible { display: flex; }
+    .rp-facture { background: #fff; max-width: 700px; width: 100%; border-radius: 16px; padding: 40px; max-height: 90vh; overflow-y: auto; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,.15); }
+    .rp-facture__header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; padding-bottom: 20px; border-bottom: 2px solid var(--rp-green); }
+    .rp-facture__title { font-size: 1.6rem; font-weight: 700; color: var(--rp-dark); letter-spacing: 2px; }
+    .rp-facture__ref { font-size: .9rem; color: var(--rp-gray); margin-top: 4px; }
+    .rp-facture__date { font-size: .9rem; color: var(--rp-gray); text-align: right; }
+    .rp-facture__parties { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 32px; }
+    .rp-facture__partie h4 { font-size: .78rem; text-transform: uppercase; letter-spacing: 1px; color: var(--rp-gray); margin-bottom: 8px; }
+    .rp-facture__partie p { font-size: .9rem; color: var(--rp-dark); line-height: 1.6; margin: 0; }
+    .rp-facture__partie strong { font-weight: 600; }
+    .rp-facture__table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+    .rp-facture__table th { background: #f7f7f7; padding: 10px 14px; font-size: .82rem; font-weight: 600; text-align: left; border-bottom: 2px solid #e8e8e8; }
+    .rp-facture__table td { padding: 12px 14px; font-size: .88rem; border-bottom: 1px solid #f0f0f0; }
+    .rp-facture__table tr:last-child td { border-bottom: none; }
+    .rp-facture__total { display: flex; justify-content: flex-end; margin-bottom: 24px; }
+    .rp-facture__total-box { background: #f7f7f7; border-radius: 10px; padding: 16px 24px; min-width: 240px; }
+    .rp-facture__total-row { display: flex; justify-content: space-between; font-size: .9rem; padding: 4px 0; }
+    .rp-facture__total-row--final { font-weight: 700; font-size: 1.1rem; color: var(--rp-dark); border-top: 2px solid var(--rp-green); margin-top: 8px; padding-top: 10px; }
+    .rp-facture__paid { text-align: center; padding: 12px; background: #dcfce7; color: #15803d; border-radius: 8px; font-weight: 600; font-size: .9rem; margin-bottom: 24px; }
+    .rp-facture__actions { display: flex; gap: 10px; justify-content: center; }
+    @media print { .rp-facture-overlay { position: static; background: none; padding: 0; display: block !important; } .rp-facture { box-shadow: none; max-height: none; border-radius: 0; } .rp-facture__actions { display: none !important; } body > *:not(.rp-facture-overlay) { display: none !important; } }
+
     /* ===== Paramètres ===== */
     .rp-params__section { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 28px; margin-bottom: 20px; }
     .rp-params__section-title { font-size: 1.05rem; font-weight: 600; margin-bottom: 20px; color: var(--rp-dark); display: flex; align-items: center; gap: 10px; }
@@ -518,7 +542,7 @@
               </thead>
               <tbody id="commandesBody">
                 <tr style="border-top:1px solid #eee;" data-client="dubois" data-status="solde-du" data-date="2026-03-08" data-montant="389" data-acompte="194.5" data-solde="194.5">
-                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="alert('Ouverture du document #RP-2026-0042');return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0042</a></td>
+                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="openFacture(this);return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0042</a></td>
                   <td style="padding:10px;white-space:nowrap;">Dubois</td>
                   <td style="padding:10px;white-space:nowrap;">Vélo</td>
                   <td style="padding:10px;white-space:nowrap;">Reconditionnement</td>
@@ -530,7 +554,7 @@
                   <td style="padding:10px;white-space:nowrap;"><span style="background:#fef3c7;color:#92400e;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">Solde dû</span></td>
                 </tr>
                 <tr style="border-top:1px solid #eee;" data-client="laurent" data-status="paye" data-date="2026-03-05" data-montant="185" data-acompte="185" data-solde="0">
-                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="alert('Ouverture du document #RP-2026-0041');return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0041</a></td>
+                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="openFacture(this);return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0041</a></td>
                   <td style="padding:10px;white-space:nowrap;">Laurent</td>
                   <td style="padding:10px;white-space:nowrap;">Trottinette</td>
                   <td style="padding:10px;white-space:nowrap;">Réparation BMS</td>
@@ -542,7 +566,7 @@
                   <td style="padding:10px;white-space:nowrap;"><span style="background:#dcfce7;color:#15803d;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">Payé</span></td>
                 </tr>
                 <tr style="border-top:1px solid #eee;" data-client="moreau" data-status="solde-du" data-date="2026-03-01" data-montant="620" data-acompte="310" data-solde="310">
-                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="alert('Ouverture du document #RP-2026-0040');return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0040</a></td>
+                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="openFacture(this);return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0040</a></td>
                   <td style="padding:10px;white-space:nowrap;">Moreau</td>
                   <td style="padding:10px;white-space:nowrap;">Scooter</td>
                   <td style="padding:10px;white-space:nowrap;">Reconditionnement</td>
@@ -554,7 +578,7 @@
                   <td style="padding:10px;white-space:nowrap;"><span style="background:#fef3c7;color:#92400e;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">Solde dû</span></td>
                 </tr>
                 <tr style="border-top:1px solid #eee;" data-client="petit" data-status="a-payer" data-date="2026-02-25" data-montant="295" data-acompte="0" data-solde="295">
-                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="alert('Ouverture du document #RP-2026-0039');return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0039</a></td>
+                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="openFacture(this);return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0039</a></td>
                   <td style="padding:10px;white-space:nowrap;">Petit</td>
                   <td style="padding:10px;white-space:nowrap;">Vélo</td>
                   <td style="padding:10px;white-space:nowrap;">Remplacement cellules</td>
@@ -566,7 +590,7 @@
                   <td style="padding:10px;white-space:nowrap;"><span style="background:#fee2e2;color:#dc2626;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">A payer</span></td>
                 </tr>
                 <tr style="border-top:1px solid #eee;" data-client="bernard" data-status="paye" data-date="2026-02-20" data-montant="475" data-acompte="475" data-solde="0">
-                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="alert('Ouverture du document #RP-2026-0038');return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0038</a></td>
+                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="openFacture(this);return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0038</a></td>
                   <td style="padding:10px;white-space:nowrap;">Bernard</td>
                   <td style="padding:10px;white-space:nowrap;">Vélo cargo</td>
                   <td style="padding:10px;white-space:nowrap;">Reconditionnement</td>
@@ -578,7 +602,7 @@
                   <td style="padding:10px;white-space:nowrap;"><span style="background:#dcfce7;color:#15803d;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">Payé</span></td>
                 </tr>
                 <tr style="border-top:1px solid #eee;" data-client="garcia" data-status="paye" data-date="2026-02-15" data-montant="320" data-acompte="320" data-solde="0">
-                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="alert('Ouverture du document #RP-2026-0037');return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0037</a></td>
+                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="openFacture(this);return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0037</a></td>
                   <td style="padding:10px;white-space:nowrap;">Garcia</td>
                   <td style="padding:10px;white-space:nowrap;">Trottinette</td>
                   <td style="padding:10px;white-space:nowrap;">Reconditionnement</td>
@@ -590,7 +614,7 @@
                   <td style="padding:10px;white-space:nowrap;"><span style="background:#dcfce7;color:#15803d;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">Payé</span></td>
                 </tr>
                 <tr style="border-top:1px solid #eee;" data-client="leroy" data-status="a-payer" data-date="2026-02-10" data-montant="450" data-acompte="0" data-solde="450">
-                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="alert('Ouverture du document #RP-2026-0036');return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0036</a></td>
+                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="openFacture(this);return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0036</a></td>
                   <td style="padding:10px;white-space:nowrap;">Leroy</td>
                   <td style="padding:10px;white-space:nowrap;">Scooter</td>
                   <td style="padding:10px;white-space:nowrap;">Remplacement cellules</td>
@@ -602,7 +626,7 @@
                   <td style="padding:10px;white-space:nowrap;"><span style="background:#fee2e2;color:#dc2626;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">A payer</span></td>
                 </tr>
                 <tr style="border-top:1px solid #eee;" data-client="martin" data-status="solde-du" data-date="2026-02-05" data-montant="540" data-acompte="270" data-solde="270">
-                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="alert('Ouverture du document #RP-2026-0035');return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0035</a></td>
+                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="openFacture(this);return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0035</a></td>
                   <td style="padding:10px;white-space:nowrap;">Martin</td>
                   <td style="padding:10px;white-space:nowrap;">Vélo</td>
                   <td style="padding:10px;white-space:nowrap;">Réparation BMS</td>
@@ -614,7 +638,7 @@
                   <td style="padding:10px;white-space:nowrap;"><span style="background:#fef3c7;color:#92400e;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">Solde dû</span></td>
                 </tr>
                 <tr style="border-top:1px solid #eee;" data-client="roux" data-status="paye" data-date="2026-01-28" data-montant="210" data-acompte="210" data-solde="0">
-                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="alert('Ouverture du document #RP-2026-0034');return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0034</a></td>
+                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="openFacture(this);return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0034</a></td>
                   <td style="padding:10px;white-space:nowrap;">Roux</td>
                   <td style="padding:10px;white-space:nowrap;">Trottinette</td>
                   <td style="padding:10px;white-space:nowrap;">Réparation BMS</td>
@@ -626,7 +650,7 @@
                   <td style="padding:10px;white-space:nowrap;"><span style="background:#dcfce7;color:#15803d;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">Payé</span></td>
                 </tr>
                 <tr style="border-top:1px solid #eee;" data-client="fournier" data-status="solde-du" data-date="2026-01-22" data-montant="380" data-acompte="190" data-solde="190">
-                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="alert('Ouverture du document #RP-2026-0033');return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0033</a></td>
+                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="openFacture(this);return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0033</a></td>
                   <td style="padding:10px;white-space:nowrap;">Fournier</td>
                   <td style="padding:10px;white-space:nowrap;">Vélo</td>
                   <td style="padding:10px;white-space:nowrap;">Reconditionnement</td>
@@ -638,7 +662,7 @@
                   <td style="padding:10px;white-space:nowrap;"><span style="background:#fef3c7;color:#92400e;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">Solde dû</span></td>
                 </tr>
                 <tr style="border-top:1px solid #eee;" data-client="girard" data-status="paye" data-date="2026-01-15" data-montant="290" data-acompte="290" data-solde="0">
-                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="alert('Ouverture du document #RP-2026-0032');return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0032</a></td>
+                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="openFacture(this);return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0032</a></td>
                   <td style="padding:10px;white-space:nowrap;">Girard</td>
                   <td style="padding:10px;white-space:nowrap;">Moto</td>
                   <td style="padding:10px;white-space:nowrap;">Reconditionnement</td>
@@ -650,7 +674,7 @@
                   <td style="padding:10px;white-space:nowrap;"><span style="background:#dcfce7;color:#15803d;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">Payé</span></td>
                 </tr>
                 <tr style="border-top:1px solid #eee;" data-client="bonnet" data-status="a-payer" data-date="2026-01-10" data-montant="515" data-acompte="0" data-solde="515">
-                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="alert('Ouverture du document #RP-2026-0031');return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0031</a></td>
+                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="openFacture(this);return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0031</a></td>
                   <td style="padding:10px;white-space:nowrap;">Bonnet</td>
                   <td style="padding:10px;white-space:nowrap;">Scooter</td>
                   <td style="padding:10px;white-space:nowrap;">Remplacement cellules</td>
@@ -662,7 +686,7 @@
                   <td style="padding:10px;white-space:nowrap;"><span style="background:#fee2e2;color:#dc2626;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">A payer</span></td>
                 </tr>
                 <tr style="border-top:1px solid #eee;" data-client="lambert" data-status="paye" data-date="2026-01-05" data-montant="345" data-acompte="345" data-solde="0">
-                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="alert('Ouverture du document #RP-2026-0030');return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0030</a></td>
+                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="openFacture(this);return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0030</a></td>
                   <td style="padding:10px;white-space:nowrap;">Lambert</td>
                   <td style="padding:10px;white-space:nowrap;">Vélo cargo</td>
                   <td style="padding:10px;white-space:nowrap;">Réparation BMS</td>
@@ -674,7 +698,7 @@
                   <td style="padding:10px;white-space:nowrap;"><span style="background:#dcfce7;color:#15803d;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">Payé</span></td>
                 </tr>
                 <tr style="border-top:1px solid #eee;" data-client="mercier" data-status="solde-du" data-date="2025-12-20" data-montant="680" data-acompte="340" data-solde="340">
-                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="alert('Ouverture du document #RP-2025-0029');return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2025-0029</a></td>
+                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="openFacture(this);return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2025-0029</a></td>
                   <td style="padding:10px;white-space:nowrap;">Mercier</td>
                   <td style="padding:10px;white-space:nowrap;">Moto</td>
                   <td style="padding:10px;white-space:nowrap;">Reconditionnement</td>
@@ -712,6 +736,60 @@
             </div>
           </div>
 
+        </div>
+
+        <!-- Overlay Facture -->
+        <div class="rp-facture-overlay" id="factureOverlay" onclick="closeFacture(event)">
+          <div class="rp-facture" onclick="event.stopPropagation()">
+            <div class="rp-facture__header">
+              <div>
+                <div class="rp-facture__title">FACTURE</div>
+                <div class="rp-facture__ref" id="factureRef"></div>
+              </div>
+              <div>
+                <div style="font-weight:700;font-size:1.1rem;color:var(--rp-green);margin-bottom:4px;">Re-plug</div>
+                <div class="rp-facture__date" id="factureDate"></div>
+              </div>
+            </div>
+
+            <div class="rp-facture__parties">
+              <div class="rp-facture__partie">
+                <h4>Émetteur</h4>
+                <p><strong>Re-plug SAS</strong><br>12 rue de l'Innovation<br>75011 Paris<br>SIRET : 912 345 678 00015<br>TVA : FR 82 912345678</p>
+              </div>
+              <div class="rp-facture__partie">
+                <h4>Client</h4>
+                <p id="factureClient"></p>
+              </div>
+            </div>
+
+            <table class="rp-facture__table">
+              <thead>
+                <tr>
+                  <th>Désignation</th>
+                  <th>Véhicule</th>
+                  <th style="text-align:right;">Montant HT</th>
+                </tr>
+              </thead>
+              <tbody id="factureTableBody">
+              </tbody>
+            </table>
+
+            <div class="rp-facture__total">
+              <div class="rp-facture__total-box">
+                <div class="rp-facture__total-row"><span>Total HT</span><span id="factureTotalHT"></span></div>
+                <div class="rp-facture__total-row"><span>TVA (20 %)</span><span id="factureTVA"></span></div>
+                <div class="rp-facture__total-row rp-facture__total-row--final"><span>Total TTC</span><span id="factureTotalTTC"></span></div>
+              </div>
+            </div>
+
+            <div class="rp-facture__paid" id="facturePaidDate"></div>
+
+            <div class="rp-facture__actions">
+              <button class="rp-btn rp-btn--primary rp-btn--small" onclick="window.print()">Imprimer</button>
+              <button class="rp-btn rp-btn--outline-dark rp-btn--small" onclick="closeFacture()">Fermer</button>
+            </div>
+          </div>
         </div>
 
         <!-- Panel: Diagnostics -->
@@ -2039,6 +2117,43 @@ function filterCommandes() {
 
 // Initialiser la pagination au chargement
 refreshPagination();
+
+// ===== Facture — ouverture / fermeture =====
+function openFacture(link) {
+  var row = link.closest('tr');
+  if (!row || row.dataset.status !== 'paye') {
+    var ref = link.textContent.trim();
+    alert('Ouverture du document ' + ref);
+    return;
+  }
+  var ref = link.textContent.trim();
+  var client = row.cells[1].textContent.trim();
+  var vehicule = row.cells[2].textContent.trim();
+  var intervention = row.cells[3].textContent.trim();
+  var dateCmd = row.cells[4].textContent.trim();
+  var montantTTC = parseFloat(row.dataset.montant) || 0;
+  var montantHT = Math.round(montantTTC / 1.20 * 100) / 100;
+  var tva = Math.round((montantTTC - montantHT) * 100) / 100;
+
+  document.getElementById('factureRef').textContent = ref;
+  document.getElementById('factureDate').innerHTML = 'Date : ' + dateCmd + '<br>Échéance : comptant';
+  document.getElementById('factureClient').innerHTML = '<strong>' + client + '</strong><br>(via Espace Partenaire)';
+
+  var tbody = document.getElementById('factureTableBody');
+  tbody.innerHTML = '<tr><td>' + intervention + '</td><td>' + vehicule + '</td><td style="text-align:right;font-weight:600;">' + montantHT.toFixed(2).replace('.', ',') + ' €</td></tr>';
+
+  document.getElementById('factureTotalHT').textContent = montantHT.toFixed(2).replace('.', ',') + ' €';
+  document.getElementById('factureTVA').textContent = tva.toFixed(2).replace('.', ',') + ' €';
+  document.getElementById('factureTotalTTC').textContent = montantTTC.toFixed(2).replace('.', ',') + ' €';
+  document.getElementById('facturePaidDate').textContent = '✓ Facture réglée le ' + dateCmd;
+
+  document.getElementById('factureOverlay').classList.add('is-visible');
+}
+
+function closeFacture(e) {
+  if (e && e.target !== document.getElementById('factureOverlay')) return;
+  document.getElementById('factureOverlay').classList.remove('is-visible');
+}
 
 // ===== Diagnostic wizard =====
 function launchDiagnosticWizard() {
