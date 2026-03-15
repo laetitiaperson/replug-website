@@ -283,10 +283,7 @@
 
     /* Battery card */
     .rp-diag__battery-card { background: #f9fafb; border: 1px solid #e8e8e8; border-radius: 12px; padding: 20px; margin-bottom: 16px; position: relative; }
-    .rp-diag__battery-remove { position: absolute; top: 12px; right: 12px; width: 28px; height: 28px; border-radius: 50%; background: #ef4444; color: #fff; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 700; line-height: 1; }
-    .rp-diag__battery-remove:hover { background: #dc2626; }
-    .rp-diag__add-battery { display: inline-flex; align-items: center; gap: 6px; background: var(--rp-green); color: #fff; border: none; padding: 10px 20px; border-radius: 24px; font-size: .88rem; font-weight: 500; cursor: pointer; transition: opacity .2s; }
-    .rp-diag__add-battery:hover { opacity: .85; }
+    /* Boutons batterie supprimés (ajouter/supprimer) */
 
     /* Photo upload areas */
     .rp-diag__photos { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
@@ -984,58 +981,63 @@
                 </div>
               </div>
 
-              <!-- Configuration Batteries -->
+              <!-- Configuration batterie -->
               <div class="rp-diag__section" id="diagSectionBatteries">
                 <div class="rp-diag__section-header" onclick="toggleDiagSection('diagSectionBatteries')">
-                  <h3>Configuration Batteries</h3>
+                  <h3>Configuration batterie</h3>
                   <button class="rp-diag__section-toggle" type="button">Masquer</button>
                 </div>
                 <div class="rp-diag__section-body">
-                  <button class="rp-diag__add-battery" id="diagAddBattery" type="button">+ Ajouter une batterie</button>
                   <div id="diagBatteriesList">
                     <div class="rp-diag__battery-card" data-battery-index="0">
-                      <button class="rp-diag__battery-remove" type="button" onclick="removeBattery(this)" title="Supprimer">&times;</button>
                       <div class="rp-diag__form-grid">
                         <div class="rp-diag__form-group">
-                          <label>Type <span style="color:#dc2626;">*</span></label>
-                          <input type="text" value="Batterie lithium-ion" placeholder="Batterie">
+                          <label>Catégorie <span style="color:#dc2626;">*</span></label>
+                          <select id="diagBattCategorie">
+                            <option value="">-- Sélectionner --</option>
+                            <option value="velo">Vélo</option>
+                            <option value="scooter">Scooter</option>
+                            <option value="trottinette">Trottinette</option>
+                            <option value="moto">Moto</option>
+                            <option value="autre">Autre</option>
+                          </select>
                         </div>
                         <div class="rp-diag__form-group">
                           <label>Fabricant <span style="color:#dc2626;">*</span></label>
-                          <input type="text" placeholder="Constructeur / OEM" value="Bosch">
+                          <input type="text" placeholder="Constructeur / OEM">
                         </div>
                         <div class="rp-diag__form-group rp-diag__form-group--full">
-                          <label>Marque <span style="color:#dc2626;">*</span></label>
-                          <input type="text" placeholder="" value="PowerPack 500">
+                          <label>Modèle <span style="color:#dc2626;">*</span></label>
+                          <input type="text" placeholder="Modèle de la batterie">
                         </div>
                         <div class="rp-diag__form-group">
                           <label>Voltage (V) <span style="color:#dc2626;">*</span></label>
-                          <select>
+                          <select id="diagBattVoltage">
                             <option value="">-- Sélectionner tension --</option>
                             <option value="24">24V</option>
-                            <option value="36" selected>36V</option>
+                            <option value="36">36V</option>
                             <option value="48">48V</option>
                           </select>
                         </div>
                         <div class="rp-diag__form-group">
                           <label>Capacité (Wh/Ah) <span style="color:#dc2626;">*</span></label>
-                          <input type="text" placeholder="ex: 360Wh ou 10Ah (≈ 360Wh)" value="500Wh">
+                          <input type="text" placeholder="ex: 360Wh ou 10Ah">
                         </div>
                         <div class="rp-diag__form-group">
                           <label>Puissance (W) <span style="color:#dc2626;">*</span></label>
-                          <input type="text" placeholder="" value="250W">
+                          <input type="text" placeholder="ex: 250W">
                         </div>
                         <div class="rp-diag__form-group">
                           <label>Âge (années) <span style="color:#dc2626;">*</span></label>
-                          <input type="text" placeholder="" value="3">
+                          <input type="text" placeholder="ex: 3">
                         </div>
                         <div class="rp-diag__form-group">
                           <label>Numéro de série (optionnel)</label>
-                          <input type="text" placeholder="ex: SN123456789" value="SN-BP500-2024-1234">
+                          <input type="text" placeholder="ex: SN123456789">
                         </div>
                         <div class="rp-diag__form-group">
                           <label>Date de fabrication (optionnel)</label>
-                          <input type="date" placeholder="jj/mm/aaaa">
+                          <input type="date">
                         </div>
                       </div>
                     </div>
@@ -2209,37 +2211,7 @@ function toggleDiagSection(sectionId) {
   btn.textContent = section.classList.contains('is-collapsed') ? 'Afficher' : 'Masquer';
 }
 
-// Add battery
-var batteryCount = 1;
-document.getElementById('diagAddBattery').addEventListener('click', function() {
-  batteryCount++;
-  var card = document.createElement('div');
-  card.className = 'rp-diag__battery-card';
-  card.dataset.batteryIndex = batteryCount;
-  card.innerHTML = '<button class="rp-diag__battery-remove" type="button" onclick="removeBattery(this)" title="Supprimer">&times;</button>' +
-    '<div class="rp-diag__form-grid">' +
-    '<div class="rp-diag__form-group"><label>Type</label><input type="text" value="Batterie" placeholder="Batterie"></div>' +
-    '<div class="rp-diag__form-group"><label>Fabricant</label><input type="text" placeholder="Constructeur / OEM"></div>' +
-    '<div class="rp-diag__form-group rp-diag__form-group--full"><label>Marque</label><input type="text" placeholder=""></div>' +
-    '<div class="rp-diag__form-group"><label>Voltage (V)</label><select><option value="">-- Sélectionner tension --</option><option value="24">24V</option><option value="36">36V</option><option value="48">48V</option></select></div>' +
-    '<div class="rp-diag__form-group"><label>Capacité (Wh/Ah)</label><input type="text" placeholder="ex: 360Wh ou 10Ah (≈ 360Wh)"></div>' +
-    '<div class="rp-diag__form-group"><label>Puissance (W)</label><input type="text" placeholder=""></div>' +
-    '<div class="rp-diag__form-group"><label>Âge (années)</label><input type="text" placeholder=""></div>' +
-    '<div class="rp-diag__form-group"><label>Numéro de série (optionnel)</label><input type="text" placeholder="ex: SN123456789"></div>' +
-    '<div class="rp-diag__form-group"><label>Date de fabrication (optionnel)</label><input type="date" placeholder="jj/mm/aaaa"></div>' +
-    '</div>';
-  document.getElementById('diagBatteriesList').appendChild(card);
-});
-
-function removeBattery(btn) {
-  var card = btn.closest('.rp-diag__battery-card');
-  var list = document.getElementById('diagBatteriesList');
-  if (list.children.length > 1) {
-    card.remove();
-  } else {
-    alert('Au moins une batterie est requise.');
-  }
-}
+// (Ajouter une batterie et removeBattery supprimés)
 
 // Step navigation
 function diagGoToStep(step) {
@@ -2263,44 +2235,82 @@ function diagGoToStep(step) {
 
 // Step 1 → Step 2 (avec validation des champs obligatoires)
 document.getElementById('diagContinueBtn').addEventListener('click', function() {
-  // Champs obligatoires client
-  var requiredClientIds = ['diagClientNom', 'diagClientEmail', 'diagClientTel', 'diagClientAdresse', 'diagClientVille', 'diagClientDept'];
   var allValid = true;
+  var firstInvalidEl = null;
+  var firstInvalidSection = null;
 
+  // --- Validation champs client ---
+  var requiredClientIds = ['diagClientNom', 'diagClientEmail', 'diagClientTel', 'diagClientAdresse', 'diagClientVille', 'diagClientDept'];
   requiredClientIds.forEach(function(id) {
     var input = document.getElementById(id);
     var group = input.closest('.rp-diag__form-group');
     if (!input.value.trim()) {
       group.classList.add('is-invalid');
       allValid = false;
+      if (!firstInvalidEl) { firstInvalidEl = input; firstInvalidSection = 'diagSectionClient'; }
     } else {
       group.classList.remove('is-invalid');
     }
   });
 
+  // --- Validation champs batterie (obligatoires) ---
+  var battCard = document.querySelector('#diagBatteriesList .rp-diag__battery-card');
+  if (battCard) {
+    // Catégorie (select)
+    var categorie = battCard.querySelector('#diagBattCategorie');
+    var categorieGroup = categorie.closest('.rp-diag__form-group');
+    if (!categorie.value) {
+      categorieGroup.classList.add('is-invalid'); allValid = false;
+      if (!firstInvalidEl) { firstInvalidEl = categorie; firstInvalidSection = 'diagSectionBatteries'; }
+    } else { categorieGroup.classList.remove('is-invalid'); }
+
+    // Fabricant, Modèle, Capacité, Puissance, Âge (inputs texte obligatoires — index 0,1,2,3,4 des inputs)
+    var battInputs = battCard.querySelectorAll('.rp-diag__form-grid .rp-diag__form-group');
+    // Index: 0=Catégorie(select), 1=Fabricant, 2=Modèle, 3=Voltage(select), 4=Capacité, 5=Puissance, 6=Âge, 7=Série(opt), 8=Date(opt)
+    [1, 2, 4, 5, 6].forEach(function(idx) {
+      var group = battInputs[idx];
+      var input = group.querySelector('input');
+      if (input && !input.value.trim()) {
+        group.classList.add('is-invalid'); allValid = false;
+        if (!firstInvalidEl) { firstInvalidEl = input; firstInvalidSection = 'diagSectionBatteries'; }
+      } else if (input) { group.classList.remove('is-invalid'); }
+    });
+
+    // Voltage (select)
+    var voltage = battCard.querySelector('#diagBattVoltage');
+    var voltageGroup = voltage.closest('.rp-diag__form-group');
+    if (!voltage.value) {
+      voltageGroup.classList.add('is-invalid'); allValid = false;
+      if (!firstInvalidEl) { firstInvalidEl = voltage; firstInvalidSection = 'diagSectionBatteries'; }
+    } else { voltageGroup.classList.remove('is-invalid'); }
+  }
+
   if (!allValid) {
-    // Scroll vers la section client si elle est collapsée
-    var clientSection = document.getElementById('diagSectionClient');
-    if (clientSection.classList.contains('is-collapsed')) {
-      clientSection.classList.remove('is-collapsed');
-      clientSection.querySelector('.rp-diag__section-toggle').textContent = 'Masquer';
+    // Déplier la section contenant le premier champ invalide
+    var section = document.getElementById(firstInvalidSection);
+    if (section && section.classList.contains('is-collapsed')) {
+      section.classList.remove('is-collapsed');
+      section.querySelector('.rp-diag__section-toggle').textContent = 'Masquer';
     }
-    // Scroll vers le premier champ invalide
-    var firstInvalid = document.querySelector('.rp-diag__form-group.is-invalid input');
-    if (firstInvalid) {
-      firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      firstInvalid.focus();
-    }
+    firstInvalidEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    firstInvalidEl.focus();
     return;
   }
 
   diagGoToStep(2);
 });
 
-// Retirer le liseré rouge dès que l'utilisateur commence à saisir
-document.querySelectorAll('#diagSectionClient input').forEach(function(input) {
+// Retirer le liseré rouge dès que l'utilisateur saisit ou change un champ
+document.querySelectorAll('#diagSectionClient input, #diagSectionBatteries input').forEach(function(input) {
   input.addEventListener('input', function() {
     if (this.value.trim()) {
+      this.closest('.rp-diag__form-group').classList.remove('is-invalid');
+    }
+  });
+});
+document.querySelectorAll('#diagSectionBatteries select').forEach(function(sel) {
+  sel.addEventListener('change', function() {
+    if (this.value) {
       this.closest('.rp-diag__form-group').classList.remove('is-invalid');
     }
   });
@@ -2398,18 +2408,16 @@ document.getElementById('diagLaunchBtn').addEventListener('click', function() {
 
   // Récupérer infos batterie (première carte)
   var battCard = document.querySelector('#diagBatteriesList .rp-diag__battery-card');
-  var battInputs = battCard ? battCard.querySelectorAll('input, select') : [];
-  var battType = battInputs[0] ? battInputs[0].value || '—' : '—';
-  var battFabricant = battInputs[1] ? battInputs[1].value || '—' : '—';
-  var battMarque = battInputs[2] ? battInputs[2].value || '—' : '—';
-  var battVoltage = '—';
-  if (battInputs[3] && battInputs[3].options) {
-    battVoltage = battInputs[3].value ? battInputs[3].options[battInputs[3].selectedIndex].text : '—';
-  } else if (battInputs[3]) {
-    battVoltage = battInputs[3].value || '—';
-  }
-  var battCapacite = battInputs[4] ? battInputs[4].value || '—' : '—';
-  var battSerie = battInputs[7] ? battInputs[7].value || 'Non renseigné' : 'Non renseigné';
+  var categorieSel = battCard ? battCard.querySelector('#diagBattCategorie') : null;
+  var battType = categorieSel && categorieSel.value ? categorieSel.options[categorieSel.selectedIndex].text : '—';
+  var battInputs = battCard ? battCard.querySelectorAll('.rp-diag__form-grid .rp-diag__form-group') : [];
+  // Index: 0=Catégorie, 1=Fabricant, 2=Modèle, 3=Voltage, 4=Capacité, 5=Puissance, 6=Âge, 7=Série, 8=Date
+  var battFabricant = battInputs[1] ? (battInputs[1].querySelector('input').value || '—') : '—';
+  var battMarque = battInputs[2] ? (battInputs[2].querySelector('input').value || '—') : '—';
+  var voltageSel = battCard ? battCard.querySelector('#diagBattVoltage') : null;
+  var battVoltage = voltageSel && voltageSel.value ? voltageSel.options[voltageSel.selectedIndex].text : '—';
+  var battCapacite = battInputs[4] ? (battInputs[4].querySelector('input').value || '—') : '—';
+  var battSerie = battInputs[7] ? (battInputs[7].querySelector('input').value || 'Non renseigné') : 'Non renseigné';
 
   // Générer référence diagnostic
   var diagRef = 'DIAG-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random()*9000+1000));
@@ -2451,9 +2459,9 @@ document.getElementById('diagLaunchBtn').addEventListener('click', function() {
 
   // Batterie
   document.getElementById('diagResultBatterie').innerHTML =
-    '<div class="rp-diag-result__field">Type<strong>' + battType + '</strong></div>' +
+    '<div class="rp-diag-result__field">Catégorie<strong>' + battType + '</strong></div>' +
     '<div class="rp-diag-result__field">Fabricant<strong>' + battFabricant + '</strong></div>' +
-    '<div class="rp-diag-result__field">Marque<strong>' + battMarque + '</strong></div>' +
+    '<div class="rp-diag-result__field">Modèle<strong>' + battMarque + '</strong></div>' +
     '<div class="rp-diag-result__field">Tension<strong>' + battVoltage + '</strong></div>' +
     '<div class="rp-diag-result__field">Capacité<strong>' + battCapacite + '</strong></div>' +
     '<div class="rp-diag-result__field">N° de série<strong>' + battSerie + '</strong></div>';
@@ -2607,16 +2615,16 @@ document.getElementById('diagNewDiag').addEventListener('click', function() {
   document.querySelectorAll('input[name="diagVisuel"]').forEach(function(r) { r.checked = false; });
   document.querySelectorAll('input[name="diagCharge"]').forEach(function(r) { r.checked = false; });
   document.querySelectorAll('input[name="diagDecharge"]').forEach(function(r) { r.checked = false; });
-  // Reset batteries to one empty card
-  var list = document.getElementById('diagBatteriesList');
-  while (list.children.length > 1) { list.lastChild.remove(); }
-  var firstCard = list.querySelector('.rp-diag__battery-card');
+  // Reset batterie
+  var firstCard = document.querySelector('#diagBatteriesList .rp-diag__battery-card');
   if (firstCard) {
     firstCard.querySelectorAll('input').forEach(function(inp) {
-      if (inp.type === 'text' || inp.type === 'date') inp.value = inp.placeholder === 'Batterie' ? 'Batterie' : '';
+      if (inp.type === 'text' || inp.type === 'date') inp.value = '';
     });
     firstCard.querySelectorAll('select').forEach(function(sel) { sel.selectedIndex = 0; });
   }
+  // Retirer les erreurs de validation
+  document.querySelectorAll('.rp-diag__form-group.is-invalid').forEach(function(g) { g.classList.remove('is-invalid'); });
   // Expand all sections
   document.querySelectorAll('.rp-diag__section.is-collapsed').forEach(function(s) {
     s.classList.remove('is-collapsed');
