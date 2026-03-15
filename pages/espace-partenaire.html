@@ -921,11 +921,6 @@
         <div class="rp-dashboard__panel" id="panel-diagnostic">
           <div class="rp-diag" id="diagWizard">
 
-            <button class="rp-diag__back-dashboard" id="diagBackDashboard">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-              Retour au tableau de bord
-            </button>
-
             <h2 class="rp-diag__title">Diagnostic Batterie</h2>
             <p class="rp-diag__subtitle">Identifiez la panne et obtenez un devis instantané pour la réparation.</p>
 
@@ -950,10 +945,10 @@
             <!-- ====== STEP 1: Infos + Config + Vérifications ====== -->
             <div class="rp-diag__page" id="diagStep1">
 
-              <!-- Informations Client -->
+              <!-- Informations client -->
               <div class="rp-diag__section" id="diagSectionClient">
                 <div class="rp-diag__section-header" onclick="toggleDiagSection('diagSectionClient')">
-                  <h3>Informations Client</h3>
+                  <h3>Informations client</h3>
                   <button class="rp-diag__section-toggle" type="button">Masquer</button>
                 </div>
                 <div class="rp-diag__section-body">
@@ -979,8 +974,8 @@
                       <input type="text" id="diagClientVille" placeholder="" value="Paris">
                     </div>
                     <div class="rp-diag__form-group">
-                      <label>Département <span style="color:#dc2626;">*</span></label>
-                      <input type="text" id="diagClientDept" placeholder="Ex: 75, 13, etc." value="75">
+                      <label>Code postal <span style="color:#dc2626;">*</span></label>
+                      <input type="text" id="diagClientDept" placeholder="Ex: 75000, 13001, etc." value="75008">
                     </div>
                   </div>
                 </div>
@@ -1896,7 +1891,7 @@ function showDevisDetail(card) {
     '<div class="rp-suivi-detail__field">Email<strong>' + d.email + '</strong></div>' +
     '<div class="rp-suivi-detail__field">Téléphone<strong>' + d.tel + '</strong></div>' +
     '<div class="rp-suivi-detail__field">Ville<strong>' + d.ville + '</strong></div>' +
-    '<div class="rp-suivi-detail__field">Département<strong>' + d.departement + '</strong></div>';
+    '<div class="rp-suivi-detail__field">Code postal<strong>' + d.departement + '</strong></div>';
 
   document.getElementById('devisDetailBatterie').innerHTML =
     '<div class="rp-suivi-detail__field">Modèle<strong>' + d.batterie + '</strong></div>' +
@@ -2084,7 +2079,7 @@ function showSuiviDetail(ref) {
     '<div class="rp-suivi-detail__field">Email<strong>' + d.email + '</strong></div>' +
     '<div class="rp-suivi-detail__field">Téléphone<strong>' + d.telephone + '</strong></div>' +
     '<div class="rp-suivi-detail__field">Ville<strong>' + d.ville + '</strong></div>' +
-    '<div class="rp-suivi-detail__field">Département<strong>' + d.departement + '</strong></div>';
+    '<div class="rp-suivi-detail__field">Code postal<strong>' + d.departement + '</strong></div>';
 
   // Batterie
   document.getElementById('suiviBatterie').innerHTML =
@@ -2176,17 +2171,6 @@ var diagCurrentStep = 1;
 document.querySelector('.rp-dash-cta .rp-btn').addEventListener('click', function(e) {
   e.preventDefault();
   launchDiagnosticWizard();
-});
-
-// Back to dashboard — retour vers l'onglet Diagnostics
-document.getElementById('diagBackDashboard').addEventListener('click', function() {
-  document.getElementById('panel-diagnostic').classList.remove('is-active');
-  document.getElementById('panel-commandes').classList.add('is-active');
-  document.querySelector('.rp-header__partner-tab[data-tab="commandes"]').classList.add('is-active');
-  document.getElementById('diagWizard').classList.remove('is-visible');
-  // Restore CTA block
-  document.querySelector('.rp-dash-cta').style.display = '';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 // Toggle collapsible sections
@@ -2420,7 +2404,7 @@ document.getElementById('diagLaunchBtn').addEventListener('click', function() {
     '<div class="rp-diag-result__field">Téléphone<strong>' + clientTel + '</strong></div>' +
     '<div class="rp-diag-result__field">Adresse<strong>' + clientAdresse + '</strong></div>' +
     '<div class="rp-diag-result__field">Ville<strong>' + clientVille + '</strong></div>' +
-    '<div class="rp-diag-result__field">Département<strong>' + clientDept + '</strong></div>';
+    '<div class="rp-diag-result__field">Code postal<strong>' + clientDept + '</strong></div>';
 
   // Batterie
   document.getElementById('diagResultBatterie').innerHTML =
