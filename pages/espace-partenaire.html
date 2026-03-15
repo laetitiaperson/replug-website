@@ -2158,8 +2158,8 @@ document.getElementById('btnDiagDevis').addEventListener('click', function() {
     t.classList.remove('is-active');
     if (t.dataset.tab === 'devis') t.classList.add('is-active');
   });
-  document.querySelectorAll('.rp-dashboard__panel').forEach(function(p) { p.style.display = 'none'; });
-  document.getElementById('panel-devis').style.display = '';
+  document.querySelectorAll('.rp-dashboard__panel').forEach(function(p) { p.classList.remove('is-active'); });
+  document.getElementById('panel-devis').classList.add('is-active');
 
   // Activer sous-onglet Administration
   document.querySelectorAll('.rp-devis-subtab').forEach(function(t) {
@@ -2872,14 +2872,16 @@ document.getElementById('diagDemandeDevis').addEventListener('click', function()
     showDevisDetail(this.closest('.rp-devis-card'));
   });
 
-  // Basculer vers l'onglet Devis
+  // Basculer vers l'onglet Devis (même logique que le tab switching normal)
   document.querySelectorAll('.rp-header__partner-tab').forEach(function(t) {
     t.classList.remove('is-active');
     if (t.dataset.tab === 'devis') t.classList.add('is-active');
   });
-  document.querySelectorAll('.rp-dashboard__panel').forEach(function(p) { p.style.display = 'none'; });
-  document.getElementById('panel-devis').style.display = '';
+  document.querySelectorAll('.rp-dashboard__panel').forEach(function(p) { p.classList.remove('is-active'); });
+  document.getElementById('panel-devis').classList.add('is-active');
+  // Masquer le wizard
   document.getElementById('panel-diagnostic').style.display = 'none';
+  document.getElementById('panel-diagnostic').classList.remove('is-active');
   var ctaBar = document.querySelector('.rp-cta-bar');
   if (ctaBar) ctaBar.style.display = '';
 
@@ -2888,9 +2890,7 @@ document.getElementById('diagDemandeDevis').addEventListener('click', function()
     t.classList.remove('is-active');
     if (t.dataset.devisTab === 'admin') t.classList.add('is-active');
   });
-  document.querySelectorAll('.rp-devis-subpanel').forEach(function(p) {
-    p.classList.remove('is-active');
-  });
+  document.querySelectorAll('.rp-devis-subpanel').forEach(function(p) { p.classList.remove('is-active'); });
   document.getElementById('subpanel-admin').classList.add('is-active');
   devisList.style.display = '';
   document.getElementById('devisDetailPanel').style.display = 'none';
