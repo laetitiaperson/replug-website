@@ -276,6 +276,9 @@
     .rp-diag__form-group select { width: 100%; padding: 10px 14px; border: 1px solid #ddd; border-radius: 8px; font-size: .9rem; font-family: inherit; background: #f9f9f9; transition: border-color .2s; box-sizing: border-box; }
     .rp-diag__form-group input:focus,
     .rp-diag__form-group select:focus { outline: none; border-color: var(--rp-green); background: #fff; }
+    .rp-diag__form-group.is-invalid input,
+    .rp-diag__form-group.is-invalid select { border-color: #dc2626; background: #fef2f2; }
+    .rp-diag__form-group.is-invalid label { color: #dc2626; }
     .rp-diag__form-group--full { grid-column: 1 / -1; }
 
     /* Battery card */
@@ -955,27 +958,27 @@
                   <div class="rp-diag__form-grid">
                     <div class="rp-diag__form-group">
                       <label>Nom complet <span style="color:#dc2626;">*</span></label>
-                      <input type="text" id="diagClientNom" placeholder="" value="Martin Dubois" required>
+                      <input type="text" id="diagClientNom" placeholder="Prénom et nom" required>
                     </div>
                     <div class="rp-diag__form-group">
                       <label>Email <span style="color:#dc2626;">*</span></label>
-                      <input type="email" id="diagClientEmail" placeholder="" value="martin.dubois@email.fr">
+                      <input type="email" id="diagClientEmail" placeholder="email@exemple.fr">
                     </div>
                     <div class="rp-diag__form-group">
                       <label>Téléphone <span style="color:#dc2626;">*</span></label>
-                      <input type="tel" id="diagClientTel" placeholder="" value="06 12 34 56 78">
+                      <input type="tel" id="diagClientTel" placeholder="06 00 00 00 00">
                     </div>
                     <div class="rp-diag__form-group">
                       <label>Adresse <span style="color:#dc2626;">*</span></label>
-                      <input type="text" id="diagClientAdresse" placeholder="Numéro et rue" value="24, avenue des Champs-Élysées">
+                      <input type="text" id="diagClientAdresse" placeholder="Numéro et rue">
                     </div>
                     <div class="rp-diag__form-group">
                       <label>Ville <span style="color:#dc2626;">*</span></label>
-                      <input type="text" id="diagClientVille" placeholder="" value="Paris">
+                      <input type="text" id="diagClientVille" placeholder="Ville">
                     </div>
                     <div class="rp-diag__form-group">
                       <label>Code postal <span style="color:#dc2626;">*</span></label>
-                      <input type="text" id="diagClientDept" placeholder="Ex: 75000, 13001, etc." value="75008">
+                      <input type="text" id="diagClientDept" placeholder="Ex: 75000, 13001, etc.">
                     </div>
                   </div>
                 </div>
@@ -2258,9 +2261,49 @@ function diagGoToStep(step) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Step 1 → Step 2
+// Step 1 → Step 2 (avec validation des champs obligatoires)
 document.getElementById('diagContinueBtn').addEventListener('click', function() {
+  // Champs obligatoires client
+  var requiredClientIds = ['diagClientNom', 'diagClientEmail', 'diagClientTel', 'diagClientAdresse', 'diagClientVille', 'diagClientDept'];
+  var allValid = true;
+
+  requiredClientIds.forEach(function(id) {
+    var input = document.getElementById(id);
+    var group = input.closest('.rp-diag__form-group');
+    if (!input.value.trim()) {
+      group.classList.add('is-invalid');
+      allValid = false;
+    } else {
+      group.classList.remove('is-invalid');
+    }
+  });
+
+  if (!allValid) {
+    // Scroll vers la section client si elle est collapsée
+    var clientSection = document.getElementById('diagSectionClient');
+    if (clientSection.classList.contains('is-collapsed')) {
+      clientSection.classList.remove('is-collapsed');
+      clientSection.querySelector('.rp-diag__section-toggle').textContent = 'Masquer';
+    }
+    // Scroll vers le premier champ invalide
+    var firstInvalid = document.querySelector('.rp-diag__form-group.is-invalid input');
+    if (firstInvalid) {
+      firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      firstInvalid.focus();
+    }
+    return;
+  }
+
   diagGoToStep(2);
+});
+
+// Retirer le liseré rouge dès que l'utilisateur commence à saisir
+document.querySelectorAll('#diagSectionClient input').forEach(function(input) {
+  input.addEventListener('input', function() {
+    if (this.value.trim()) {
+      this.closest('.rp-diag__form-group').classList.remove('is-invalid');
+    }
+  });
 });
 
 // Step 2 → Step 1
