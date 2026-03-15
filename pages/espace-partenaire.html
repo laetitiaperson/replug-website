@@ -2114,18 +2114,65 @@ document.getElementById('btnFermerDiagDetail').addEventListener('click', functio
   document.getElementById('diagCardsList').style.display = '';
 });
 
-// "Demander un devis" → switch to Devis tab
+// "Demander un devis" depuis le détail diagnostic → créer carte devis + basculer
 document.getElementById('btnDiagDevis').addEventListener('click', function() {
-  alert('Devis généré avec succès ! Vous pouvez le retrouver dans l\'onglet Devis.');
+  // Récupérer la ref du diagnostic actuellement affiché
+  var diagRefEl = document.querySelector('#diagDetailPanel .rp-diag-detail__ref');
+  if (!diagRefEl) return;
+  var diagRefText = diagRefEl.textContent.trim();
+  var d = DIAG_DATA[diagRefText];
+  if (!d) { alert('Diagnostic introuvable.'); return; }
+
+  // Générer réf devis
+  var initiales = d.client.split(' ').map(function(w) { return w.charAt(0).toUpperCase(); }).join('');
+  var dept = d.departement || '00';
+  var today = new Date();
+  var dateStr = today.getFullYear() + String(today.getMonth()+1).padStart(2,'0') + String(today.getDate()).padStart(2,'0');
+  var devisRef = initiales + '-' + dept + '-' + dateStr + '-' + String(Math.floor(Math.random()*900+100));
+  var dateFr = today.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
+
+  // Créer la carte HTML
+  var cardHtml = '<div class="rp-devis-card" data-statut="attente" data-ref="' + devisRef + '" data-diag-ref="' + d.ref + '" data-client="' + d.client + '" data-email="' + d.email + '" data-batterie="' + d.batterie + '" data-date="' + today.toISOString().slice(0,10) + '" data-montant="' + d.total.replace(/[^0-9]/g, '') + '">' +
+    '<div class="rp-devis-card__header"><span class="rp-devis-card__ref">' + devisRef + '</span><span class="rp-devis-card__price">' + d.total.replace('€','EUR') + '</span></div>' +
+    '<div class="rp-devis-card__details">' +
+      '<span>Client<strong>' + d.client + '</strong></span>' +
+      '<span>Email<strong>' + d.email + '</strong></span>' +
+      '<span>Batterie<strong>' + d.batterie + '</strong></span>' +
+      '<span>Date<strong>' + dateFr + '</strong></span>' +
+      '<span>Statut<strong><span class="rp-devis-card__badge rp-devis-card__badge--attente">En attente</span></strong></span>' +
+    '</div>' +
+    '<div style="padding:0 20px 16px;text-align:right;"><button class="rp-btn rp-btn--outline-dark rp-btn--small rp-devis-voir-detail">Voir détails</button></div>' +
+  '</div>';
+
+  var devisList = document.getElementById('devisList');
+  devisList.insertAdjacentHTML('afterbegin', cardHtml);
+  var newCard = devisList.firstElementChild;
+  newCard.querySelector('.rp-devis-voir-detail').addEventListener('click', function() {
+    showDevisDetail(this.closest('.rp-devis-card'));
+  });
+
+  // Fermer le panel diagnostic et basculer vers Devis
   document.getElementById('diagDetailPanel').style.display = 'none';
   document.getElementById('diagCardsList').style.display = '';
-  // Switch to Devis tab
-  document.querySelectorAll('.rp-header__partner-tab').forEach(function(t) { t.classList.remove('is-active'); });
-  document.querySelectorAll('.rp-dashboard__panel').forEach(function(p) { p.classList.remove('is-active'); });
-  var devisTab = document.querySelector('.rp-header__partner-tab[data-tab="devis"]');
-  if (devisTab) devisTab.classList.add('is-active');
-  document.getElementById('panel-devis').classList.add('is-active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.querySelectorAll('.rp-header__partner-tab').forEach(function(t) {
+    t.classList.remove('is-active');
+    if (t.dataset.tab === 'devis') t.classList.add('is-active');
+  });
+  document.querySelectorAll('.rp-dashboard__panel').forEach(function(p) { p.style.display = 'none'; });
+  document.getElementById('panel-devis').style.display = '';
+
+  // Activer sous-onglet Administration
+  document.querySelectorAll('.rp-devis-subtab').forEach(function(t) {
+    t.classList.remove('is-active');
+    if (t.dataset.devisTab === 'admin') t.classList.add('is-active');
+  });
+  document.querySelectorAll('.rp-devis-subpanel').forEach(function(p) { p.classList.remove('is-active'); });
+  document.getElementById('subpanel-admin').classList.add('is-active');
+  devisList.style.display = '';
+  document.getElementById('devisDetailPanel').style.display = 'none';
+
+  // Ouvrir directement le détail
+  showDevisDetail(newCard);
 });
 
 // ===== Devis sub-tab switching =====
@@ -2774,20 +2821,82 @@ document.getElementById('diagLaunchBtn').addEventListener('click', function() {
   diagGoToStep(3);
 });
 
-// Demander devis → alerte + switch vers onglet Devis
+// Demander devis → créer une carte devis + switch vers onglet Devis avec détail ouvert
 document.getElementById('diagDemandeDevis').addEventListener('click', function() {
-  alert('Devis généré avec succès ! Vous pouvez le retrouver dans l\'onglet Devis.');
-  // Switch to Devis tab
+  var data = window._lastDiagResult;
+  if (!data) { alert('Erreur : aucune donnée de diagnostic.'); return; }
+
+  // Générer une référence devis unique
+  var initiales = data.clientNom.split(' ').map(function(w) { return w.charAt(0).toUpperCase(); }).join('');
+  var dept = data.clientDept || '00';
+  var today = new Date();
+  var dateStr = today.getFullYear() + String(today.getMonth()+1).padStart(2,'0') + String(today.getDate()).padStart(2,'0');
+  var devisRef = initiales + '-' + dept + '-' + dateStr + '-' + String(Math.floor(Math.random()*900+100));
+  var dateFr = today.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
+
+  // Ajouter dans DIAG_DATA pour que showDevisDetail fonctionne
+  DIAG_DATA[data.ref] = {
+    ref: data.ref, date: data.date, status: 'attente', statusLabel: 'En attente',
+    client: data.clientNom, email: data.clientEmail, tel: data.clientTel,
+    adresse: data.clientAdresse, ville: data.clientVille, departement: data.clientDept,
+    batterie: data.batterie, tension: data.tension, capacite: data.capacite, serie: data.serie,
+    resultat: data.resultat, resultatDetail: data.resultatDetail || '',
+    prestations: data.prestations, total: data.total
+  };
+
+  // Créer la carte HTML
+  var cardHtml = '<div class="rp-devis-card" data-statut="attente" data-ref="' + devisRef + '" data-diag-ref="' + data.ref + '" data-client="' + data.clientNom + '" data-email="' + data.clientEmail + '" data-batterie="' + data.batterie + '" data-date="' + today.toISOString().slice(0,10) + '" data-montant="' + data.total.replace(/[^0-9]/g, '') + '" data-prestation="Diagnostic ' + data.ref + '">' +
+    '<div class="rp-devis-card__header">' +
+      '<span class="rp-devis-card__ref">' + devisRef + '</span>' +
+      '<span class="rp-devis-card__price">' + data.total.replace('€','EUR') + '</span>' +
+    '</div>' +
+    '<div class="rp-devis-card__details">' +
+      '<span>Client<strong>' + data.clientNom + '</strong></span>' +
+      '<span>Email<strong>' + data.clientEmail + '</strong></span>' +
+      '<span>Batterie<strong>' + data.batterie + '</strong></span>' +
+      '<span>Date<strong>' + dateFr + '</strong></span>' +
+      '<span>Statut<strong><span class="rp-devis-card__badge rp-devis-card__badge--attente">En attente</span></strong></span>' +
+    '</div>' +
+    '<div style="padding:0 20px 16px;text-align:right;">' +
+      '<button class="rp-btn rp-btn--outline-dark rp-btn--small rp-devis-voir-detail">Voir détails</button>' +
+    '</div>' +
+  '</div>';
+
+  // Insérer en haut de la liste
+  var devisList = document.getElementById('devisList');
+  devisList.insertAdjacentHTML('afterbegin', cardHtml);
+
+  // Attacher le listener sur le bouton "Voir détails" de la nouvelle carte
+  var newCard = devisList.firstElementChild;
+  newCard.querySelector('.rp-devis-voir-detail').addEventListener('click', function() {
+    showDevisDetail(this.closest('.rp-devis-card'));
+  });
+
+  // Basculer vers l'onglet Devis
   document.querySelectorAll('.rp-header__partner-tab').forEach(function(t) {
     t.classList.remove('is-active');
     if (t.dataset.tab === 'devis') t.classList.add('is-active');
   });
   document.querySelectorAll('.rp-dashboard__panel').forEach(function(p) { p.style.display = 'none'; });
   document.getElementById('panel-devis').style.display = '';
-  // Hide diagnostic wizard
   document.getElementById('panel-diagnostic').style.display = 'none';
   var ctaBar = document.querySelector('.rp-cta-bar');
   if (ctaBar) ctaBar.style.display = '';
+
+  // S'assurer que le sous-onglet Administration est actif et la liste visible
+  document.querySelectorAll('.rp-devis-subtab').forEach(function(t) {
+    t.classList.remove('is-active');
+    if (t.dataset.devisTab === 'admin') t.classList.add('is-active');
+  });
+  document.querySelectorAll('.rp-devis-subpanel').forEach(function(p) {
+    p.classList.remove('is-active');
+  });
+  document.getElementById('subpanel-admin').classList.add('is-active');
+  devisList.style.display = '';
+  document.getElementById('devisDetailPanel').style.display = 'none';
+
+  // Ouvrir directement le détail du nouveau devis
+  showDevisDetail(newCard);
 });
 
 // New diagnostic (reset all)
