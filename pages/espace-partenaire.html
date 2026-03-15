@@ -1004,7 +1004,136 @@
                         </div>
                         <div class="rp-diag__form-group">
                           <label>Fabricant <span style="color:#dc2626;">*</span></label>
-                          <input type="text" placeholder="Constructeur / OEM">
+                          <select id="diagBattFabricant">
+                            <option value="">-- Sélectionner --</option>
+                            <option value="Advanced">Advanced</option>
+                            <option value="Ahooga">Ahooga</option>
+                            <option value="Amslod">Amslod</option>
+                            <option value="Aprilia">Aprilia</option>
+                            <option value="Arcade">Arcade</option>
+                            <option value="Babboe">Babboe</option>
+                            <option value="Batavus">Batavus</option>
+                            <option value="Bergamont">Bergamont</option>
+                            <option value="Bergstrom">Bergstrom</option>
+                            <option value="BH Bikes">BH Bikes</option>
+                            <option value="BICLEC">BICLEC</option>
+                            <option value="Bike43">Bike43</option>
+                            <option value="Biwbik">Biwbik</option>
+                            <option value="BMC">BMC</option>
+                            <option value="Bottecchia">Bottecchia</option>
+                            <option value="Bulls">Bulls</option>
+                            <option value="Cangoo">Cangoo</option>
+                            <option value="Cannondale">Cannondale</option>
+                            <option value="Canyon">Canyon</option>
+                            <option value="Carrefour Toplife">Carrefour Toplife</option>
+                            <option value="Cecotec">Cecotec</option>
+                            <option value="CityBug">CityBug</option>
+                            <option value="Cowboy">Cowboy</option>
+                            <option value="Crussis">Crussis</option>
+                            <option value="CYCLAMATIC">CYCLAMATIC</option>
+                            <option value="Cycoo">Cycoo</option>
+                            <option value="Decathlon">Decathlon</option>
+                            <option value="Descheemaeker">Descheemaeker</option>
+                            <option value="Diavelo">Diavelo</option>
+                            <option value="Douze Cycles">Douze Cycles</option>
+                            <option value="E-Twow">E-Twow</option>
+                            <option value="Easy Bike">Easy Bike</option>
+                            <option value="Ecobike">Ecobike</option>
+                            <option value="Econic One">Econic One</option>
+                            <option value="Ecoxtrem">Ecoxtrem</option>
+                            <option value="Eovolt">Eovolt</option>
+                            <option value="Esprit">Esprit</option>
+                            <option value="Eveobike">Eveobike</option>
+                            <option value="Ezego">Ezego</option>
+                            <option value="Falter">Falter</option>
+                            <option value="Fantic">Fantic</option>
+                            <option value="Feu Vert">Feu Vert</option>
+                            <option value="Fischer">Fischer</option>
+                            <option value="Flyer">Flyer</option>
+                            <option value="Focus">Focus</option>
+                            <option value="Forme">Forme</option>
+                            <option value="Gazelle">Gazelle</option>
+                            <option value="Giant">Giant</option>
+                            <option value="Gitane">Gitane</option>
+                            <option value="Granville">Granville</option>
+                            <option value="Greencity">Greencity</option>
+                            <option value="Haibike">Haibike</option>
+                            <option value="Hercules">Hercules</option>
+                            <option value="Hilltecks">Hilltecks</option>
+                            <option value="Inovelo">Inovelo</option>
+                            <option value="ISD">ISD</option>
+                            <option value="Jeep">Jeep</option>
+                            <option value="Joyor">Joyor</option>
+                            <option value="Kaabo">Kaabo</option>
+                            <option value="Kalkhoff">Kalkhoff</option>
+                            <option value="Koga">Koga</option>
+                            <option value="Lapierre">Lapierre</option>
+                            <option value="Leader Fox">Leader Fox</option>
+                            <option value="Llobe">Llobe</option>
+                            <option value="Lombardo">Lombardo</option>
+                            <option value="Lovens">Lovens</option>
+                            <option value="Makadam">Makadam</option>
+                            <option value="Mate">Mate</option>
+                            <option value="Matra">Matra</option>
+                            <option value="Megamo">Megamo</option>
+                            <option value="Minerva">Minerva</option>
+                            <option value="Mobidoo">Mobidoo</option>
+                            <option value="Moma Bikes">Moma Bikes</option>
+                            <option value="Momentum">Momentum</option>
+                            <option value="Mondraker">Mondraker</option>
+                            <option value="Moov In">Moov In</option>
+                            <option value="MoovWay">MoovWay</option>
+                            <option value="Morrison">Morrison</option>
+                            <option value="Moustache">Moustache</option>
+                            <option value="Mustang">Mustang</option>
+                            <option value="Nakamura">Nakamura</option>
+                            <option value="NCM">NCM</option>
+                            <option value="Neomouv">Neomouv</option>
+                            <option value="O2Feel">O2Feel</option>
+                            <option value="Olympia">Olympia</option>
+                            <option value="Orus">Orus</option>
+                            <option value="Peugeot">Peugeot</option>
+                            <option value="Pinarello">Pinarello</option>
+                            <option value="Proxy Cycle">Proxy Cycle</option>
+                            <option value="Qio">Qio</option>
+                            <option value="Riese &amp; Müller">Riese &amp; Müller</option>
+                            <option value="Rock Machine">Rock Machine</option>
+                            <option value="Rotwild">Rotwild</option>
+                            <option value="Sachs">Sachs</option>
+                            <option value="Santos">Santos</option>
+                            <option value="Saxonette">Saxonette</option>
+                            <option value="Scott">Scott</option>
+                            <option value="Scrapper">Scrapper</option>
+                            <option value="Simplon">Simplon</option>
+                            <option value="SMLRO">SMLRO</option>
+                            <option value="Solex">Solex</option>
+                            <option value="Sparta">Sparta</option>
+                            <option value="Specialized">Specialized</option>
+                            <option value="Starway">Starway</option>
+                            <option value="Stella">Stella</option>
+                            <option value="Stevens">Stevens</option>
+                            <option value="Sunn">Sunn</option>
+                            <option value="T-Bird">T-Bird</option>
+                            <option value="Tenways">Tenways</option>
+                            <option value="TommyBike">TommyBike</option>
+                            <option value="Trek">Trek</option>
+                            <option value="Triobike">Triobike</option>
+                            <option value="Unno">Unno</option>
+                            <option value="Ushuaia">Ushuaia</option>
+                            <option value="Vanmoof">Vanmoof</option>
+                            <option value="Velair">Velair</option>
+                            <option value="Vogue">Vogue</option>
+                            <option value="Voltagreen">Voltagreen</option>
+                            <option value="Wattitud">Wattitud</option>
+                            <option value="Wattoo">Wattoo</option>
+                            <option value="Wayscral">Wayscral</option>
+                            <option value="Wiizzee">Wiizzee</option>
+                            <option value="Wilier">Wilier</option>
+                            <option value="Winora">Winora</option>
+                            <option value="Woodsun">Woodsun</option>
+                            <option value="YOSEMITE">YOSEMITE</option>
+                            <option value="Autre">Autre</option>
+                          </select>
                         </div>
                         <div class="rp-diag__form-group rp-diag__form-group--full">
                           <label>Modèle <span style="color:#dc2626;">*</span></label>
@@ -2264,10 +2393,18 @@ document.getElementById('diagContinueBtn').addEventListener('click', function() 
       if (!firstInvalidEl) { firstInvalidEl = categorie; firstInvalidSection = 'diagSectionBatteries'; }
     } else { categorieGroup.classList.remove('is-invalid'); }
 
-    // Fabricant, Modèle, Capacité, Puissance, Âge (inputs texte obligatoires — index 0,1,2,3,4 des inputs)
+    // Fabricant (select)
+    var fabricant = battCard.querySelector('#diagBattFabricant');
+    var fabricantGroup = fabricant.closest('.rp-diag__form-group');
+    if (!fabricant.value) {
+      fabricantGroup.classList.add('is-invalid'); allValid = false;
+      if (!firstInvalidEl) { firstInvalidEl = fabricant; firstInvalidSection = 'diagSectionBatteries'; }
+    } else { fabricantGroup.classList.remove('is-invalid'); }
+
+    // Modèle, Capacité, Puissance, Âge (inputs texte obligatoires)
     var battInputs = battCard.querySelectorAll('.rp-diag__form-grid .rp-diag__form-group');
-    // Index: 0=Catégorie(select), 1=Fabricant, 2=Modèle, 3=Voltage(select), 4=Capacité, 5=Puissance, 6=Âge, 7=Série(opt), 8=Date(opt)
-    [1, 2, 4, 5, 6].forEach(function(idx) {
+    // Index: 0=Catégorie(select), 1=Fabricant(select), 2=Modèle, 3=Voltage(select), 4=Capacité, 5=Puissance, 6=Âge, 7=Série(opt), 8=Date(opt)
+    [2, 4, 5, 6].forEach(function(idx) {
       var group = battInputs[idx];
       var input = group.querySelector('input');
       if (input && !input.value.trim()) {
@@ -2412,7 +2549,8 @@ document.getElementById('diagLaunchBtn').addEventListener('click', function() {
   var battType = categorieSel && categorieSel.value ? categorieSel.options[categorieSel.selectedIndex].text : '—';
   var battInputs = battCard ? battCard.querySelectorAll('.rp-diag__form-grid .rp-diag__form-group') : [];
   // Index: 0=Catégorie, 1=Fabricant, 2=Modèle, 3=Voltage, 4=Capacité, 5=Puissance, 6=Âge, 7=Série, 8=Date
-  var battFabricant = battInputs[1] ? (battInputs[1].querySelector('input').value || '—') : '—';
+  var fabSel = battCard ? battCard.querySelector('#diagBattFabricant') : null;
+  var battFabricant = fabSel && fabSel.value ? fabSel.options[fabSel.selectedIndex].text : '—';
   var battMarque = battInputs[2] ? (battInputs[2].querySelector('input').value || '—') : '—';
   var voltageSel = battCard ? battCard.querySelector('#diagBattVoltage') : null;
   var battVoltage = voltageSel && voltageSel.value ? voltageSel.options[voltageSel.selectedIndex].text : '—';
