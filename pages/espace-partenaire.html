@@ -803,28 +803,14 @@
             <h2 style="font-size:1.2rem;margin:0 0 16px;">Mes devis</h2>
 
             <!-- Filters -->
-            <div class="rp-devis-filters">
-              <div class="rp-form__group">
-                <label class="rp-form__label">Rechercher</label>
-                <input type="text" class="rp-form__input" placeholder="ID, nom, email..." id="devisSearch">
-              </div>
-              <div class="rp-form__group">
-                <label class="rp-form__label">Date de création</label>
-                <input type="date" class="rp-form__input" id="devisDate">
-              </div>
-              <div class="rp-form__group">
-                <label class="rp-form__label">Statut</label>
-                <select class="rp-form__select" id="devisStatut">
-                  <option value="">Tous</option>
-                  <option value="attente">En attente</option>
-                  <option value="reparation">En réparation</option>
-                  <option value="refuse">Refusé</option>
-                </select>
-              </div>
-              <div class="rp-devis-filter-actions">
-                <button class="rp-btn rp-btn--primary rp-btn--small" id="devisActualiser">Actualiser</button>
-                <button class="rp-btn rp-btn--outline-dark rp-btn--small" id="devisEffacer">Effacer</button>
-              </div>
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px;padding:12px 16px;background:#f8f9fa;border-radius:10px;border:1px solid #e8e8e8;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--rp-gray)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              <input type="text" class="rp-form__input" placeholder="Rechercher un devis..." style="flex:1;min-width:180px;padding:8px 12px;font-size:.88rem;border:1px solid #d1d5db;background:#fff;" id="devisSearch">
+              <select class="rp-form__select" style="width:auto;padding:8px 32px 8px 12px;font-size:.88rem;border:1px solid #d1d5db;background:#fff;" id="devisStatut">
+                <option value="">Statut</option>
+                <option value="attente">A payer</option>
+                <option value="reparation">Solde dû</option>
+              </select>
             </div>
 
             <!-- Devis list -->
@@ -2345,7 +2331,6 @@ document.querySelectorAll('.rp-devis-subtab').forEach(function(btn) {
 function filterDevis() {
   var search = document.getElementById('devisSearch').value.toLowerCase();
   var statut = document.getElementById('devisStatut').value;
-  var dateVal = document.getElementById('devisDate').value;
   var cards = document.querySelectorAll('#devisList .rp-devis-card');
   cards.forEach(function(card) {
     var matchSearch = !search ||
@@ -2353,20 +2338,11 @@ function filterDevis() {
       card.dataset.client.toLowerCase().includes(search) ||
       card.dataset.email.toLowerCase().includes(search);
     var matchStatut = !statut || card.dataset.statut === statut;
-    var matchDate = !dateVal || card.dataset.date === dateVal;
-    card.style.display = (matchSearch && matchStatut && matchDate) ? '' : 'none';
+    card.style.display = (matchSearch && matchStatut) ? '' : 'none';
   });
 }
-document.getElementById('devisActualiser').addEventListener('click', filterDevis);
 document.getElementById('devisSearch').addEventListener('input', filterDevis);
 document.getElementById('devisStatut').addEventListener('change', filterDevis);
-document.getElementById('devisDate').addEventListener('change', filterDevis);
-document.getElementById('devisEffacer').addEventListener('click', function() {
-  document.getElementById('devisSearch').value = '';
-  document.getElementById('devisStatut').value = '';
-  document.getElementById('devisDate').value = '';
-  filterDevis();
-});
 
 // ===== Devis — Voir détails =====
 var DEVIS_STATUS_LABELS = { attente: 'En attente', reparation: 'En réparation', approuve: 'Validé', refuse: 'Refusé' };
