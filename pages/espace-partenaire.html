@@ -582,14 +582,7 @@
           </div>
 
           <!-- Pagination -->
-          <div style="display:flex;justify-content:center;align-items:center;gap:6px;margin-top:24px;">
-            <button class="rp-pagination__btn" disabled style="padding:8px 14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;font-size:.85rem;color:var(--rp-gray);cursor:not-allowed;opacity:.5;">← Précédente</button>
-            <button class="rp-pagination__btn rp-pagination__btn--active" style="padding:8px 14px;border:2px solid var(--rp-green);border-radius:8px;background:#f0fdf4;font-size:.85rem;font-weight:600;color:var(--rp-green);cursor:pointer;">1</button>
-            <button class="rp-pagination__btn" style="padding:8px 14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;font-size:.85rem;color:var(--rp-dark);cursor:pointer;">2</button>
-            <button class="rp-pagination__btn" style="padding:8px 14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;font-size:.85rem;color:var(--rp-dark);cursor:pointer;">3</button>
-            <button class="rp-pagination__btn" style="padding:8px 14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;font-size:.85rem;color:var(--rp-dark);cursor:pointer;">4</button>
-            <button class="rp-pagination__btn" style="padding:8px 14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;font-size:.85rem;color:var(--rp-dark);cursor:pointer;">Suivante →</button>
-          </div>
+          <div id="commandesPagination" style="display:flex;justify-content:center;align-items:center;gap:6px;margin-top:24px;"></div>
 
           <!-- Summary cards -->
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:28px;">
@@ -1815,20 +1808,7 @@ document.querySelectorAll('.rp-header__partner-tab').forEach(function(tab) {
   });
 });
 
-// ===== Commandes — filter by status & search client =====
-function filterCommandes() {
-  var status = document.getElementById('filterStatus').value;
-  var search = document.getElementById('searchClient').value.toLowerCase().trim();
-  var rows = document.querySelectorAll('#commandesBody tr');
-  rows.forEach(function(row) {
-    var matchStatus = !status || row.dataset.status === status;
-    // Recherche sur le nom client ET sur la référence
-    var clientCell = row.cells[1] ? row.cells[1].textContent.toLowerCase() : '';
-    var refCell = row.cells[0] ? row.cells[0].textContent.toLowerCase() : '';
-    var matchSearch = !search || clientCell.includes(search) || refCell.includes(search);
-    row.style.display = (matchStatus && matchSearch) ? '' : 'none';
-  });
-}
+// ===== Commandes — filter & search (délégué à la pagination) =====
 document.getElementById('filterStatus').addEventListener('change', filterCommandes);
 document.getElementById('searchClient').addEventListener('input', filterCommandes);
 
@@ -1862,6 +1842,95 @@ function sortCommandes(th, key) {
     if (span) span.textContent = t === th ? (dir === 'asc' ? '▲' : '▼') : '⇅';
   });
 }
+
+// ===== Pagination commandes =====
+var commandesParPage = 5;
+var commandesPageActuelle = 1;
+
+function paginateCommandes() {
+  var tbody = document.getElementById('commandesBody');
+  var allRows = Array.from(tbody.querySelectorAll('tr'));
+  // Ne paginer que les lignes visibles (après filtrage)
+  var visibleRows = allRows.filter(function(r) { return r.style.display !== 'none'; });
+  var totalPages = Math.max(1, Math.ceil(visibleRows.length / commandesParPage));
+  if (commandesPageActuelle > totalPages) commandesPageActuelle = totalPages;
+
+  // Masquer toutes les lignes, puis afficher celles de la page courante
+  var start = (commandesPageActuelle - 1) * commandesParPage;
+  var end = start + commandesParPage;
+  visibleRows.forEach(function(row, i) {
+    row.style.display = (i >= start && i < end) ? '' : 'none';
+  });
+  // Les lignes filtrées (display:none par filterCommandes) restent cachées
+  allRows.filter(function(r) { return r.dataset._filtered === '1'; }).forEach(function(r) { r.style.display = 'none'; });
+
+  renderPagination(totalPages);
+}
+
+function renderPagination(totalPages) {
+  var container = document.getElementById('commandesPagination');
+  container.innerHTML = '';
+  var btnStyle = 'padding:8px 14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;font-size:.85rem;color:var(--rp-dark);cursor:pointer;';
+  var activeStyle = 'padding:8px 14px;border:2px solid var(--rp-green);border-radius:8px;background:#f0fdf4;font-size:.85rem;font-weight:600;color:var(--rp-green);cursor:pointer;';
+  var disabledStyle = 'padding:8px 14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;font-size:.85rem;color:var(--rp-gray);cursor:not-allowed;opacity:.5;';
+
+  // Bouton Précédente
+  var prevBtn = document.createElement('button');
+  prevBtn.textContent = '← Précédente';
+  prevBtn.style.cssText = commandesPageActuelle === 1 ? disabledStyle : btnStyle;
+  prevBtn.disabled = commandesPageActuelle === 1;
+  prevBtn.onclick = function() { if (commandesPageActuelle > 1) { commandesPageActuelle--; refreshPagination(); } };
+  container.appendChild(prevBtn);
+
+  // Boutons numéros
+  for (var i = 1; i <= totalPages; i++) {
+    (function(page) {
+      var btn = document.createElement('button');
+      btn.textContent = page;
+      btn.style.cssText = page === commandesPageActuelle ? activeStyle : btnStyle;
+      btn.onclick = function() { commandesPageActuelle = page; refreshPagination(); };
+      container.appendChild(btn);
+    })(i);
+  }
+
+  // Bouton Suivante
+  var nextBtn = document.createElement('button');
+  nextBtn.textContent = 'Suivante →';
+  nextBtn.style.cssText = commandesPageActuelle === totalPages ? disabledStyle : btnStyle;
+  nextBtn.disabled = commandesPageActuelle === totalPages;
+  nextBtn.onclick = function() { if (commandesPageActuelle < totalPages) { commandesPageActuelle++; refreshPagination(); } };
+  container.appendChild(nextBtn);
+}
+
+function refreshPagination() {
+  // Réappliquer le filtre puis paginer
+  var status = document.getElementById('filterStatus').value;
+  var search = document.getElementById('searchClient').value.toLowerCase().trim();
+  var rows = document.querySelectorAll('#commandesBody tr');
+  rows.forEach(function(row) {
+    var clientCell = row.cells[1] ? row.cells[1].textContent.toLowerCase() : '';
+    var refCell = row.cells[0] ? row.cells[0].textContent.toLowerCase() : '';
+    var matchStatus = !status || row.dataset.status === status;
+    var matchSearch = !search || clientCell.includes(search) || refCell.includes(search);
+    if (matchStatus && matchSearch) {
+      row.style.display = '';
+      row.dataset._filtered = '0';
+    } else {
+      row.style.display = 'none';
+      row.dataset._filtered = '1';
+    }
+  });
+  paginateCommandes();
+}
+
+// Remplacer filterCommandes pour intégrer la pagination
+function filterCommandes() {
+  commandesPageActuelle = 1;
+  refreshPagination();
+}
+
+// Initialiser la pagination au chargement
+refreshPagination();
 
 // ===== Diagnostic wizard =====
 function launchDiagnosticWizard() {
