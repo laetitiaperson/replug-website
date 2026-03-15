@@ -302,11 +302,13 @@
     .rp-diag__photo-upload svg { width: 24px; height: 24px; color: var(--rp-gray); margin-bottom: 8px; }
     .rp-diag__photo-upload p { font-size: .85rem; color: var(--rp-gray); margin: 0; }
     .rp-diag__photo-label { font-size: .85rem; font-weight: 500; color: var(--rp-dark); margin-bottom: 8px; }
+    .rp-diag__photo-zone.is-invalid .rp-diag__photo-upload { border-color: #dc2626; background: #fef2f2; }
+    .rp-diag__photo-zone.is-invalid .rp-diag__photo-label { color: #dc2626; }
 
     /* Radio checks */
     .rp-diag__checks h4 { font-size: 1rem; font-weight: 600; margin: 24px 0 12px; color: var(--rp-dark); }
     .rp-diag__check-group { margin-bottom: 16px; }
-    .rp-diag__check-group-title { font-size: .92rem; font-weight: 500; color: var(--rp-dark); margin-bottom: 8px; }
+    .rp-diag__check-group-title { font-size: .88rem; font-weight: 600; color: var(--rp-green); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid #e8e8e8; text-transform: uppercase; letter-spacing: .5px; }
     .rp-diag__radio-item { display: flex; align-items: center; justify-content: space-between; background: #f9f9f9; border-radius: 10px; padding: 12px 16px; margin-bottom: 6px; cursor: pointer; transition: background .2s; }
     .rp-diag__radio-item:hover { background: #f0f0f0; }
     .rp-diag__radio-item input[type="radio"] { accent-color: var(--rp-green); margin-right: 10px; flex-shrink: 0; }
@@ -927,7 +929,7 @@
         <div class="rp-dashboard__panel" id="panel-diagnostic">
           <div class="rp-diag" id="diagWizard">
 
-            <h2 class="rp-diag__title">Diagnostic Batterie</h2>
+            <h2 class="rp-diag__title">Diagnostic batterie</h2>
             <p class="rp-diag__subtitle">Identifiez la panne et obtenez un devis instantané pour la réparation.</p>
 
             <!-- Steps indicator -->
@@ -1060,18 +1062,18 @@
                   <button class="rp-diag__section-toggle" type="button">Masquer</button>
                 </div>
                 <div class="rp-diag__section-body">
-                  <h4 style="font-size:1rem;font-weight:600;margin-bottom:12px;color:var(--rp-dark);">Photos <span style="color:#dc2626;">*</span></h4>
+                  <h4 style="font-size:1rem;font-weight:600;margin-bottom:12px;color:var(--rp-dark);">Photos</h4>
                   <div class="rp-diag__photos">
-                    <div>
-                      <p class="rp-diag__photo-label">Photo générale</p>
+                    <div class="rp-diag__photo-zone" id="diagPhotoZoneGen">
+                      <p class="rp-diag__photo-label">Photo générale <span style="color:var(--rp-dark);">*</span></p>
                       <div class="rp-diag__photo-upload">
                         <input type="file" accept="image/*" id="diagPhotoGen">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
                         <p>Ajouter photo</p>
                       </div>
                     </div>
-                    <div>
-                      <p class="rp-diag__photo-label">Étiquette batterie</p>
+                    <div class="rp-diag__photo-zone" id="diagPhotoZoneEtiq">
+                      <p class="rp-diag__photo-label">Étiquette batterie <span style="color:var(--rp-dark);">*</span></p>
                       <div class="rp-diag__photo-upload">
                         <input type="file" accept="image/*" id="diagPhotoEtiq">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
@@ -2281,8 +2283,8 @@ function diagGoToStep(step) {
   // Masquer titre + sous-titre sur l'étape 2
   var diagTitle = document.querySelector('.rp-diag__title');
   var diagSubtitle = document.querySelector('.rp-diag__subtitle');
-  if (diagTitle) diagTitle.style.display = step === 2 ? 'none' : '';
-  if (diagSubtitle) diagSubtitle.style.display = step === 2 ? 'none' : '';
+  if (diagTitle) diagTitle.style.visibility = step === 2 ? 'hidden' : '';
+  if (diagSubtitle) diagSubtitle.style.visibility = step === 2 ? 'hidden' : '';
 
   document.querySelectorAll('.rp-diag__step-line').forEach(function(line, i) {
     line.classList.toggle('is-done', i < step - 1);
@@ -2350,6 +2352,21 @@ document.getElementById('diagContinueBtn').addEventListener('click', function() 
     } else { voltageGroup.classList.remove('is-invalid'); }
   }
 
+  // --- Validation photos obligatoires ---
+  var photoGenZone = document.getElementById('diagPhotoZoneGen');
+  var photoGenInput = document.getElementById('diagPhotoGen');
+  if (photoGenInput && !photoGenInput.files.length) {
+    photoGenZone.classList.add('is-invalid'); allValid = false;
+    if (!firstInvalidEl) { firstInvalidEl = photoGenZone; firstInvalidSection = 'diagSectionDiag'; }
+  } else if (photoGenZone) { photoGenZone.classList.remove('is-invalid'); }
+
+  var photoEtiqZone = document.getElementById('diagPhotoZoneEtiq');
+  var photoEtiqInput = document.getElementById('diagPhotoEtiq');
+  if (photoEtiqInput && !photoEtiqInput.files.length) {
+    photoEtiqZone.classList.add('is-invalid'); allValid = false;
+    if (!firstInvalidEl) { firstInvalidEl = photoEtiqZone; firstInvalidSection = 'diagSectionDiag'; }
+  } else if (photoEtiqZone) { photoEtiqZone.classList.remove('is-invalid'); }
+
   if (!allValid) {
     // Déplier la section contenant le premier champ invalide
     var section = document.getElementById(firstInvalidSection);
@@ -2379,6 +2396,18 @@ document.querySelectorAll('#diagSectionBatteries select').forEach(function(sel) 
       this.closest('.rp-diag__form-group').classList.remove('is-invalid');
     }
   });
+});
+
+// Retirer le liseré rouge sur les photos quand un fichier est sélectionné
+['diagPhotoGen', 'diagPhotoEtiq'].forEach(function(id) {
+  var input = document.getElementById(id);
+  if (input) {
+    input.addEventListener('change', function() {
+      if (this.files.length) {
+        this.closest('.rp-diag__photo-zone').classList.remove('is-invalid');
+      }
+    });
+  }
 });
 
 // Retirer le liseré rouge sur les champs de l'étape 2
