@@ -281,7 +281,8 @@
     .rp-diag__form-group input:focus,
     .rp-diag__form-group select:focus { outline: none; border-color: var(--rp-green); background: #fff; }
     .rp-diag__form-group.is-invalid input,
-    .rp-diag__form-group.is-invalid select { border-color: #dc2626; background: #fef2f2; }
+    .rp-diag__form-group.is-invalid select,
+    .rp-diag__form-group.is-invalid textarea { border-color: #dc2626; background: #fef2f2; }
     .rp-diag__form-group.is-invalid label { color: #dc2626; }
     .rp-diag__form-group select:disabled { opacity: .5; cursor: not-allowed; }
     .rp-diag__form-group--full { grid-column: 1 / -1; }
@@ -2374,6 +2375,32 @@ document.querySelectorAll('#diagSectionBatteries select').forEach(function(sel) 
   });
 });
 
+// Retirer le liseré rouge sur les champs de l'étape 2
+document.querySelectorAll('#diagSectionMesures input').forEach(function(input) {
+  input.addEventListener('input', function() {
+    if (this.value.trim()) this.closest('.rp-diag__form-group').classList.remove('is-invalid');
+  });
+});
+document.querySelectorAll('#diagSectionContexte select').forEach(function(sel) {
+  sel.addEventListener('change', function() {
+    if (this.value) this.closest('.rp-diag__form-group').classList.remove('is-invalid');
+  });
+});
+// Retirer le liseré rouge des problèmes dès qu'on en coche un
+document.querySelectorAll('input[name="diagProbleme"]').forEach(function(cb) {
+  cb.addEventListener('change', function() {
+    var body = document.getElementById('diagSectionProblemes').querySelector('.rp-diag__section-body');
+    body.style.border = ''; body.style.borderRadius = ''; body.style.padding = '';
+  });
+});
+// Retirer le liseré rouge du textarea commentaires
+var diagComm = document.getElementById('diagCommentaires');
+if (diagComm) {
+  diagComm.addEventListener('input', function() {
+    if (this.value.trim()) this.closest('.rp-diag__form-group').classList.remove('is-invalid');
+  });
+}
+
 // Step 2 → Step 1
 document.getElementById('diagBackStep1').addEventListener('click', function() {
   diagGoToStep(1);
@@ -2385,8 +2412,74 @@ document.getElementById('diagResetBtn').addEventListener('click', function() {
   document.querySelectorAll('input[name="diagProbleme"]').forEach(function(cb) { cb.checked = false; });
 });
 
-// Launch diagnostic (Step 2 → Step 3)
+// Launch diagnostic (Step 2 → Step 3) avec validation
 document.getElementById('diagLaunchBtn').addEventListener('click', function() {
+  var allValid = true;
+  var firstInvalidEl = null;
+  var firstInvalidSection = null;
+
+  // --- Validation Mesures électriques ---
+  var requiredStep2Ids = ['diagTension', 'diagTensionChargeur', 'diagCourantCharge', 'diagCodeErreur'];
+  requiredStep2Ids.forEach(function(id) {
+    var input = document.getElementById(id);
+    if (!input) return;
+    var group = input.closest('.rp-diag__form-group');
+    if (!input.value.trim()) {
+      group.classList.add('is-invalid'); allValid = false;
+      if (!firstInvalidEl) { firstInvalidEl = input; firstInvalidSection = 'diagSectionMesures'; }
+    } else { group.classList.remove('is-invalid'); }
+  });
+
+  // --- Validation Problèmes rencontrés (au moins 1 coché) ---
+  var problemesCoches = document.querySelectorAll('input[name="diagProbleme"]:checked');
+  var problemesSection = document.getElementById('diagSectionProblemes');
+  var problemesBody = problemesSection.querySelector('.rp-diag__section-body');
+  if (problemesCoches.length === 0) {
+    problemesBody.style.border = '2px solid #dc2626';
+    problemesBody.style.borderRadius = '8px';
+    problemesBody.style.padding = '12px';
+    allValid = false;
+    if (!firstInvalidEl) { firstInvalidEl = problemesBody; firstInvalidSection = 'diagSectionProblemes'; }
+  } else {
+    problemesBody.style.border = '';
+    problemesBody.style.borderRadius = '';
+    problemesBody.style.padding = '';
+  }
+
+  // --- Validation Contexte d'utilisation (selects) ---
+  var requiredStep2Selects = ['diagFrequence', 'diagStockage', 'diagDernierUsage', 'diagReparation'];
+  requiredStep2Selects.forEach(function(id) {
+    var sel = document.getElementById(id);
+    if (!sel) return;
+    var group = sel.closest('.rp-diag__form-group');
+    if (!sel.value) {
+      group.classList.add('is-invalid'); allValid = false;
+      if (!firstInvalidEl) { firstInvalidEl = sel; firstInvalidSection = 'diagSectionContexte'; }
+    } else { group.classList.remove('is-invalid'); }
+  });
+
+  // --- Validation Commentaires ---
+  var commentaires = document.getElementById('diagCommentaires');
+  if (commentaires) {
+    var commentGroup = commentaires.closest('.rp-diag__form-group');
+    if (!commentaires.value.trim()) {
+      commentGroup.classList.add('is-invalid'); allValid = false;
+      if (!firstInvalidEl) { firstInvalidEl = commentaires; firstInvalidSection = 'diagSectionObservations'; }
+    } else { commentGroup.classList.remove('is-invalid'); }
+  }
+
+  if (!allValid) {
+    // Déplier la section contenant le premier champ invalide
+    var section = document.getElementById(firstInvalidSection);
+    if (section && section.classList.contains('is-collapsed')) {
+      section.classList.remove('is-collapsed');
+      section.querySelector('.rp-diag__section-toggle').textContent = 'Masquer';
+    }
+    firstInvalidEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (firstInvalidEl.focus) firstInvalidEl.focus();
+    return;
+  }
+
   // Gather checked problems
   var problems = [];
   document.querySelectorAll('input[name="diagProbleme"]:checked').forEach(function(cb) {
