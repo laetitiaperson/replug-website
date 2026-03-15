@@ -2278,6 +2278,12 @@ function diagGoToStep(step) {
     if (sNum === step) s.classList.add('is-active');
     if (sNum < step) s.classList.add('is-done');
   });
+  // Masquer titre + sous-titre sur l'étape 2
+  var diagTitle = document.querySelector('.rp-diag__title');
+  var diagSubtitle = document.querySelector('.rp-diag__subtitle');
+  if (diagTitle) diagTitle.style.display = step === 2 ? 'none' : '';
+  if (diagSubtitle) diagSubtitle.style.display = step === 2 ? 'none' : '';
+
   document.querySelectorAll('.rp-diag__step-line').forEach(function(line, i) {
     line.classList.toggle('is-done', i < step - 1);
   });
