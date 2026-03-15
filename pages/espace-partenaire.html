@@ -492,10 +492,10 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--rp-gray)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
             <input type="text" class="rp-form__input" placeholder="Rechercher un client..." style="flex:1;min-width:180px;padding:8px 12px;font-size:.88rem;border:1px solid #d1d5db;background:#fff;" id="searchClient">
             <select class="rp-form__select" style="width:auto;padding:8px 32px 8px 12px;font-size:.88rem;border:1px solid #d1d5db;background:#fff;" id="filterStatus">
-              <option value="">Tous les statuts</option>
-              <option value="en-cours">En cours</option>
-              <option value="livree">Livrée</option>
-              <option value="en-attente">En attente</option>
+              <option value="">Statut</option>
+              <option value="a-payer">A payer</option>
+              <option value="partiellement-paye">Partiellement payé</option>
+              <option value="paye">Payé</option>
             </select>
           </div>
 
@@ -504,22 +504,22 @@
             <table style="width:100%;border-collapse:collapse;font-size:.82rem;">
               <thead>
                 <tr style="background:#f7f7f7;text-align:left;">
-                  <th style="padding:10px 10px;font-weight:600;white-space:nowrap;">N°</th>
-                  <th style="padding:10px 10px;font-weight:600;white-space:nowrap;">Client</th>
+                  <th style="padding:10px 10px;font-weight:600;white-space:nowrap;">Référence</th>
+                  <th style="padding:10px 10px;font-weight:600;white-space:nowrap;cursor:pointer;" data-sort="client" onclick="sortCommandes(this,'client')">Client <span style="font-size:.7rem;color:var(--rp-gray);">⇅</span></th>
                   <th style="padding:10px 10px;font-weight:600;white-space:nowrap;">Véhicule</th>
                   <th style="padding:10px 10px;font-weight:600;white-space:nowrap;">Intervention</th>
-                  <th style="padding:10px 10px;font-weight:600;white-space:nowrap;">Commande</th>
+                  <th style="padding:10px 10px;font-weight:600;white-space:nowrap;cursor:pointer;" data-sort="date" onclick="sortCommandes(this,'date')">Commande <span style="font-size:.7rem;color:var(--rp-gray);">⇅</span></th>
                   <th style="padding:10px 10px;font-weight:600;white-space:nowrap;">Livraison</th>
-                  <th style="padding:10px 10px;font-weight:600;white-space:nowrap;">Montant</th>
-                  <th style="padding:10px 10px;font-weight:600;white-space:nowrap;">Acompte</th>
-                  <th style="padding:10px 10px;font-weight:600;white-space:nowrap;">Solde</th>
+                  <th style="padding:10px 10px;font-weight:600;white-space:nowrap;cursor:pointer;" data-sort="montant" onclick="sortCommandes(this,'montant')">Montant <span style="font-size:.7rem;color:var(--rp-gray);">⇅</span></th>
+                  <th style="padding:10px 10px;font-weight:600;white-space:nowrap;cursor:pointer;" data-sort="acompte" onclick="sortCommandes(this,'acompte')">Acompte <span style="font-size:.7rem;color:var(--rp-gray);">⇅</span></th>
+                  <th style="padding:10px 10px;font-weight:600;white-space:nowrap;cursor:pointer;" data-sort="solde" onclick="sortCommandes(this,'solde')">Solde <span style="font-size:.7rem;color:var(--rp-gray);">⇅</span></th>
                   <th style="padding:10px 10px;font-weight:600;white-space:nowrap;">Statut</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr style="border-top:1px solid #eee;" data-client="martin dubois" data-status="en-cours">
-                  <td style="padding:10px;white-space:nowrap;font-weight:500;">#RP-2026-0042</td>
-                  <td style="padding:10px;white-space:nowrap;">M. Dubois</td>
+              <tbody id="commandesBody">
+                <tr style="border-top:1px solid #eee;" data-client="dubois" data-status="partiellement-paye" data-date="2026-03-08" data-montant="389" data-acompte="194.5" data-solde="194.5">
+                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="alert('Ouverture du document #RP-2026-0042');return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0042</a></td>
+                  <td style="padding:10px;white-space:nowrap;">Dubois</td>
                   <td style="padding:10px;white-space:nowrap;">Vélo élec.</td>
                   <td style="padding:10px;white-space:nowrap;">Reconditionnement</td>
                   <td style="padding:10px;white-space:nowrap;">08/03/26</td>
@@ -527,11 +527,11 @@
                   <td style="padding:10px;white-space:nowrap;font-weight:600;">389 €</td>
                   <td style="padding:10px;white-space:nowrap;">194,50 €</td>
                   <td style="padding:10px;white-space:nowrap;font-weight:600;color:#d97706;">194,50 €</td>
-                  <td style="padding:10px;white-space:nowrap;"><span style="background:#dcfce7;color:#15803d;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">En cours</span></td>
+                  <td style="padding:10px;white-space:nowrap;"><span style="background:#fef3c7;color:#92400e;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">Partiellement payé</span></td>
                 </tr>
-                <tr style="border-top:1px solid #eee;" data-client="sophie laurent" data-status="livree">
-                  <td style="padding:10px;white-space:nowrap;font-weight:500;">#RP-2026-0041</td>
-                  <td style="padding:10px;white-space:nowrap;">S. Laurent</td>
+                <tr style="border-top:1px solid #eee;" data-client="laurent" data-status="paye" data-date="2026-03-05" data-montant="185" data-acompte="185" data-solde="0">
+                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="alert('Ouverture du document #RP-2026-0041');return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0041</a></td>
+                  <td style="padding:10px;white-space:nowrap;">Laurent</td>
                   <td style="padding:10px;white-space:nowrap;">Trottinette</td>
                   <td style="padding:10px;white-space:nowrap;">Réparation BMS</td>
                   <td style="padding:10px;white-space:nowrap;">05/03/26</td>
@@ -539,11 +539,11 @@
                   <td style="padding:10px;white-space:nowrap;font-weight:600;">185 €</td>
                   <td style="padding:10px;white-space:nowrap;">185 €</td>
                   <td style="padding:10px;white-space:nowrap;font-weight:600;color:#15803d;">0 €</td>
-                  <td style="padding:10px;white-space:nowrap;"><span style="background:#dbeafe;color:#1d4ed8;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">Livrée</span></td>
+                  <td style="padding:10px;white-space:nowrap;"><span style="background:#dcfce7;color:#15803d;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">Payé</span></td>
                 </tr>
-                <tr style="border-top:1px solid #eee;" data-client="pierre moreau" data-status="en-cours">
-                  <td style="padding:10px;white-space:nowrap;font-weight:500;">#RP-2026-0040</td>
-                  <td style="padding:10px;white-space:nowrap;">P. Moreau</td>
+                <tr style="border-top:1px solid #eee;" data-client="moreau" data-status="partiellement-paye" data-date="2026-03-01" data-montant="620" data-acompte="310" data-solde="310">
+                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="alert('Ouverture du document #RP-2026-0040');return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0040</a></td>
+                  <td style="padding:10px;white-space:nowrap;">Moreau</td>
                   <td style="padding:10px;white-space:nowrap;">Scooter élec.</td>
                   <td style="padding:10px;white-space:nowrap;">Reconditionnement</td>
                   <td style="padding:10px;white-space:nowrap;">01/03/26</td>
@@ -551,11 +551,11 @@
                   <td style="padding:10px;white-space:nowrap;font-weight:600;">620 €</td>
                   <td style="padding:10px;white-space:nowrap;">310 €</td>
                   <td style="padding:10px;white-space:nowrap;font-weight:600;color:#d97706;">310 €</td>
-                  <td style="padding:10px;white-space:nowrap;"><span style="background:#dcfce7;color:#15803d;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">En cours</span></td>
+                  <td style="padding:10px;white-space:nowrap;"><span style="background:#fef3c7;color:#92400e;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">Partiellement payé</span></td>
                 </tr>
-                <tr style="border-top:1px solid #eee;" data-client="claire petit" data-status="en-attente">
-                  <td style="padding:10px;white-space:nowrap;font-weight:500;">#RP-2026-0039</td>
-                  <td style="padding:10px;white-space:nowrap;">C. Petit</td>
+                <tr style="border-top:1px solid #eee;" data-client="petit" data-status="a-payer" data-date="2026-02-25" data-montant="295" data-acompte="0" data-solde="295">
+                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="alert('Ouverture du document #RP-2026-0039');return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0039</a></td>
+                  <td style="padding:10px;white-space:nowrap;">Petit</td>
                   <td style="padding:10px;white-space:nowrap;">Vélo élec.</td>
                   <td style="padding:10px;white-space:nowrap;">Remplacement cellules</td>
                   <td style="padding:10px;white-space:nowrap;">25/02/26</td>
@@ -563,11 +563,11 @@
                   <td style="padding:10px;white-space:nowrap;font-weight:600;">295 €</td>
                   <td style="padding:10px;white-space:nowrap;">0 €</td>
                   <td style="padding:10px;white-space:nowrap;font-weight:600;color:#dc2626;">295 €</td>
-                  <td style="padding:10px;white-space:nowrap;"><span style="background:#fef3c7;color:#92400e;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">En attente</span></td>
+                  <td style="padding:10px;white-space:nowrap;"><span style="background:#fee2e2;color:#dc2626;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">A payer</span></td>
                 </tr>
-                <tr style="border-top:1px solid #eee;" data-client="julien bernard" data-status="livree">
-                  <td style="padding:10px;white-space:nowrap;font-weight:500;">#RP-2026-0038</td>
-                  <td style="padding:10px;white-space:nowrap;">J. Bernard</td>
+                <tr style="border-top:1px solid #eee;" data-client="bernard" data-status="paye" data-date="2026-02-20" data-montant="475" data-acompte="475" data-solde="0">
+                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="alert('Ouverture du document #RP-2026-0038');return false;" style="color:var(--rp-green);text-decoration:none;font-weight:500;">#RP-2026-0038</a></td>
+                  <td style="padding:10px;white-space:nowrap;">Bernard</td>
                   <td style="padding:10px;white-space:nowrap;">Vélo cargo</td>
                   <td style="padding:10px;white-space:nowrap;">Reconditionnement</td>
                   <td style="padding:10px;white-space:nowrap;">20/02/26</td>
@@ -575,7 +575,7 @@
                   <td style="padding:10px;white-space:nowrap;font-weight:600;">475 €</td>
                   <td style="padding:10px;white-space:nowrap;">475 €</td>
                   <td style="padding:10px;white-space:nowrap;font-weight:600;color:#15803d;">0 €</td>
-                  <td style="padding:10px;white-space:nowrap;"><span style="background:#dbeafe;color:#1d4ed8;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">Livrée</span></td>
+                  <td style="padding:10px;white-space:nowrap;"><span style="background:#dcfce7;color:#15803d;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">Payé</span></td>
                 </tr>
               </tbody>
             </table>
@@ -1808,16 +1808,50 @@ document.querySelectorAll('.rp-header__partner-tab').forEach(function(tab) {
 // ===== Commandes — filter by status & search client =====
 function filterCommandes() {
   var status = document.getElementById('filterStatus').value;
-  var search = document.getElementById('searchClient').value.toLowerCase();
-  var rows = document.querySelectorAll('#panel-commandes tbody tr');
+  var search = document.getElementById('searchClient').value.toLowerCase().trim();
+  var rows = document.querySelectorAll('#commandesBody tr');
   rows.forEach(function(row) {
     var matchStatus = !status || row.dataset.status === status;
-    var matchSearch = !search || row.dataset.client.includes(search);
+    // Recherche sur le nom client ET sur la référence
+    var clientCell = row.cells[1] ? row.cells[1].textContent.toLowerCase() : '';
+    var refCell = row.cells[0] ? row.cells[0].textContent.toLowerCase() : '';
+    var matchSearch = !search || clientCell.includes(search) || refCell.includes(search);
     row.style.display = (matchStatus && matchSearch) ? '' : 'none';
   });
 }
 document.getElementById('filterStatus').addEventListener('change', filterCommandes);
 document.getElementById('searchClient').addEventListener('input', filterCommandes);
+
+// ===== Commandes — tri par colonnes =====
+var sortDirections = {};
+function sortCommandes(th, key) {
+  var dir = sortDirections[key] === 'asc' ? 'desc' : 'asc';
+  sortDirections[key] = dir;
+  var tbody = document.getElementById('commandesBody');
+  var rows = Array.from(tbody.querySelectorAll('tr'));
+  rows.sort(function(a, b) {
+    var valA, valB;
+    if (key === 'client') {
+      valA = (a.dataset.client || '').toLowerCase();
+      valB = (b.dataset.client || '').toLowerCase();
+      return dir === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
+    } else if (key === 'date') {
+      valA = a.dataset.date || '';
+      valB = b.dataset.date || '';
+      return dir === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
+    } else {
+      valA = parseFloat(a.dataset[key]) || 0;
+      valB = parseFloat(b.dataset[key]) || 0;
+      return dir === 'asc' ? valA - valB : valB - valA;
+    }
+  });
+  rows.forEach(function(row) { tbody.appendChild(row); });
+  // Mettre à jour les indicateurs visuels
+  document.querySelectorAll('#panel-commandes thead th[data-sort]').forEach(function(t) {
+    var span = t.querySelector('span');
+    if (span) span.textContent = t === th ? (dir === 'asc' ? '▲' : '▼') : '⇅';
+  });
+}
 
 // ===== Diagnostic wizard =====
 function launchDiagnosticWizard() {
