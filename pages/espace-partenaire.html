@@ -118,23 +118,7 @@
     .rp-devis-subpanel.is-active { display: block; }
 
     /* ===== Diagnostics history cards ===== */
-    .rp-diag-history-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 20px 24px; margin-bottom: 12px; transition: box-shadow .2s; }
-    .rp-diag-history-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,.06); }
-    .rp-diag-history-card__header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
-    .rp-diag-history-card__header > div { display: flex; align-items: center; gap: 10px; }
-    .rp-diag-history-card__ref { font-weight: 600; font-size: 1rem; color: var(--rp-dark); }
-    .rp-diag-history-card__date { font-size: .85rem; color: var(--rp-gray); }
-    .rp-diag-history-card__badge { display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: .82rem; font-weight: 500; }
-    .rp-diag-history-card__badge--attente { background: #fef3c7; color: #92400e; }
-    .rp-diag-history-card__badge--valide { background: #dcfce7; color: #15803d; }
-    .rp-diag-history-card__badge--archive { background: #f3f4f6; color: #6b7280; }
-    .rp-diag-history-card__badge--refuse { background: #fee2e2; color: #dc2626; }
-    .rp-diag-history-card__body { margin-bottom: 14px; }
-    .rp-diag-history-card__info { display: flex; gap: 24px; flex-wrap: wrap; font-size: .88rem; color: var(--rp-gray); }
-    .rp-diag-history-card__info span { display: flex; flex-direction: column; }
-    .rp-diag-history-card__info strong { font-weight: 500; color: var(--rp-dark); font-size: .9rem; }
-    .rp-diag-history-card__footer { display: flex; align-items: center; justify-content: space-between; padding-top: 14px; border-top: 1px solid #f0f0f0; }
-    .rp-diag-history-card__price { font-weight: 700; font-size: 1.15rem; color: var(--rp-dark); }
+    /* Panel diagnostics supprimé — CSS nettoyé */
 
     /* Devis filter bar */
     .rp-devis-filters { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; background: #f9f9f9; border-radius: 12px; padding: 20px; }
@@ -414,7 +398,6 @@
       <div class="rp-header__partner-bar">
         <div class="rp-header__partner-tabs">
           <button class="rp-header__partner-tab is-active" data-tab="commandes">Commandes</button>
-          <button class="rp-header__partner-tab" data-tab="diagnostics">Diagnostics</button>
           <button class="rp-header__partner-tab" data-tab="devis">Devis</button>
           <button class="rp-header__partner-tab" data-tab="comparateur">Comparateur</button>
           <button class="rp-header__partner-tab" data-tab="parametres">Paramètres</button>
@@ -611,200 +594,7 @@
         </div>
 
         <!-- Panel: Diagnostics -->
-        <div class="rp-dashboard__panel" id="panel-diagnostics">
-
-          <!-- Header + filters -->
-          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:24px;">
-            <h2 style="font-size:1.2rem;margin:0;">Mes diagnostics</h2>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;">
-              <select class="rp-form__select" style="width:auto;padding:8px 32px 8px 12px;font-size:.88rem;" id="filterDiagStatus">
-                <option value="">Tous les statuts</option>
-                <option value="attente">En attente</option>
-                <option value="valide">Validé</option>
-                <option value="archive">Archivé</option>
-                <option value="refuse">Refusé</option>
-              </select>
-              <input type="text" class="rp-form__input" placeholder="Rechercher un client ou réf..." style="width:220px;padding:8px 12px;font-size:.88rem;" id="searchDiag">
-              <button class="rp-btn rp-btn--primary" style="padding:8px 20px;font-size:.88rem;" id="diagNewFromList">+ Nouveau diagnostic</button>
-            </div>
-          </div>
-
-          <!-- Diagnostic cards -->
-          <div id="diagCardsList">
-
-            <div class="rp-diag-history-card" data-status="attente" data-search="martin dubois diag-2026-0015 bosch powerpack">
-              <div class="rp-diag-history-card__header">
-                <div>
-                  <span class="rp-diag-history-card__ref">DIAG-2026-0015</span>
-                  <span class="rp-diag-history-card__badge rp-diag-history-card__badge--attente">En attente</span>
-                </div>
-                <span class="rp-diag-history-card__date">12/03/2026</span>
-              </div>
-              <div class="rp-diag-history-card__body">
-                <div class="rp-diag-history-card__info">
-                  <span>Client <strong>Martin Dubois</strong></span>
-                  <span>Batterie <strong>Bosch PowerPack 500</strong></span>
-                  <span>Tension <strong>36V</strong></span>
-                  <span>Résultat <strong>Défaut BMS — 100%</strong></span>
-                </div>
-              </div>
-              <div class="rp-diag-history-card__footer">
-                <span class="rp-diag-history-card__price">220 €</span>
-                <button class="rp-btn rp-btn--outline-dark rp-btn--small">Voir détails</button>
-              </div>
-            </div>
-
-            <div class="rp-diag-history-card" data-status="attente" data-search="sophie laurent diag-2026-0014 yamaha pw-x3">
-              <div class="rp-diag-history-card__header">
-                <div>
-                  <span class="rp-diag-history-card__ref">DIAG-2026-0014</span>
-                  <span class="rp-diag-history-card__badge rp-diag-history-card__badge--attente">En attente</span>
-                </div>
-                <span class="rp-diag-history-card__date">10/03/2026</span>
-              </div>
-              <div class="rp-diag-history-card__body">
-                <div class="rp-diag-history-card__info">
-                  <span>Client <strong>Sophie Laurent</strong></span>
-                  <span>Batterie <strong>Yamaha PW-X3 600Wh</strong></span>
-                  <span>Tension <strong>36V</strong></span>
-                  <span>Résultat <strong>Cellules défectueuses — 85%</strong></span>
-                </div>
-              </div>
-              <div class="rp-diag-history-card__footer">
-                <span class="rp-diag-history-card__price">295 €</span>
-                <button class="rp-btn rp-btn--outline-dark rp-btn--small">Voir détails</button>
-              </div>
-            </div>
-
-            <div class="rp-diag-history-card" data-status="valide" data-search="pierre moreau diag-2026-0012 shimano steps e8000">
-              <div class="rp-diag-history-card__header">
-                <div>
-                  <span class="rp-diag-history-card__ref">DIAG-2026-0012</span>
-                  <span class="rp-diag-history-card__badge rp-diag-history-card__badge--valide">Validé</span>
-                </div>
-                <span class="rp-diag-history-card__date">05/03/2026</span>
-              </div>
-              <div class="rp-diag-history-card__body">
-                <div class="rp-diag-history-card__info">
-                  <span>Client <strong>Pierre Moreau</strong></span>
-                  <span>Batterie <strong>Shimano STEPS E8000</strong></span>
-                  <span>Tension <strong>36V</strong></span>
-                  <span>Résultat <strong>Défaut connecteur — 90%</strong></span>
-                </div>
-              </div>
-              <div class="rp-diag-history-card__footer">
-                <span class="rp-diag-history-card__price">185 €</span>
-                <button class="rp-btn rp-btn--outline-dark rp-btn--small">Voir détails</button>
-              </div>
-            </div>
-
-            <div class="rp-diag-history-card" data-status="archive" data-search="claire petit diag-2026-0009 bosch powertube">
-              <div class="rp-diag-history-card__header">
-                <div>
-                  <span class="rp-diag-history-card__ref">DIAG-2026-0009</span>
-                  <span class="rp-diag-history-card__badge rp-diag-history-card__badge--archive">Archivé</span>
-                </div>
-                <span class="rp-diag-history-card__date">25/02/2026</span>
-              </div>
-              <div class="rp-diag-history-card__body">
-                <div class="rp-diag-history-card__info">
-                  <span>Client <strong>Claire Petit</strong></span>
-                  <span>Batterie <strong>Bosch PowerTube 625</strong></span>
-                  <span>Tension <strong>36V</strong></span>
-                  <span>Résultat <strong>Défaut BMS — 95%</strong></span>
-                </div>
-              </div>
-              <div class="rp-diag-history-card__footer">
-                <span class="rp-diag-history-card__price">220 €</span>
-                <button class="rp-btn rp-btn--outline-dark rp-btn--small">Voir détails</button>
-              </div>
-            </div>
-
-            <div class="rp-diag-history-card" data-status="refuse" data-search="thomas garcia diag-2026-0007 specialized turbo levo">
-              <div class="rp-diag-history-card__header">
-                <div>
-                  <span class="rp-diag-history-card__ref">DIAG-2026-0007</span>
-                  <span class="rp-diag-history-card__badge rp-diag-history-card__badge--refuse">Refusé</span>
-                </div>
-                <span class="rp-diag-history-card__date">18/02/2026</span>
-              </div>
-              <div class="rp-diag-history-card__body">
-                <div class="rp-diag-history-card__info">
-                  <span>Client <strong>Thomas Garcia</strong></span>
-                  <span>Batterie <strong>Specialized Turbo Levo 700Wh</strong></span>
-                  <span>Tension <strong>48V</strong></span>
-                  <span>Résultat <strong>Batterie irréparable — 98%</strong></span>
-                </div>
-              </div>
-              <div class="rp-diag-history-card__footer">
-                <span class="rp-diag-history-card__price">— €</span>
-                <button class="rp-btn rp-btn--outline-dark rp-btn--small">Voir détails</button>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Detail panel (hidden by default) -->
-          <div class="rp-suivi-detail" id="diagDetailPanel" style="display:none;">
-            <div class="rp-suivi-detail__header">
-              <div>
-                <h3 style="margin-bottom:4px;">Détail du diagnostic</h3>
-                <span class="rp-devis-ref" id="diagDetailRef"></span>
-              </div>
-              <span class="rp-devis-card__badge" id="diagDetailBadge"></span>
-            </div>
-
-            <p class="rp-suivi-detail__montant">Estimation</p>
-            <p class="rp-suivi-detail__price" id="diagDetailPrice"></p>
-
-            <hr>
-            <p class="rp-suivi-detail__section-title">Client</p>
-            <div class="rp-suivi-detail__grid" id="diagDetailClient"></div>
-
-            <hr>
-            <p class="rp-suivi-detail__section-title">Batterie</p>
-            <div class="rp-suivi-detail__grid" id="diagDetailBatterie"></div>
-
-            <hr>
-            <p class="rp-suivi-detail__section-title">Résultat du diagnostic</p>
-            <div id="diagDetailResultat" style="background:#fff;border-radius:8px;padding:12px 16px;font-size:.9rem;margin-bottom:8px;"></div>
-
-            <hr>
-            <p class="rp-suivi-detail__section-title">Prestations recommandées</p>
-            <div id="diagDetailPrestations"></div>
-
-            <div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:12px 16px;font-size:.82rem;color:#92400e;margin-top:16px;">
-              ⚠️ Un acompte de 50 % est exigible à la commande. Le solde sera payé avant la livraison retour.
-            </div>
-
-            <div class="rp-suivi-detail__actions" style="margin-top:20px;">
-              <button class="rp-btn rp-btn--primary rp-btn--small" id="btnDiagDevis">Demander un devis</button>
-              <button class="rp-btn rp-btn--outline-dark rp-btn--small" onclick="window.print()">Imprimer</button>
-              <button class="rp-btn rp-btn--outline-dark rp-btn--small" id="btnFermerDiagDetail">Fermer</button>
-            </div>
-          </div>
-
-          <!-- Summary cards -->
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-top:28px;">
-            <div style="background:#f0f9f0;border-radius:12px;padding:20px;text-align:center;">
-              <p style="font-size:.82rem;color:var(--rp-gray);margin-bottom:4px;">Total diagnostics</p>
-              <p style="font-size:1.5rem;font-weight:700;color:var(--rp-dark);">5</p>
-            </div>
-            <div style="background:#fef3c7;border-radius:12px;padding:20px;text-align:center;">
-              <p style="font-size:.82rem;color:var(--rp-gray);margin-bottom:4px;">En attente</p>
-              <p style="font-size:1.5rem;font-weight:700;color:#92400e;">2</p>
-            </div>
-            <div style="background:#dcfce7;border-radius:12px;padding:20px;text-align:center;">
-              <p style="font-size:.82rem;color:var(--rp-gray);margin-bottom:4px;">Validés</p>
-              <p style="font-size:1.5rem;font-weight:700;color:#15803d;">1</p>
-            </div>
-            <div style="background:#f3f4f6;border-radius:12px;padding:20px;text-align:center;">
-              <p style="font-size:.82rem;color:var(--rp-gray);margin-bottom:4px;">Archivés</p>
-              <p style="font-size:1.5rem;font-weight:700;color:#6b7280;">1</p>
-            </div>
-          </div>
-
-        </div>
+        <!-- Panel Diagnostics supprimé — les diagnostics sont maintenant gérés via le wizard et l'onglet Devis -->
 
         <!-- Panel: Devis -->
         <div class="rp-dashboard__panel" id="panel-devis">
@@ -1965,10 +1755,7 @@ document.querySelectorAll('.rp-header__partner-tab').forEach(function(tab) {
     if (devisDetail) { devisDetail.style.display = 'none'; }
     var devisList = document.getElementById('devisList');
     if (devisList) { devisList.style.display = ''; }
-    var diagDetail = document.getElementById('diagDetailPanel');
-    if (diagDetail) { diagDetail.style.display = 'none'; }
-    var diagCards = document.getElementById('diagCardsList');
-    if (diagCards) { diagCards.style.display = ''; }
+    // (Panel diagnostics supprimé)
     // Close diagnostic wizard if open
     var diagWizard = document.getElementById('diagWizard');
     if (diagWizard) { diagWizard.classList.remove('is-visible'); }
@@ -1991,21 +1778,7 @@ function filterCommandes() {
 document.getElementById('filterStatus').addEventListener('change', filterCommandes);
 document.getElementById('searchClient').addEventListener('input', filterCommandes);
 
-// ===== Diagnostics — filter by status & search =====
-function filterDiagnostics() {
-  var status = document.getElementById('filterDiagStatus').value;
-  var search = document.getElementById('searchDiag').value.toLowerCase();
-  var cards = document.querySelectorAll('.rp-diag-history-card');
-  cards.forEach(function(card) {
-    var matchStatus = !status || card.dataset.status === status;
-    var matchSearch = !search || card.dataset.search.includes(search);
-    card.style.display = (matchStatus && matchSearch) ? '' : 'none';
-  });
-}
-document.getElementById('filterDiagStatus').addEventListener('change', filterDiagnostics);
-document.getElementById('searchDiag').addEventListener('input', filterDiagnostics);
-
-// ===== Diagnostics — "Nouveau diagnostic" button =====
+// ===== Diagnostic wizard =====
 function launchDiagnosticWizard() {
   document.querySelectorAll('.rp-dashboard__panel').forEach(function(p) { p.classList.remove('is-active'); });
   document.getElementById('panel-diagnostic').classList.add('is-active');
@@ -2015,9 +1788,9 @@ function launchDiagnosticWizard() {
   diagGoToStep(1);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-document.getElementById('diagNewFromList').addEventListener('click', launchDiagnosticWizard);
+// diagNewFromList supprimé — le wizard est lancé depuis le CTA
 
-// ===== Diagnostic — Voir détails =====
+// ===== Données diagnostics (utilisées par les devis) =====
 var DIAG_DATA = {
   'DIAG-2026-0015': {
     ref: 'DIAG-2026-0015', date: '12/03/2026', status: 'attente', statusLabel: 'En attente',
@@ -2060,120 +1833,6 @@ var DIAG_DATA = {
     total: '60 €'
   }
 };
-
-function showDiagDetail(ref) {
-  var d = DIAG_DATA[ref];
-  if (!d) return;
-  document.getElementById('diagDetailRef').textContent = d.ref + ' — ' + d.date;
-  document.getElementById('diagDetailPrice').textContent = d.total;
-
-  var badge = document.getElementById('diagDetailBadge');
-  badge.textContent = d.statusLabel;
-  badge.className = 'rp-devis-card__badge rp-diag-history-card__badge--' + d.status;
-
-  document.getElementById('diagDetailClient').innerHTML =
-    '<div class="rp-suivi-detail__field">Nom<strong>' + d.client + '</strong></div>' +
-    '<div class="rp-suivi-detail__field">Email<strong>' + d.email + '</strong></div>' +
-    '<div class="rp-suivi-detail__field">Téléphone<strong>' + d.tel + '</strong></div>' +
-    '<div class="rp-suivi-detail__field">Ville<strong>' + d.ville + '</strong></div>' +
-    '<div class="rp-suivi-detail__field">Département<strong>' + d.departement + '</strong></div>';
-
-  document.getElementById('diagDetailBatterie').innerHTML =
-    '<div class="rp-suivi-detail__field">Modèle<strong>' + d.batterie + '</strong></div>' +
-    '<div class="rp-suivi-detail__field">Tension<strong>' + d.tension + '</strong></div>' +
-    '<div class="rp-suivi-detail__field">Capacité<strong>' + d.capacite + '</strong></div>' +
-    '<div class="rp-suivi-detail__field">N° de série<strong>' + d.serie + '</strong></div>';
-
-  document.getElementById('diagDetailResultat').innerHTML =
-    '<strong style="display:block;margin-bottom:4px;">' + d.resultat + '</strong>' +
-    '<span style="color:var(--rp-gray);">' + d.resultatDetail + '</span>';
-
-  var prestHtml = '';
-  d.prestations.forEach(function(p) {
-    prestHtml += '<div class="rp-suivi-detail__prestation" style="margin-bottom:6px;"><span>' + p.label + '</span><span>' + p.prix + '</span></div>';
-  });
-  prestHtml += '<div class="rp-suivi-detail__prestation" style="background:var(--rp-green);color:#fff;font-weight:600;margin-top:8px;"><span>Total estimé</span><span>' + d.total + '</span></div>';
-  document.getElementById('diagDetailPrestations').innerHTML = prestHtml;
-
-  // Show panel, hide cards
-  document.getElementById('diagCardsList').style.display = 'none';
-  document.getElementById('diagDetailPanel').style.display = 'block';
-  window.scrollTo({ top: document.getElementById('diagDetailPanel').offsetTop - 80, behavior: 'smooth' });
-}
-
-// Bind "Voir détails" buttons
-document.querySelectorAll('.rp-diag-history-card').forEach(function(card) {
-  var btn = card.querySelector('.rp-btn');
-  var ref = card.querySelector('.rp-diag-history-card__ref').textContent.trim();
-  btn.addEventListener('click', function() { showDiagDetail(ref); });
-});
-
-// Close detail
-document.getElementById('btnFermerDiagDetail').addEventListener('click', function() {
-  document.getElementById('diagDetailPanel').style.display = 'none';
-  document.getElementById('diagCardsList').style.display = '';
-});
-
-// "Demander un devis" depuis le détail diagnostic → créer carte devis + basculer
-document.getElementById('btnDiagDevis').addEventListener('click', function() {
-  // Récupérer la ref du diagnostic actuellement affiché
-  var diagRefEl = document.querySelector('#diagDetailPanel .rp-diag-detail__ref');
-  if (!diagRefEl) return;
-  var diagRefText = diagRefEl.textContent.trim();
-  var d = DIAG_DATA[diagRefText];
-  if (!d) { alert('Diagnostic introuvable.'); return; }
-
-  // Générer réf devis
-  var initiales = d.client.split(' ').map(function(w) { return w.charAt(0).toUpperCase(); }).join('');
-  var dept = d.departement || '00';
-  var today = new Date();
-  var dateStr = today.getFullYear() + String(today.getMonth()+1).padStart(2,'0') + String(today.getDate()).padStart(2,'0');
-  var devisRef = initiales + '-' + dept + '-' + dateStr + '-' + String(Math.floor(Math.random()*900+100));
-  var dateFr = today.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
-
-  // Créer la carte HTML
-  var cardHtml = '<div class="rp-devis-card" data-statut="attente" data-ref="' + devisRef + '" data-diag-ref="' + d.ref + '" data-client="' + d.client + '" data-email="' + d.email + '" data-batterie="' + d.batterie + '" data-date="' + today.toISOString().slice(0,10) + '" data-montant="' + d.total.replace(/[^0-9]/g, '') + '">' +
-    '<div class="rp-devis-card__header"><span class="rp-devis-card__ref">' + devisRef + '</span><span class="rp-devis-card__price">' + d.total.replace('€','EUR') + '</span></div>' +
-    '<div class="rp-devis-card__details">' +
-      '<span>Client<strong>' + d.client + '</strong></span>' +
-      '<span>Email<strong>' + d.email + '</strong></span>' +
-      '<span>Batterie<strong>' + d.batterie + '</strong></span>' +
-      '<span>Date<strong>' + dateFr + '</strong></span>' +
-      '<span>Statut<strong><span class="rp-devis-card__badge rp-devis-card__badge--attente">En attente</span></strong></span>' +
-    '</div>' +
-    '<div style="padding:0 20px 16px;text-align:right;"><button class="rp-btn rp-btn--outline-dark rp-btn--small rp-devis-voir-detail">Voir détails</button></div>' +
-  '</div>';
-
-  var devisList = document.getElementById('devisList');
-  devisList.insertAdjacentHTML('afterbegin', cardHtml);
-  var newCard = devisList.firstElementChild;
-  newCard.querySelector('.rp-devis-voir-detail').addEventListener('click', function() {
-    showDevisDetail(this.closest('.rp-devis-card'));
-  });
-
-  // Fermer le panel diagnostic et basculer vers Devis
-  document.getElementById('diagDetailPanel').style.display = 'none';
-  document.getElementById('diagCardsList').style.display = '';
-  document.querySelectorAll('.rp-header__partner-tab').forEach(function(t) {
-    t.classList.remove('is-active');
-    if (t.dataset.tab === 'devis') t.classList.add('is-active');
-  });
-  document.querySelectorAll('.rp-dashboard__panel').forEach(function(p) { p.classList.remove('is-active'); });
-  document.getElementById('panel-devis').classList.add('is-active');
-
-  // Activer sous-onglet Administration
-  document.querySelectorAll('.rp-devis-subtab').forEach(function(t) {
-    t.classList.remove('is-active');
-    if (t.dataset.devisTab === 'admin') t.classList.add('is-active');
-  });
-  document.querySelectorAll('.rp-devis-subpanel').forEach(function(p) { p.classList.remove('is-active'); });
-  document.getElementById('subpanel-admin').classList.add('is-active');
-  devisList.style.display = '';
-  document.getElementById('devisDetailPanel').style.display = 'none';
-
-  // Ouvrir directement le détail
-  showDevisDetail(newCard);
-});
 
 // ===== Devis sub-tab switching =====
 document.querySelectorAll('.rp-devis-subtab').forEach(function(btn) {
@@ -2522,8 +2181,8 @@ document.querySelector('.rp-dash-cta .rp-btn').addEventListener('click', functio
 // Back to dashboard — retour vers l'onglet Diagnostics
 document.getElementById('diagBackDashboard').addEventListener('click', function() {
   document.getElementById('panel-diagnostic').classList.remove('is-active');
-  document.getElementById('panel-diagnostics').classList.add('is-active');
-  document.querySelector('.rp-header__partner-tab[data-tab="diagnostics"]').classList.add('is-active');
+  document.getElementById('panel-commandes').classList.add('is-active');
+  document.querySelector('.rp-header__partner-tab[data-tab="commandes"]').classList.add('is-active');
   document.getElementById('diagWizard').classList.remove('is-visible');
   // Restore CTA block
   document.querySelector('.rp-dash-cta').style.display = '';
