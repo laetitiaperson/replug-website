@@ -1218,7 +1218,7 @@
                       </select>
                     </div>
                     <div class="rp-diag__form-group">
-                      <label>Code erreur affiché <span style="color:#dc2626;">*</span></label>
+                      <label>Code erreur affiché</label>
                       <input type="text" id="diagCodeErreur" placeholder="Ex: E04, clignotement 3x...">
                     </div>
                   </div>
@@ -2477,7 +2477,7 @@ document.getElementById('diagLaunchBtn').addEventListener('click', function() {
   var firstInvalidSection = null;
 
   // --- Validation Mesures électriques ---
-  var requiredStep2Ids = ['diagTension', 'diagTensionChargeur', 'diagCourantCharge', 'diagCodeErreur'];
+  var requiredStep2Ids = ['diagTension', 'diagTensionChargeur', 'diagCourantCharge'];
   requiredStep2Ids.forEach(function(id) {
     var input = document.getElementById(id);
     if (!input) return;
