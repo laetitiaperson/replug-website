@@ -1375,20 +1375,6 @@
                 </div>
               </div>
 
-              <!-- Section: Observations -->
-              <div class="rp-diag__section" id="diagSectionObservations">
-                <div class="rp-diag__section-header" onclick="toggleDiagSection('diagSectionObservations')">
-                  <h3>Observations complémentaires</h3>
-                  <button class="rp-diag__section-toggle" type="button">Masquer</button>
-                </div>
-                <div class="rp-diag__section-body">
-                  <div class="rp-diag__form-group" style="margin-bottom:0;">
-                    <label>Commentaires libres <span style="color:#dc2626;">*</span></label>
-                    <textarea id="diagCommentaires" rows="4" placeholder="Décrivez tout élément utile : circonstances de la panne, comportement observé, historique de la batterie..." style="width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:10px;font-size:.9rem;font-family:inherit;background:#f9f9f9;resize:vertical;box-sizing:border-box;transition:border-color .2s;"></textarea>
-                  </div>
-                </div>
-              </div>
-
               <div class="rp-diag__actions">
                 <button class="rp-btn rp-btn--primary" id="diagLaunchBtn" type="button">Lancer le diagnostic</button>
                 <button class="rp-diag__btn-reset" id="diagResetBtn" type="button">Réinitialiser</button>
@@ -2472,13 +2458,6 @@ document.querySelectorAll('input[name="diagProbleme"]').forEach(function(cb) {
     body.style.border = ''; body.style.borderRadius = ''; body.style.padding = '';
   });
 });
-// Retirer le liseré rouge du textarea commentaires
-var diagComm = document.getElementById('diagCommentaires');
-if (diagComm) {
-  diagComm.addEventListener('input', function() {
-    if (this.value.trim()) this.closest('.rp-diag__form-group').classList.remove('is-invalid');
-  });
-}
 
 // Step 2 → Step 1
 document.getElementById('diagBackStep1').addEventListener('click', function() {
@@ -2536,16 +2515,6 @@ document.getElementById('diagLaunchBtn').addEventListener('click', function() {
       if (!firstInvalidEl) { firstInvalidEl = sel; firstInvalidSection = 'diagSectionContexte'; }
     } else { group.classList.remove('is-invalid'); }
   });
-
-  // --- Validation Commentaires ---
-  var commentaires = document.getElementById('diagCommentaires');
-  if (commentaires) {
-    var commentGroup = commentaires.closest('.rp-diag__form-group');
-    if (!commentaires.value.trim()) {
-      commentGroup.classList.add('is-invalid'); allValid = false;
-      if (!firstInvalidEl) { firstInvalidEl = commentaires; firstInvalidSection = 'diagSectionObservations'; }
-    } else { commentGroup.classList.remove('is-invalid'); }
-  }
 
   if (!allValid) {
     // Déplier la section contenant le premier champ invalide
@@ -2842,7 +2811,6 @@ document.getElementById('diagNewDiag').addEventListener('click', function() {
   var diagStockage = document.getElementById('diagStockage'); if (diagStockage) diagStockage.selectedIndex = 0;
   var diagDernierUsage = document.getElementById('diagDernierUsage'); if (diagDernierUsage) diagDernierUsage.selectedIndex = 0;
   var diagReparation = document.getElementById('diagReparation'); if (diagReparation) diagReparation.selectedIndex = 0;
-  var diagCommentaires = document.getElementById('diagCommentaires'); if (diagCommentaires) diagCommentaires.value = '';
   document.querySelectorAll('input[name="diagProbleme"]').forEach(function(cb) { cb.checked = false; });
   document.querySelectorAll('input[name="diagVisuel"]').forEach(function(r) { r.checked = false; });
   document.querySelectorAll('input[name="diagCharge"]').forEach(function(r) { r.checked = false; });
