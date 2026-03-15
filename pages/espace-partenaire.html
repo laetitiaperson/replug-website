@@ -330,7 +330,9 @@
     .rp-diag-result__header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
     .rp-diag-result__header h3 { font-size: 1.2rem; font-weight: 700; color: var(--rp-dark); margin-bottom: 4px; }
     .rp-diag-result__ref { color: var(--rp-gray); font-size: .9rem; }
-    .rp-diag-result__badge { display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: .82rem; font-weight: 500; background: #fef3c7; color: #92400e; }
+    .rp-diag-result__badge { display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: .82rem; font-weight: 500; background: #fef3c7; color: #92400e; border: none; cursor: default; }
+    .rp-diag-result__badge--print { background: #f0f0f0; color: var(--rp-dark); cursor: pointer; transition: background .2s; }
+    .rp-diag-result__badge--print:hover { background: #e0e0e0; }
     .rp-diag-result__montant { font-size: .88rem; color: var(--rp-gray); margin-bottom: 2px; }
     .rp-diag-result__price { font-size: 1.6rem; font-weight: 700; color: var(--rp-dark); margin-bottom: 8px; }
     .rp-diag-result hr { border: none; border-top: 1px solid #e5e7eb; margin: 20px 0; }
@@ -1392,7 +1394,7 @@
                     <h3>Résultat du diagnostic</h3>
                     <span class="rp-diag-result__ref" id="diagResultRef"></span>
                   </div>
-                  <span class="rp-diag-result__badge">En attente</span>
+                  <button class="rp-diag-result__badge rp-diag-result__badge--print" onclick="window.print()" type="button">🖨️ Imprimer</button>
                 </div>
 
                 <!-- Prix total -->
@@ -1436,11 +1438,15 @@
 
                 <!-- Actions -->
                 <div class="rp-diag-result__actions">
-                  <button class="rp-btn rp-btn--primary rp-btn--small" id="diagDemandeDevis" type="button">Demander un devis</button>
-                  <button class="rp-btn rp-btn--outline-dark rp-btn--small" onclick="window.print()">Imprimer</button>
-                  <button class="rp-btn rp-btn--outline-dark rp-btn--small" id="diagNewDiag" type="button">Nouveau diagnostic</button>
+                  <button class="rp-btn rp-btn--primary rp-btn--small" id="diagDemandeDevis" type="button">Commander</button>
+                  <button class="rp-btn rp-btn--outline-dark rp-btn--small" onclick="alert('Diagnostic sauvegardé.')">Sauvegarder</button>
                 </div>
 
+              </div>
+
+              <!-- Nouveau diagnostic — hors du cadre résultat -->
+              <div style="text-align:center;margin-top:24px;">
+                <button class="rp-btn rp-btn--outline-dark rp-btn--small" id="diagNewDiag" type="button">Nouveau diagnostic</button>
               </div>
 
             </div>
@@ -2305,11 +2311,12 @@ function diagGoToStep(step) {
     if (sNum === step) s.classList.add('is-active');
     if (sNum < step) s.classList.add('is-done');
   });
-  // Masquer titre + sous-titre sur l'étape 2
+  // Masquer titre + sous-titre sur les étapes 2 et 3
   var diagTitle = document.querySelector('.rp-diag__title');
   var diagSubtitle = document.querySelector('.rp-diag__subtitle');
-  if (diagTitle) diagTitle.style.visibility = step === 2 ? 'hidden' : '';
-  if (diagSubtitle) diagSubtitle.style.visibility = step === 2 ? 'hidden' : '';
+  var hideTitle = (step === 2 || step === 3);
+  if (diagTitle) diagTitle.style.visibility = hideTitle ? 'hidden' : '';
+  if (diagSubtitle) diagSubtitle.style.visibility = hideTitle ? 'hidden' : '';
 
   document.querySelectorAll('.rp-diag__step-line').forEach(function(line, i) {
     line.classList.toggle('is-done', i < step - 1);
