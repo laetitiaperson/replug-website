@@ -230,7 +230,84 @@
     .rp-facture__paid { text-align: center; padding: 12px; border-radius: 8px; font-weight: 600; font-size: .9rem; margin-top: 24px; }
     .rp-facture__paid--ok { background: #dcfce7; color: #15803d; }
     .rp-facture__paid--pending { background: #fef3c7; color: #92400e; }
-    @media print { .rp-facture-overlay { position: static; background: none; padding: 0; display: block !important; } .rp-facture { box-shadow: none; max-height: none; border-radius: 0; } .rp-facture__actions { display: none !important; } body > *:not(.rp-facture-overlay) { display: none !important; } }
+    @media print {
+      /* ---- Masquer tout par défaut ---- */
+      body * { visibility: hidden !important; }
+
+      /* ---- Zone imprimable : facture (overlay) ---- */
+      .rp-facture-overlay.is-visible,
+      .rp-facture-overlay.is-visible * {
+        visibility: visible !important;
+      }
+      .rp-facture-overlay.is-visible {
+        position: fixed !important; inset: 0 !important;
+        background: #fff !important; padding: 0 !important;
+        display: flex !important; z-index: 99999 !important;
+        overflow: visible !important;
+      }
+      .rp-facture-overlay.is-visible .rp-facture {
+        box-shadow: none !important; max-height: none !important;
+        border-radius: 0 !important; overflow: visible !important;
+        margin: 0 auto !important; padding: 20px 40px !important;
+      }
+      .rp-facture__actions { display: none !important; }
+
+      /* ---- Zone imprimable : détail devis ---- */
+      #devisDetailPanel[style*="display: block"],
+      #devisDetailPanel[style*="display: block"] * {
+        visibility: visible !important;
+      }
+      #devisDetailPanel[style*="display: block"] {
+        position: fixed !important; inset: 0 !important;
+        background: #fff !important; z-index: 99999 !important;
+        overflow: visible !important; max-width: none !important;
+        padding: 20px 40px !important; box-shadow: none !important;
+        border-radius: 0 !important;
+      }
+
+      /* ---- Zone imprimable : suivi devis ---- */
+      #suiviDevisDetail.is-visible,
+      #suiviDevisDetail.is-visible * {
+        visibility: visible !important;
+      }
+      #suiviDevisDetail.is-visible {
+        position: fixed !important; inset: 0 !important;
+        background: #fff !important; z-index: 99999 !important;
+        overflow: visible !important; max-width: none !important;
+        padding: 20px 40px !important; box-shadow: none !important;
+        border-radius: 0 !important;
+      }
+
+      /* ---- Zone imprimable : résultat diagnostic ---- */
+      #diagResultPanel,
+      #diagResultPanel * {
+        visibility: visible !important;
+      }
+      #diagResultPanel {
+        position: fixed !important; inset: 0 !important;
+        background: #fff !important; z-index: 99999 !important;
+        overflow: visible !important; max-width: none !important;
+        padding: 20px 40px !important; box-shadow: none !important;
+        border-radius: 0 !important;
+      }
+
+      /* ---- Masquer les boutons d'action partout ---- */
+      .rp-suivi-detail__actions,
+      .rp-diag-result__badge--print {
+        display: none !important;
+      }
+
+      /* ---- Conserver les couleurs de fond à l'impression ---- */
+      .rp-facture__paid,
+      .rp-devis-doc__total-row--final,
+      .rp-devis-doc__dest,
+      .rp-devis-doc__table thead,
+      .rp-devis-card__badge,
+      .rp-diag-result {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+    }
 
     /* ===== Paramètres ===== */
     .rp-params__section { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 28px; margin-bottom: 20px; }
