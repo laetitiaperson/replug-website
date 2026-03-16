@@ -433,6 +433,8 @@
     .rp-diag-result__badge { display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: .82rem; font-weight: 500; background: #fef3c7; color: #92400e; border: none; cursor: default; }
     .rp-diag-result__badge--print { background: #f0f0f0; color: var(--rp-dark); cursor: pointer; transition: background .2s; }
     .rp-diag-result__badge--print:hover { background: #e0e0e0; }
+    .rp-diag-result__delete { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 8px; border: 1px solid #e5e7eb; background: #fff; color: #9ca3af; cursor: pointer; transition: all .2s; margin-left: auto; }
+    .rp-diag-result__delete:hover { color: #dc2626; border-color: #dc2626; background: #fef2f2; }
     .rp-diag-result__montant { font-size: .88rem; color: var(--rp-gray); margin-bottom: 2px; }
     .rp-diag-result__price { font-size: 1.6rem; font-weight: 700; color: var(--rp-dark); margin-bottom: 8px; }
     .rp-diag-result hr { border: none; border-top: 1px solid #e5e7eb; margin: 20px 0; }
@@ -1673,6 +1675,7 @@
                   <button class="rp-btn rp-btn--primary rp-btn--small" id="diagCommander" type="button">Commander</button>
                   <button class="rp-btn rp-btn--outline-dark rp-btn--small" id="diagSauvegarder" type="button">Sauvegarder</button>
                   <button class="rp-btn rp-btn--outline-dark rp-btn--small" onclick="window.print()">Imprimer</button>
+                  <button class="rp-diag-result__delete" id="diagSupprimer" type="button" title="Supprimer ce diagnostic"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg></button>
                 </div>
 
               </div>
@@ -3264,6 +3267,13 @@ document.getElementById('diagCommander').addEventListener('click', function() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
+
+// Supprimer le diagnostic — revient à l'accueil du diagnostic
+document.getElementById('diagSupprimer').addEventListener('click', function() {
+  if (!confirm('Supprimer ce diagnostic ?')) return;
+  diagExitWizardToTab('commandes');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
 
 // ===== Télécharger QR Code (generates a simple page to print/save as PDF) =====
 document.getElementById('btnDownloadQR').addEventListener('click', function() {
