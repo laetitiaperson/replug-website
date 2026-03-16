@@ -152,22 +152,35 @@
     .rp-suivi-search__form { display: flex; gap: 10px; }
     .rp-suivi-search__form input { flex: 1; padding: 10px 14px; font-size: .92rem; }
 
-    .rp-suivi-detail { max-width: 640px; margin: 0 auto; background: #f9fafb; border-radius: 16px; padding: 32px; display: none; }
+    .rp-suivi-detail { max-width: 700px; margin: 0 auto; background: #fff; border-radius: 16px; padding: 40px; display: none; box-shadow: 0 2px 16px rgba(0,0,0,.07); }
     .rp-suivi-detail.is-visible { display: block; }
-    .rp-suivi-detail__header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
-    .rp-suivi-detail__header h3 { font-size: 1.2rem; margin-bottom: 4px; }
-    .rp-suivi-detail__header .rp-devis-ref { color: var(--rp-gray); font-size: .9rem; }
-    .rp-suivi-detail__qr { width: 80px; height: 80px; background: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; padding: 8px; }
-    .rp-suivi-detail__qr svg { width: 100%; height: 100%; }
-    .rp-suivi-detail__montant { font-size: .88rem; color: var(--rp-gray); margin-bottom: 2px; }
-    .rp-suivi-detail__price { font-size: 1.6rem; font-weight: 700; color: var(--rp-dark); margin-bottom: 8px; }
-    .rp-suivi-detail hr { border: none; border-top: 1px solid #e5e7eb; margin: 20px 0; }
-    .rp-suivi-detail__section-title { font-size: 1rem; font-weight: 600; margin-bottom: 12px; color: var(--rp-dark); }
-    .rp-suivi-detail__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 0; }
-    .rp-suivi-detail__field { font-size: .82rem; color: var(--rp-gray); }
-    .rp-suivi-detail__field strong { display: block; font-size: .9rem; font-weight: 500; color: var(--rp-dark); margin-top: 2px; }
-    .rp-suivi-detail__prestation { display: flex; justify-content: space-between; background: #fff; border-radius: 8px; padding: 12px 16px; font-size: .9rem; }
-    .rp-suivi-detail__prestation span:last-child { font-weight: 600; }
+    .rp-devis-doc__header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; }
+    .rp-devis-doc__logo { width: 90px; height: auto; }
+    .rp-devis-doc__emetteur { text-align: right; font-size: .88rem; color: var(--rp-dark); }
+    .rp-devis-doc__emetteur strong { display: block; font-size: 1rem; color: var(--rp-green); margin-bottom: 4px; }
+    .rp-devis-doc__title-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 24px; }
+    .rp-devis-doc__title { font-size: 1.8rem; font-weight: 700; color: var(--rp-dark); letter-spacing: 2px; }
+    .rp-devis-doc__ref { font-size: .95rem; color: var(--rp-gray); }
+    .rp-devis-doc__dest { background: #f9fafb; border-left: 3px solid var(--rp-green); border-radius: 8px; padding: 16px 20px; margin-bottom: 28px; font-size: .9rem; }
+    .rp-devis-doc__dest-label { font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--rp-gray); margin-bottom: 6px; }
+    .rp-devis-doc__dest strong { display: block; font-size: 1rem; color: var(--rp-dark); margin-bottom: 2px; }
+    .rp-devis-doc__client-ref { font-size: .82rem; color: var(--rp-gray); margin-top: 8px; font-style: italic; }
+    .rp-devis-doc__table { width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: .9rem; }
+    .rp-devis-doc__table thead { background: #f3f4f6; }
+    .rp-devis-doc__table th { text-align: left; padding: 10px 14px; font-weight: 600; color: var(--rp-dark); font-size: .82rem; }
+    .rp-devis-doc__table th:last-child { text-align: right; }
+    .rp-devis-doc__table td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; }
+    .rp-devis-doc__table td:last-child { text-align: right; font-weight: 500; }
+    .rp-devis-doc__totals { display: flex; justify-content: flex-end; margin-bottom: 24px; }
+    .rp-devis-doc__totals-box { width: 260px; }
+    .rp-devis-doc__total-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: .9rem; }
+    .rp-devis-doc__total-row--final { background: var(--rp-green); color: #fff; font-weight: 700; font-size: 1rem; padding: 10px 14px; border-radius: 6px; margin-top: 8px; }
+    .rp-devis-doc__conditions { margin-bottom: 20px; }
+    .rp-devis-doc__conditions-title { font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
+    .rp-devis-doc__conditions p { font-size: .85rem; color: var(--rp-gray); font-style: italic; }
+    .rp-devis-doc__footer { border-top: 1px solid #e8e8e8; padding-top: 16px; font-size: .78rem; color: #999; text-align: center; }
+    .rp-devis-doc__badge { margin-bottom: 20px; }
+    .rp-devis-doc__payment { background: #f9fafb; border-radius: 12px; border: 1px solid #e8e8e8; padding: 20px; margin-top: 20px; }
     .rp-suivi-detail__actions { display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
     @media (max-width: 600px) {
       .rp-suivi-detail__grid { grid-template-columns: 1fr 1fr; }
@@ -949,48 +962,72 @@
 
             <!-- Devis detail panel (hidden by default) -->
             <div class="rp-suivi-detail" id="devisDetailPanel" style="display:none;">
-              <div class="rp-suivi-detail__header">
-                <div>
-                  <h3 style="margin-bottom:4px;">Détail du devis</h3>
-                  <span class="rp-devis-ref" id="devisDetailRef"></span>
+              <!-- En-tête logo + émetteur -->
+              <div class="rp-devis-doc__header">
+                <img src="../images/logo-replug.png" alt="Re-plug" class="rp-devis-doc__logo">
+                <div class="rp-devis-doc__emetteur">
+                  <strong>Re-plug SAS</strong>
+                  8, rue Lemercier - 75017 Paris<br>
+                  admin@re-plug.fr
                 </div>
+              </div>
+
+              <!-- Titre DEVIS + Référence -->
+              <div class="rp-devis-doc__title-row">
+                <span class="rp-devis-doc__title">DEVIS</span>
+                <span class="rp-devis-doc__ref" id="devisDetailRef"></span>
+              </div>
+
+              <!-- Statut -->
+              <div class="rp-devis-doc__badge">
                 <span class="rp-devis-card__badge" id="devisDetailBadge"></span>
               </div>
 
-              <p class="rp-suivi-detail__montant">Montant du devis</p>
-              <p class="rp-suivi-detail__price" id="devisDetailPrice"></p>
+              <!-- Destinataire = partenaire -->
+              <div class="rp-devis-doc__dest">
+                <div class="rp-devis-doc__dest-label">Destinataire</div>
+                <strong id="devisDestNom">Cycles Expert SARL</strong>
+                <span id="devisDestAdresse">12 avenue de la République — 75011 Paris</span><br>
+                <span id="devisDestSiret">SIRET : 823 456 789 00012</span>
+                <div class="rp-devis-doc__client-ref" id="devisClientRef"></div>
+              </div>
 
-              <hr>
-              <p class="rp-suivi-detail__section-title">Client</p>
-              <div class="rp-suivi-detail__grid" id="devisDetailClient"></div>
+              <!-- Tableau désignation -->
+              <table class="rp-devis-doc__table">
+                <thead>
+                  <tr><th>Désignation</th><th>Quantité</th><th>Prix unitaire HT</th><th>Total HT (Euros)</th></tr>
+                </thead>
+                <tbody id="devisDetailTableBody"></tbody>
+              </table>
 
-              <hr>
-              <p class="rp-suivi-detail__section-title">Batterie</p>
-              <div class="rp-suivi-detail__grid" id="devisDetailBatterie"></div>
+              <!-- Totaux -->
+              <div class="rp-devis-doc__totals">
+                <div class="rp-devis-doc__totals-box">
+                  <div class="rp-devis-doc__total-row"><span>Total HT :</span><span id="devisTotalHT"></span></div>
+                  <div class="rp-devis-doc__total-row"><span>TVA (20%) :</span><span id="devisTVA"></span></div>
+                  <div class="rp-devis-doc__total-row rp-devis-doc__total-row--final"><span>TOTAL TTC (Euros) :</span><span id="devisTotalTTC"></span></div>
+                </div>
+              </div>
 
-              <hr>
-              <p class="rp-suivi-detail__section-title">Diagnostic associé</p>
-              <div id="devisDetailDiag" style="background:#fff;border-radius:8px;padding:12px 16px;font-size:.9rem;margin-bottom:8px;"></div>
+              <!-- Conditions de paiement -->
+              <div class="rp-devis-doc__conditions">
+                <div class="rp-devis-doc__conditions-title">Conditions de paiement</div>
+                <p>50% à la commande, 50% avant livraison</p>
+              </div>
 
-              <hr>
-              <p class="rp-suivi-detail__section-title">Prestations</p>
-              <div id="devisDetailPrestations"></div>
+              <!-- Notice paiement -->
+              <div id="devisPaymentNotice" style="background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:12px 16px;font-size:.82rem;color:#92400e;"></div>
 
-              <div id="devisPaymentNotice" style="background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:12px 16px;font-size:.82rem;color:#92400e;margin-top:16px;"></div>
-
-              <hr>
-              <p class="rp-suivi-detail__section-title">Paiement</p>
-              <div id="devisPaymentSection" style="background:#fff;border-radius:12px;border:1px solid #e8e8e8;padding:20px;">
+              <!-- Section paiement -->
+              <div id="devisPaymentSection" class="rp-devis-doc__payment">
                 <p style="font-size:.9rem;color:var(--rp-dark);margin-bottom:12px;font-weight:500;">Acompte de 50 % à régler : <strong id="devisAcompteAmount" style="color:var(--rp-green);"></strong></p>
                 <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
-                  <label style="flex:1;min-width:140px;display:flex;align-items:center;gap:8px;padding:12px 16px;border:2px solid #e8e8e8;border-radius:8px;cursor:pointer;font-size:.88rem;transition:border-color .2s;">
+                  <label style="flex:1;min-width:140px;display:flex;align-items:center;gap:8px;padding:12px 16px;border:2px solid #e8e8e8;border-radius:8px;cursor:pointer;font-size:.88rem;">
                     <input type="radio" name="devisPayMethod" value="cb" checked style="accent-color:var(--rp-green);">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
                     Carte bancaire
                   </label>
-                  <label style="flex:1;min-width:140px;display:flex;align-items:center;gap:8px;padding:12px 16px;border:2px solid #e8e8e8;border-radius:8px;cursor:pointer;font-size:.88rem;transition:border-color .2s;">
+                  <label style="flex:1;min-width:140px;display:flex;align-items:center;gap:8px;padding:12px 16px;border:2px solid #e8e8e8;border-radius:8px;cursor:pointer;font-size:.88rem;">
                     <input type="radio" name="devisPayMethod" value="virement" style="accent-color:var(--rp-green);">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
                     Virement bancaire
                   </label>
                 </div>
@@ -1009,7 +1046,6 @@
                       <input type="text" class="rp-form__input" placeholder="123" maxlength="3" style="font-size:.9rem;" disabled>
                     </div>
                   </div>
-                  <p style="font-size:.78rem;color:var(--rp-gray);margin-bottom:12px;">🔒 Paiement sécurisé — Les données bancaires ne sont pas stockées.</p>
                 </div>
                 <div id="devisPayVirement" style="display:none;">
                   <div style="background:#f8f9fa;border-radius:8px;padding:16px;font-size:.88rem;margin-bottom:12px;">
@@ -1018,9 +1054,13 @@
                     <p style="margin-bottom:4px;">BIC : <strong>REPLFRPP</strong></p>
                     <p>Référence à indiquer : <strong id="devisPayVirementRef"></strong></p>
                   </div>
-                  <p style="font-size:.78rem;color:var(--rp-gray);margin-bottom:12px;">Le traitement de votre commande débutera dès réception du virement.</p>
                 </div>
                 <button class="rp-btn rp-btn--primary" style="width:100%;" id="btnDevisPayer">Payer l'acompte</button>
+              </div>
+
+              <!-- Pied de page légal -->
+              <div class="rp-devis-doc__footer">
+                Re-plug SAS - Capital social : 15 000 € - SIRET : En cours - RCS Paris - N° TVA Intracommunautaire : En cours
               </div>
 
               <div class="rp-suivi-detail__actions" style="margin-top:20px;">
@@ -2350,40 +2390,39 @@ function showDevisDetail(card) {
   var d = DIAG_DATA[diagRef];
   if (!d) return;
 
-  document.getElementById('devisDetailRef').textContent = 'Devis ' + devisRef + ' — issu du diagnostic ' + diagRef;
-  document.getElementById('devisDetailPrice').textContent = d.total;
+  // Référence
+  document.getElementById('devisDetailRef').textContent = 'Référence : ' + devisRef;
 
+  // Badge statut
   var badge = document.getElementById('devisDetailBadge');
   badge.textContent = DEVIS_STATUS_LABELS[statut] || statut;
   badge.className = 'rp-devis-card__badge rp-devis-card__badge--' + statut;
 
-  document.getElementById('devisDetailClient').innerHTML =
-    '<div class="rp-suivi-detail__field">Nom<strong>' + d.client + '</strong></div>' +
-    '<div class="rp-suivi-detail__field">Email<strong>' + d.email + '</strong></div>' +
-    '<div class="rp-suivi-detail__field">Téléphone<strong>' + d.tel + '</strong></div>' +
-    '<div class="rp-suivi-detail__field">Ville<strong>' + d.ville + '</strong></div>' +
-    '<div class="rp-suivi-detail__field">Code postal<strong>' + d.departement + '</strong></div>';
+  // Destinataire = partenaire (demo)
+  document.getElementById('devisDestNom').textContent = 'Cycles Expert SARL';
+  document.getElementById('devisDestAdresse').textContent = '12 avenue de la République — 75011 Paris';
+  document.getElementById('devisDestSiret').textContent = 'SIRET : 823 456 789 00012';
+  document.getElementById('devisClientRef').textContent = 'Client final : ' + d.client + ' — ' + d.batterie;
 
-  document.getElementById('devisDetailBatterie').innerHTML =
-    '<div class="rp-suivi-detail__field">Modèle<strong>' + d.batterie + '</strong></div>' +
-    '<div class="rp-suivi-detail__field">Tension<strong>' + d.tension + '</strong></div>' +
-    '<div class="rp-suivi-detail__field">Capacité<strong>' + d.capacite + '</strong></div>' +
-    '<div class="rp-suivi-detail__field">N° de série<strong>' + d.serie + '</strong></div>';
-
-  document.getElementById('devisDetailDiag').innerHTML =
-    '<strong style="display:block;margin-bottom:4px;">Réf. ' + diagRef + ' — ' + d.date + '</strong>' +
-    '<span style="color:var(--rp-gray);">' + d.resultat + '</span>';
-
-  var prestHtml = '';
+  // Tableau prestations
+  var tableHtml = '';
   d.prestations.forEach(function(p) {
-    prestHtml += '<div class="rp-suivi-detail__prestation" style="margin-bottom:6px;"><span>' + p.label + '</span><span>' + p.prix + '</span></div>';
+    var prixNum = parseFloat(p.prix.replace(/[^0-9,\.]/g, '').replace(',', '.')) || 0;
+    var prixHT = (prixNum / 1.20).toFixed(2).replace('.', ',');
+    tableHtml += '<tr><td>' + p.label + '</td><td style="text-align:center;">1</td><td>' + prixHT + '</td><td>' + prixHT + ' €</td></tr>';
   });
-  prestHtml += '<div class="rp-suivi-detail__prestation" style="background:var(--rp-green);color:#fff;font-weight:600;margin-top:8px;"><span>Total devis</span><span>' + d.total + '</span></div>';
-  document.getElementById('devisDetailPrestations').innerHTML = prestHtml;
+  document.getElementById('devisDetailTableBody').innerHTML = tableHtml;
+
+  // Totaux
+  var totalTTC = parseFloat(d.total.replace(/[^0-9,\.]/g, '').replace(',', '.')) || 0;
+  var totalHT = Math.round(totalTTC / 1.20 * 100) / 100;
+  var tva = Math.round((totalTTC - totalHT) * 100) / 100;
+  document.getElementById('devisTotalHT').textContent = totalHT.toFixed(2).replace('.', ',') + ' €';
+  document.getElementById('devisTVA').textContent = tva.toFixed(2).replace('.', ',') + ' €';
+  document.getElementById('devisTotalTTC').textContent = totalTTC.toFixed(2).replace('.', ',') + ' €';
 
   // Payment section adapted to status
-  var totalNum = parseFloat(d.total.replace(/[^0-9,\.]/g, '').replace(',', '.')) || 0;
-  var halfAmount = (totalNum / 2).toFixed(2).replace('.', ',') + ' €';
+  var halfAmount = (totalTTC / 2).toFixed(2).replace('.', ',') + ' €';
   var notice = document.getElementById('devisPaymentNotice');
   var paySection = document.getElementById('devisPaymentSection');
   currentDevisStatut = statut;
