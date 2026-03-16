@@ -41,6 +41,13 @@
     .rp-partner-form__success svg { width: 64px; height: 64px; color: var(--rp-green); margin-bottom: 20px; }
     .rp-partner-form__success h2 { font-size: 1.5rem; margin-bottom: 12px; }
     .rp-partner-form__success p { color: #555; max-width: 460px; margin: 0 auto; }
+    /* Validation */
+    .rp-form__group.is-invalid .rp-form__input,
+    .rp-form__group.is-invalid .rp-form__textarea { border-color: #dc2626; background: #fef2f2; }
+    .rp-form__group.is-invalid .rp-form__label { color: #dc2626; }
+    .rp-form__group.is-invalid .rp-form__hint { color: #dc2626; }
+    .rp-partner-form__legal.is-invalid { color: #dc2626; }
+    .rp-partner-form__legal.is-invalid a { color: #dc2626; }
   </style>
 </head>
 <body>
@@ -48,9 +55,9 @@
   <header class="rp-header"><div class="rp-header__inner"><a href="../index.html" class="rp-header__logo" aria-label="Re-plug — Accueil"><img src="../images/logo-replug.png" alt="Re-plug" class="rp-header__logo-img" width="120" height="40"></a><nav class="rp-header__nav" aria-label="Navigation principale"><a href="qui-sommes-nous.html" class="rp-header__nav-link">Qui sommes-nous</a><a href="notre-expertise.html" class="rp-header__nav-link">Notre expertise</a><a href="ressources.html" class="rp-header__nav-link">Ressources</a><a href="blog.html" class="rp-header__nav-link">Blog</a><a href="contact.html" class="rp-header__nav-link">Contact</a><a href="trouver-un-reparateur.html" class="rp-btn rp-btn--primary rp-header__nav-cta">Trouver un réparateur</a></nav><div class="rp-header__actions"><a href="espace-partenaire.html" class="rp-header__partner-link" aria-label="Espace Partenaire"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Espace Partenaire</span></a><a href="trouver-un-reparateur.html" class="rp-btn rp-btn--primary rp-header__cta">Trouver un réparateur</a></div><button class="rp-header__burger" aria-label="Ouvrir le menu" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
 
   <main id="main-content">
-    <section class="rp-page-hero rp-page-hero--green">
+    <section class="rp-page-hero rp-page-hero--with-bg" style="background-image:url('../images/ebikes-mobilite.jpg');">
       <div class="rp-page-hero__inner">
-        <h1 class="rp-page-hero__title">Inscription revendeur</h1>
+        <h1 class="rp-page-hero__title">Inscription partenaire</h1>
         <p class="rp-page-hero__subtitle">Rejoignez le réseau Re-plug et proposez de la réparation et du reconditionnement de batteries à vos clients.</p>
       </div>
     </section>
@@ -77,36 +84,40 @@
           </div>
           <div class="rp-form__group">
             <label for="password" class="rp-form__label">Mot de passe *</label>
-            <input type="password" id="password" name="password" class="rp-form__input" minlength="6" required>
-            <p class="rp-form__hint">Minimum 6 caractères</p>
+            <input type="password" id="password" name="password" class="rp-form__input" minlength="8" required>
+            <p class="rp-form__hint">Minimum 8 caractères, dont 1 majuscule, 1 chiffre et 1 caractère spécial (!@#$%...)</p>
           </div>
           <div class="rp-form__group">
-            <label for="telephone" class="rp-form__label">Téléphone</label>
-            <input type="tel" id="telephone" name="telephone" class="rp-form__input">
+            <label for="password-confirm" class="rp-form__label">Confirmer le mot de passe *</label>
+            <input type="password" id="password-confirm" name="password_confirm" class="rp-form__input" required>
+          </div>
+          <div class="rp-form__group">
+            <label for="telephone" class="rp-form__label">Téléphone *</label>
+            <input type="tel" id="telephone" name="telephone" class="rp-form__input" required>
           </div>
 
           <!-- Informations entreprise -->
           <h3 class="rp-partner-form__section-title">Informations entreprise</h3>
           <div class="rp-form__group">
-            <label for="entreprise" class="rp-form__label">Nom de l'entreprise</label>
-            <input type="text" id="entreprise" name="entreprise" class="rp-form__input">
+            <label for="entreprise" class="rp-form__label">Nom de l'entreprise *</label>
+            <input type="text" id="entreprise" name="entreprise" class="rp-form__input" required>
           </div>
           <div class="rp-form__group">
             <label for="siret" class="rp-form__label">Numéro de SIRET *</label>
             <input type="text" id="siret" name="siret" class="rp-form__input" required>
           </div>
           <div class="rp-form__group">
-            <label for="adresse" class="rp-form__label">Adresse</label>
-            <input type="text" id="adresse" name="adresse" class="rp-form__input">
+            <label for="adresse" class="rp-form__label">Adresse *</label>
+            <input type="text" id="adresse" name="adresse" class="rp-form__input" required>
           </div>
           <div class="rp-partner-form__row--3">
             <div class="rp-form__group">
-              <label for="ville" class="rp-form__label">Ville</label>
-              <input type="text" id="ville" name="ville" class="rp-form__input">
+              <label for="ville" class="rp-form__label">Ville *</label>
+              <input type="text" id="ville" name="ville" class="rp-form__input" required>
             </div>
             <div class="rp-form__group">
-              <label for="cp" class="rp-form__label">Code postal</label>
-              <input type="text" id="cp" name="cp" class="rp-form__input">
+              <label for="cp" class="rp-form__label">Code postal *</label>
+              <input type="text" id="cp" name="cp" class="rp-form__input" required>
             </div>
             <div class="rp-form__group">
               <label for="pays" class="rp-form__label">Pays</label>
@@ -121,16 +132,6 @@
             <label><input type="checkbox" name="specialisation" value="trottinettes"> Trottinettes</label>
             <label><input type="checkbox" name="specialisation" value="scooters"> Scooters</label>
             <label><input type="checkbox" name="specialisation" value="autre"> Autre</label>
-          </div>
-
-          <!-- Options -->
-          <h3 class="rp-partner-form__section-title">Options</h3>
-          <div class="rp-option-card">
-            <input type="checkbox" id="compte-client" name="compte_client" value="oui">
-            <label for="compte-client" class="rp-option-card__text">
-              <strong>Créer automatiquement un compte client sur cette boutique</strong>
-              <span>Accès direct aux tarifs préférentiels et commandes en ligne</span>
-            </label>
           </div>
 
           <!-- Activité -->
@@ -148,7 +149,7 @@
           <button type="submit" class="rp-btn rp-btn--primary" style="width:100%;">Envoyer ma demande</button>
 
           <p class="rp-partner-form__footer">
-            Vous avez déjà un compte ? <a href="espace-partenaire.html">Se connecter au portail pro</a>
+            Vous avez déjà un compte ? <a href="espace-partenaire.html">Connectez-vous</a>
           </p>
         </form>
 
@@ -186,9 +187,71 @@ function rpAcceptCookies(){localStorage.setItem('rp_cookies','accepted');documen
 function rpRefuseCookies(){localStorage.setItem('rp_cookies','refused');document.getElementById('rp-cookie-banner').classList.remove('is-visible');}
 (function(){if(!localStorage.getItem('rp_cookies')){document.getElementById('rp-cookie-banner').classList.add('is-visible');}})();
 
-// Form submission → show success message
+// Validation helpers
+function setInvalid(el) {
+  var group = el.closest('.rp-form__group');
+  if (group) group.classList.add('is-invalid');
+}
+function clearInvalid(el) {
+  var group = el.closest('.rp-form__group');
+  if (group) group.classList.remove('is-invalid');
+}
+
+// Clear invalid on input
+document.querySelectorAll('#partnerForm input, #partnerForm textarea').forEach(function(input) {
+  input.addEventListener('input', function() { clearInvalid(this); });
+});
+document.getElementById('cgv').addEventListener('change', function() {
+  document.querySelector('.rp-partner-form__legal').classList.remove('is-invalid');
+});
+
+// Form submission with validation
 document.getElementById('partnerForm').addEventListener('submit', function(e) {
   e.preventDefault();
+  var valid = true;
+
+  // Reset all
+  this.querySelectorAll('.is-invalid').forEach(function(el) { el.classList.remove('is-invalid'); });
+  document.querySelector('.rp-partner-form__legal').classList.remove('is-invalid');
+
+  // Required fields
+  this.querySelectorAll('[required]').forEach(function(input) {
+    if (input.type === 'checkbox') return; // CGV handled separately
+    if (!input.value.trim()) { setInvalid(input); valid = false; }
+  });
+
+  // Email format
+  var email = document.getElementById('email');
+  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (email.value.trim() && !emailRegex.test(email.value.trim())) { setInvalid(email); valid = false; }
+
+  // Phone format (10 digits)
+  var tel = document.getElementById('telephone');
+  var telVal = tel.value.replace(/[\s\.\-]/g, '');
+  if (tel.value.trim() && !/^\d{10}$/.test(telVal)) { setInvalid(tel); valid = false; }
+
+  // Password: min 8, 1 uppercase, 1 digit, 1 special
+  var pwd = document.getElementById('password');
+  var pwdVal = pwd.value;
+  if (pwdVal.length < 8 || !/[A-Z]/.test(pwdVal) || !/[0-9]/.test(pwdVal) || !/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(pwdVal)) {
+    setInvalid(pwd); valid = false;
+  }
+
+  // Confirm password
+  var pwdConfirm = document.getElementById('password-confirm');
+  if (pwdConfirm.value !== pwdVal || !pwdConfirm.value) { setInvalid(pwdConfirm); valid = false; }
+
+  // CGV
+  var cgv = document.getElementById('cgv');
+  if (!cgv.checked) { document.querySelector('.rp-partner-form__legal').classList.add('is-invalid'); valid = false; }
+
+  if (!valid) {
+    var firstInvalid = this.querySelector('.is-invalid input, .is-invalid textarea');
+    if (firstInvalid) firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  // Success
   this.style.display = 'none';
   document.getElementById('partnerSuccess').classList.add('is-visible');
   window.scrollTo({ top: 0, behavior: 'smooth' });
