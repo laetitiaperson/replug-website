@@ -226,24 +226,10 @@
     .rp-facture-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 24px; }
     .rp-facture-overlay.is-visible { display: flex; }
     .rp-facture { background: #fff; max-width: 700px; width: 100%; border-radius: 16px; padding: 40px; max-height: 90vh; overflow-y: auto; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,.15); }
-    .rp-facture__header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; padding-bottom: 20px; border-bottom: 2px solid var(--rp-green); }
-    .rp-facture__title { font-size: 1.6rem; font-weight: 700; color: var(--rp-dark); letter-spacing: 2px; }
-    .rp-facture__ref { font-size: .9rem; color: var(--rp-gray); margin-top: 4px; }
-    .rp-facture__date { font-size: .9rem; color: var(--rp-gray); text-align: right; }
-    .rp-facture__parties { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 32px; }
-    .rp-facture__partie h4 { font-size: .78rem; text-transform: uppercase; letter-spacing: 1px; color: var(--rp-gray); margin-bottom: 8px; }
-    .rp-facture__partie p { font-size: .9rem; color: var(--rp-dark); line-height: 1.6; margin: 0; }
-    .rp-facture__partie strong { font-weight: 600; }
-    .rp-facture__table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
-    .rp-facture__table th { background: #f7f7f7; padding: 10px 14px; font-size: .82rem; font-weight: 600; text-align: left; border-bottom: 2px solid #e8e8e8; }
-    .rp-facture__table td { padding: 12px 14px; font-size: .88rem; border-bottom: 1px solid #f0f0f0; }
-    .rp-facture__table tr:last-child td { border-bottom: none; }
-    .rp-facture__total { display: flex; justify-content: flex-end; margin-bottom: 24px; }
-    .rp-facture__total-box { background: #f7f7f7; border-radius: 10px; padding: 16px 24px; min-width: 240px; }
-    .rp-facture__total-row { display: flex; justify-content: space-between; font-size: .9rem; padding: 4px 0; }
-    .rp-facture__total-row--final { font-weight: 700; font-size: 1.1rem; color: var(--rp-dark); border-top: 2px solid var(--rp-green); margin-top: 8px; padding-top: 10px; }
-    .rp-facture__paid { text-align: center; padding: 12px; background: #dcfce7; color: #15803d; border-radius: 8px; font-weight: 600; font-size: .9rem; margin-bottom: 24px; }
-    .rp-facture__actions { display: flex; gap: 10px; justify-content: center; }
+    .rp-facture__actions { display: flex; gap: 10px; justify-content: center; margin-top: 24px; }
+    .rp-facture__paid { text-align: center; padding: 12px; border-radius: 8px; font-weight: 600; font-size: .9rem; margin-top: 24px; }
+    .rp-facture__paid--ok { background: #dcfce7; color: #15803d; }
+    .rp-facture__paid--pending { background: #fef3c7; color: #92400e; }
     @media print { .rp-facture-overlay { position: static; background: none; padding: 0; display: block !important; } .rp-facture { box-shadow: none; max-height: none; border-radius: 0; } .rp-facture__actions { display: none !important; } body > *:not(.rp-facture-overlay) { display: none !important; } }
 
     /* ===== Paramètres ===== */
@@ -530,7 +516,6 @@
             <input type="text" class="rp-form__input" placeholder="Rechercher une commande..." style="flex:1;min-width:180px;padding:8px 12px;font-size:.88rem;border:1px solid #d1d5db;background:#fff;" id="searchClient">
             <select class="rp-form__select" style="width:auto;padding:8px 32px 8px 12px;font-size:.88rem;border:1px solid #d1d5db;background:#fff;" id="filterStatus">
               <option value="">Statut</option>
-              <option value="a-payer">A payer</option>
               <option value="solde-du">Solde dû</option>
               <option value="paye">Payé</option>
             </select>
@@ -590,18 +575,6 @@
                   <td style="padding:10px;white-space:nowrap;font-weight:600;color:#d97706;">310 €</td>
                   <td style="padding:10px;white-space:nowrap;"><span style="background:#fef3c7;color:#92400e;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">Solde dû</span></td>
                 </tr>
-                <tr style="border-top:1px solid #eee;" data-client="petit" data-status="a-payer" data-date="2026-02-25" data-montant="295" data-acompte="0" data-solde="295">
-                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="openFacture(this);return false;" style="color:var(--rp-green);text-decoration:underline;font-weight:500;cursor:pointer;">#RP-2026-0039</a></td>
-                  <td style="padding:10px;white-space:nowrap;">Petit</td>
-                  <td style="padding:10px;white-space:nowrap;">Vélo</td>
-                  <td style="padding:10px;white-space:nowrap;">Remplacement cellules</td>
-                  <td style="padding:10px;white-space:nowrap;">25/02/26</td>
-                  <td style="padding:10px;white-space:nowrap;">—</td>
-                  <td style="padding:10px;white-space:nowrap;font-weight:600;">295 €</td>
-                  <td style="padding:10px;white-space:nowrap;">0 €</td>
-                  <td style="padding:10px;white-space:nowrap;font-weight:600;color:#dc2626;">295 €</td>
-                  <td style="padding:10px;white-space:nowrap;"><span style="background:#fee2e2;color:#dc2626;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">A payer</span></td>
-                </tr>
                 <tr style="border-top:1px solid #eee;" data-client="bernard" data-status="paye" data-date="2026-02-20" data-montant="475" data-acompte="475" data-solde="0">
                   <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="openFacture(this);return false;" style="color:var(--rp-green);text-decoration:underline;font-weight:500;cursor:pointer;">#RP-2026-0038</a></td>
                   <td style="padding:10px;white-space:nowrap;">Bernard</td>
@@ -625,18 +598,6 @@
                   <td style="padding:10px;white-space:nowrap;">320 €</td>
                   <td style="padding:10px;white-space:nowrap;font-weight:600;color:#15803d;">0 €</td>
                   <td style="padding:10px;white-space:nowrap;"><span style="background:#dcfce7;color:#15803d;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">Payé</span></td>
-                </tr>
-                <tr style="border-top:1px solid #eee;" data-client="leroy" data-status="a-payer" data-date="2026-02-10" data-montant="450" data-acompte="0" data-solde="450">
-                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="openFacture(this);return false;" style="color:var(--rp-green);text-decoration:underline;font-weight:500;cursor:pointer;">#RP-2026-0036</a></td>
-                  <td style="padding:10px;white-space:nowrap;">Leroy</td>
-                  <td style="padding:10px;white-space:nowrap;">Scooter</td>
-                  <td style="padding:10px;white-space:nowrap;">Remplacement cellules</td>
-                  <td style="padding:10px;white-space:nowrap;">10/02/26</td>
-                  <td style="padding:10px;white-space:nowrap;">—</td>
-                  <td style="padding:10px;white-space:nowrap;font-weight:600;">450 €</td>
-                  <td style="padding:10px;white-space:nowrap;">0 €</td>
-                  <td style="padding:10px;white-space:nowrap;font-weight:600;color:#dc2626;">450 €</td>
-                  <td style="padding:10px;white-space:nowrap;"><span style="background:#fee2e2;color:#dc2626;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">A payer</span></td>
                 </tr>
                 <tr style="border-top:1px solid #eee;" data-client="martin" data-status="solde-du" data-date="2026-02-05" data-montant="540" data-acompte="270" data-solde="270">
                   <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="openFacture(this);return false;" style="color:var(--rp-green);text-decoration:underline;font-weight:500;cursor:pointer;">#RP-2026-0035</a></td>
@@ -685,18 +646,6 @@
                   <td style="padding:10px;white-space:nowrap;">290 €</td>
                   <td style="padding:10px;white-space:nowrap;font-weight:600;color:#15803d;">0 €</td>
                   <td style="padding:10px;white-space:nowrap;"><span style="background:#dcfce7;color:#15803d;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">Payé</span></td>
-                </tr>
-                <tr style="border-top:1px solid #eee;" data-client="bonnet" data-status="a-payer" data-date="2026-01-10" data-montant="515" data-acompte="0" data-solde="515">
-                  <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="openFacture(this);return false;" style="color:var(--rp-green);text-decoration:underline;font-weight:500;cursor:pointer;">#RP-2026-0031</a></td>
-                  <td style="padding:10px;white-space:nowrap;">Bonnet</td>
-                  <td style="padding:10px;white-space:nowrap;">Scooter</td>
-                  <td style="padding:10px;white-space:nowrap;">Remplacement cellules</td>
-                  <td style="padding:10px;white-space:nowrap;">10/01/26</td>
-                  <td style="padding:10px;white-space:nowrap;">—</td>
-                  <td style="padding:10px;white-space:nowrap;font-weight:600;">515 €</td>
-                  <td style="padding:10px;white-space:nowrap;">0 €</td>
-                  <td style="padding:10px;white-space:nowrap;font-weight:600;color:#dc2626;">515 €</td>
-                  <td style="padding:10px;white-space:nowrap;"><span style="background:#fee2e2;color:#dc2626;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">A payer</span></td>
                 </tr>
                 <tr style="border-top:1px solid #eee;" data-client="lambert" data-status="paye" data-date="2026-01-05" data-montant="345" data-acompte="345" data-solde="0">
                   <td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="openFacture(this);return false;" style="color:var(--rp-green);text-decoration:underline;font-weight:500;cursor:pointer;">#RP-2026-0030</a></td>
@@ -754,50 +703,73 @@
         <!-- Overlay Facture -->
         <div class="rp-facture-overlay" id="factureOverlay" onclick="closeFacture(event)">
           <div class="rp-facture" onclick="event.stopPropagation()">
-            <div class="rp-facture__header">
-              <div>
-                <div class="rp-facture__title">FACTURE</div>
-                <div class="rp-facture__ref" id="factureRef"></div>
-              </div>
-              <div>
-                <div style="font-weight:700;font-size:1.1rem;color:var(--rp-green);margin-bottom:4px;">Re-plug</div>
-                <div class="rp-facture__date" id="factureDate"></div>
+
+            <!-- Header : logo + coordonnées -->
+            <div class="rp-devis-doc__header">
+              <img src="../assets/images/logo-replug.svg" alt="Re-plug" class="rp-devis-doc__logo">
+              <div class="rp-devis-doc__emetteur">
+                <strong>Re-plug SAS</strong>
+                8, rue Lemercier — 75017 Paris<br>
+                admin@re-plug.fr
               </div>
             </div>
 
-            <div class="rp-facture__parties">
-              <div class="rp-facture__partie">
-                <h4>Émetteur</h4>
-                <p><strong>Re-plug SAS</strong><br>12 rue de l'Innovation<br>75011 Paris<br>SIRET : 912 345 678 00015<br>TVA : FR 82 912345678</p>
-              </div>
-              <div class="rp-facture__partie">
-                <h4>Client</h4>
-                <p id="factureClient"></p>
-              </div>
+            <!-- Titre + référence -->
+            <div class="rp-devis-doc__title-row">
+              <span class="rp-devis-doc__title" id="factureTitle">FACTURE</span>
+              <span style="font-size:.95rem;color:var(--rp-gray);" id="factureRef"></span>
             </div>
 
-            <table class="rp-facture__table">
+            <!-- Destinataire -->
+            <div class="rp-devis-doc__dest">
+              <div class="rp-devis-doc__dest-label">Destinataire</div>
+              <div style="margin-top:6px;">
+                <strong id="factureDestNom"></strong><br>
+                <span id="factureDestAdresse" style="font-size:.88rem;color:var(--rp-gray);"></span><br>
+                <span id="factureDestSiret" style="font-size:.85rem;color:var(--rp-gray);"></span>
+              </div>
+              <div class="rp-devis-doc__client-ref" id="factureClientRef"></div>
+            </div>
+
+            <!-- Tableau prestations -->
+            <table class="rp-devis-doc__table">
               <thead>
                 <tr>
-                  <th>Désignation</th>
-                  <th>Véhicule</th>
-                  <th style="text-align:right;">Montant HT</th>
+                  <th style="padding:10px 14px;font-size:.82rem;font-weight:600;text-align:left;">Désignation</th>
+                  <th style="padding:10px 14px;font-size:.82rem;font-weight:600;text-align:center;">Quantité</th>
+                  <th style="padding:10px 14px;font-size:.82rem;font-weight:600;text-align:left;">Prix unitaire HT</th>
+                  <th style="padding:10px 14px;font-size:.82rem;font-weight:600;text-align:right;">Total HT (Euros)</th>
                 </tr>
               </thead>
-              <tbody id="factureTableBody">
-              </tbody>
+              <tbody id="factureTableBody"></tbody>
             </table>
 
-            <div class="rp-facture__total">
-              <div class="rp-facture__total-box">
-                <div class="rp-facture__total-row"><span>Total HT</span><span id="factureTotalHT"></span></div>
-                <div class="rp-facture__total-row"><span>TVA (20 %)</span><span id="factureTVA"></span></div>
-                <div class="rp-facture__total-row rp-facture__total-row--final"><span>Total TTC</span><span id="factureTotalTTC"></span></div>
+            <!-- Totaux -->
+            <div style="display:flex;justify-content:flex-end;margin-bottom:24px;">
+              <div style="min-width:260px;">
+                <div style="display:flex;justify-content:space-between;font-size:.9rem;padding:6px 14px;"><span>Total HT :</span><strong id="factureTotalHT"></strong></div>
+                <div style="display:flex;justify-content:space-between;font-size:.9rem;padding:6px 14px;"><span>TVA (20%) :</span><strong id="factureTVA"></strong></div>
+                <div class="rp-devis-doc__total-row--final" style="display:flex;justify-content:space-between;font-size:1.05rem;padding:10px 14px;margin-top:8px;">
+                  <span>TOTAL TTC (Euros) :</span><strong id="factureTotalTTC"></strong>
+                </div>
               </div>
             </div>
 
+            <!-- Conditions de paiement -->
+            <div style="margin-bottom:20px;">
+              <div class="rp-devis-doc__conditions-title">Conditions de paiement</div>
+              <p style="font-size:.85rem;color:var(--rp-gray);margin:6px 0 0;font-style:italic;" id="factureConditions">50% à la commande, 50% avant livraison</p>
+            </div>
+
+            <!-- Statut paiement -->
             <div class="rp-facture__paid" id="facturePaidDate"></div>
 
+            <!-- Pied de page légal -->
+            <div class="rp-devis-doc__footer">
+              Re-plug SAS - Capital social : 15 000 € - SIRET : En cours - RCS Paris - N° TVA Intracommunautaire : En cours
+            </div>
+
+            <!-- Actions -->
             <div class="rp-facture__actions">
               <button class="rp-btn rp-btn--primary rp-btn--small" onclick="window.print()">Imprimer</button>
               <button class="rp-btn rp-btn--outline-dark rp-btn--small" onclick="closeFacture()">Fermer</button>
@@ -2170,36 +2142,54 @@ function openFacture(link) {
   if (!row) return;
   var ref = link.textContent.trim();
 
-  // A payer ou Solde dû → basculer vers l'onglet Devis et ouvrir le devis correspondant
-  if (row.dataset.status === 'a-payer' || row.dataset.status === 'solde-du') {
-    naviguerVersDevis(ref);
-    return;
-  }
-
-  // Autres statuts non payés → alert classique
-  if (row.dataset.status !== 'paye') {
-    alert('Ouverture du document ' + ref);
-    return;
-  }
   var client = row.cells[1].textContent.trim();
   var vehicule = row.cells[2].textContent.trim();
   var intervention = row.cells[3].textContent.trim();
   var dateCmd = row.cells[4].textContent.trim();
+  var status = row.dataset.status;
   var montantTTC = parseFloat(row.dataset.montant) || 0;
-  var montantHT = Math.round(montantTTC / 1.20 * 100) / 100;
-  var tva = Math.round((montantTTC - montantHT) * 100) / 100;
+  var acompte = parseFloat(row.dataset.acompte) || 0;
+  var isAcompte = status === 'solde-du';
 
-  document.getElementById('factureRef').textContent = ref;
-  document.getElementById('factureDate').innerHTML = 'Date : ' + dateCmd + '<br>Échéance : comptant';
-  document.getElementById('factureClient').innerHTML = '<strong>' + client + '</strong><br>(via Espace Partenaire)';
+  // Montant affiché = acompte (50%) pour facture d'acompte, total pour facture finale
+  var displayTTC = isAcompte ? acompte : montantTTC;
+  var displayHT = Math.round(displayTTC / 1.20 * 100) / 100;
+  var displayTVA = Math.round((displayTTC - displayHT) * 100) / 100;
 
+  // Titre du document
+  document.getElementById('factureTitle').textContent = isAcompte ? 'FACTURE D\'ACOMPTE' : 'FACTURE';
+  document.getElementById('factureRef').textContent = 'Référence : ' + ref;
+
+  // Destinataire = partenaire (demo)
+  document.getElementById('factureDestNom').textContent = 'Cycles Expert SARL';
+  document.getElementById('factureDestAdresse').textContent = '12 avenue de la République — 75011 Paris';
+  document.getElementById('factureDestSiret').textContent = 'SIRET : 823 456 789 00012';
+  document.getElementById('factureClientRef').textContent = 'Client final : ' + client + ' — ' + vehicule;
+
+  // Tableau prestations
   var tbody = document.getElementById('factureTableBody');
-  tbody.innerHTML = '<tr><td>' + intervention + '</td><td>' + vehicule + '</td><td style="text-align:right;font-weight:600;">' + montantHT.toFixed(2).replace('.', ',') + ' €</td></tr>';
+  var label = isAcompte ? 'Acompte 50 % — ' + intervention : intervention;
+  tbody.innerHTML = '<tr><td style="padding:12px 14px;font-size:.88rem;border-bottom:1px solid #f0f0f0;">' + label + '</td><td style="padding:12px 14px;font-size:.88rem;text-align:center;border-bottom:1px solid #f0f0f0;">1</td><td style="padding:12px 14px;font-size:.88rem;border-bottom:1px solid #f0f0f0;">' + displayHT.toFixed(2).replace('.', ',') + '</td><td style="padding:12px 14px;font-size:.88rem;text-align:right;border-bottom:1px solid #f0f0f0;">' + displayHT.toFixed(2).replace('.', ',') + ' €</td></tr>';
 
-  document.getElementById('factureTotalHT').textContent = montantHT.toFixed(2).replace('.', ',') + ' €';
-  document.getElementById('factureTVA').textContent = tva.toFixed(2).replace('.', ',') + ' €';
-  document.getElementById('factureTotalTTC').textContent = montantTTC.toFixed(2).replace('.', ',') + ' €';
-  document.getElementById('facturePaidDate').textContent = '✓ Facture réglée le ' + dateCmd;
+  // Totaux
+  document.getElementById('factureTotalHT').textContent = displayHT.toFixed(2).replace('.', ',') + ' €';
+  document.getElementById('factureTVA').textContent = displayTVA.toFixed(2).replace('.', ',') + ' €';
+  document.getElementById('factureTotalTTC').textContent = displayTTC.toFixed(2).replace('.', ',') + ' €';
+
+  // Conditions adaptées
+  document.getElementById('factureConditions').textContent = isAcompte
+    ? '50% à la commande, 50% avant livraison'
+    : 'Facture intégralement réglée';
+
+  // Statut paiement
+  var paidLine = document.getElementById('facturePaidDate');
+  if (isAcompte) {
+    paidLine.textContent = '⚠️ Acompte de 50 % réglé — Solde restant : ' + acompte.toFixed(2).replace('.', ',') + ' €';
+    paidLine.className = 'rp-facture__paid rp-facture__paid--pending';
+  } else {
+    paidLine.textContent = '✓ Facture réglée le ' + dateCmd;
+    paidLine.className = 'rp-facture__paid rp-facture__paid--ok';
+  }
 
   document.getElementById('factureOverlay').classList.add('is-visible');
 }
