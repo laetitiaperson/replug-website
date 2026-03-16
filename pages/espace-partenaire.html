@@ -479,6 +479,30 @@
       15%, 45%, 75% { transform: translateX(-6px); }
       30%, 60%, 90% { transform: translateX(6px); }
     }
+
+    /* ===== ATELIER ===== */
+    .rp-header--atelier .rp-header__partner-tabs--partenaire { display: none !important; }
+    .rp-header__partner-tabs--atelier { display: none; }
+    .rp-header--atelier .rp-header__partner-tabs--atelier { display: flex !important; }
+
+    .rp-atelier__badge { display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: .82rem; font-weight: 500; }
+    .rp-atelier__badge--en-attente { background: #dbeafe; color: #1e40af; }
+    .rp-atelier__badge--receptionnee { background: #e0e7ff; color: #3730a3; }
+    .rp-atelier__badge--diagnostic { background: #fef3c7; color: #92400e; }
+    .rp-atelier__badge--reparation { background: #ffedd5; color: #c2410c; }
+    .rp-atelier__badge--controle { background: #f3e8ff; color: #7c3aed; }
+    .rp-atelier__badge--expediee { background: #dcfce7; color: #15803d; }
+
+    .rp-atelier__card { background: #fff; border: 1px solid #e8e8e8; border-radius: 14px; padding: 20px 24px; margin-bottom: 14px; transition: box-shadow .2s; }
+    .rp-atelier__card:hover { box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+    .rp-atelier__card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+    .rp-atelier__card-ref { font-weight: 700; font-size: 1.05rem; color: var(--rp-dark); }
+    .rp-atelier__card-details { display: flex; gap: 24px; flex-wrap: wrap; font-size: .88rem; color: var(--rp-gray); }
+    .rp-atelier__card-details strong { display: block; color: var(--rp-dark); font-size: .92rem; margin-top: 2px; }
+    .rp-atelier__card-actions { display: flex; justify-content: flex-end; margin-top: 14px; }
+
+    .rp-atelier__toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--rp-green); color: #fff; padding: 12px 28px; border-radius: 10px; font-size: .92rem; font-weight: 500; z-index: 9999; animation: rp-toast-in .3s ease; box-shadow: 0 4px 16px rgba(0,0,0,.15); }
+    @keyframes rp-toast-in { from { opacity: 0; transform: translateX(-50%) translateY(20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
   </style>
 </head>
 <body class="template-partner-login">
@@ -510,11 +534,15 @@
 
       <!-- Partner bar (hidden until dashboard active) -->
       <div class="rp-header__partner-bar">
-        <div class="rp-header__partner-tabs">
+        <div class="rp-header__partner-tabs rp-header__partner-tabs--partenaire">
           <button class="rp-header__partner-tab is-active" data-tab="commandes">Mes commandes</button>
           <button class="rp-header__partner-tab" data-tab="devis">Mes devis</button>
           <button class="rp-header__partner-tab" data-tab="comparateur">Comparateur</button>
           <button class="rp-header__partner-tab" data-tab="parametres">Mon compte</button>
+        </div>
+        <div class="rp-header__partner-tabs rp-header__partner-tabs--atelier">
+          <button class="rp-header__partner-tab is-active" data-tab="atelier-batteries">Batteries à traiter</button>
+          <button class="rp-header__partner-tab" data-tab="atelier-historique">Historique</button>
         </div>
         <div class="rp-header__partner-right">
           <div class="rp-header__partner-name">
@@ -1844,6 +1872,45 @@
 
         </div>
 
+        <!-- ===== ATELIER: Batteries à traiter ===== -->
+        <div class="rp-dashboard__panel" id="panel-atelier-batteries">
+          <h2 style="font-size:1.2rem;margin:0 0 16px;">Batteries à traiter</h2>
+
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px;padding:12px 16px;background:#f8f9fa;border-radius:10px;border:1px solid #e8e8e8;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--rp-gray)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" placeholder="Rechercher une batterie..." style="flex:1;min-width:180px;padding:8px 12px;font-size:.88rem;border:1px solid #d1d5db;border-radius:8px;background:#fff;" id="atelierSearch">
+            <select id="filterAtelierStatus" style="padding:8px 12px;font-size:.88rem;border:1px solid #d1d5db;border-radius:8px;background:#fff;cursor:pointer;">
+              <option value="">Tous les statuts</option>
+              <option value="en-attente">En attente</option>
+              <option value="receptionnee">Réceptionnée</option>
+              <option value="diagnostic">Diagnostic atelier</option>
+              <option value="reparation">En réparation</option>
+              <option value="controle">Contrôle qualité</option>
+            </select>
+          </div>
+
+          <div id="atelierBatteriesContainer"></div>
+        </div>
+
+        <!-- ===== ATELIER: Historique ===== -->
+        <div class="rp-dashboard__panel" id="panel-atelier-historique">
+          <h2 style="font-size:1.2rem;margin:0 0 16px;">Historique des réparations</h2>
+
+          <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;font-size:.9rem;">
+              <thead>
+                <tr style="border-bottom:2px solid #e5e7eb;text-align:left;">
+                  <th style="padding:10px 12px;font-weight:600;color:var(--rp-dark);">Référence</th>
+                  <th style="padding:10px 12px;font-weight:600;color:var(--rp-dark);">Véhicule</th>
+                  <th style="padding:10px 12px;font-weight:600;color:var(--rp-dark);">Intervention</th>
+                  <th style="padding:10px 12px;font-weight:600;color:var(--rp-dark);">Date expédition</th>
+                </tr>
+              </thead>
+              <tbody id="atelierHistoriqueBody"></tbody>
+            </table>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -1927,16 +1994,53 @@ function rpRefuseCookies() { localStorage.setItem('rp_cookies','refused'); docum
 (function(){ if(!localStorage.getItem('rp_cookies')){ document.getElementById('rp-cookie-banner').classList.add('is-visible'); } })();
 
 // ===== Partner mode: unified header =====
-function activatePartnerMode() {
-  document.querySelector('.rp-header').classList.add('rp-header--partner');
+var currentRole = null;
+
+function activatePartnerMode(role, displayName) {
+  currentRole = role || 'partenaire';
+  var header = document.querySelector('.rp-header');
+  header.classList.add('rp-header--partner');
+
+  // Set display name
+  document.getElementById('partnerDisplayName').textContent = displayName || 'Partenaire';
+
   document.getElementById('loginSection').style.display = 'none';
   document.getElementById('dashboardSection').classList.add('is-visible');
+
+  // Reset all panels and tabs
+  document.querySelectorAll('.rp-dashboard__panel').forEach(function(p) { p.classList.remove('is-active'); });
+  document.querySelectorAll('.rp-header__partner-tab').forEach(function(t) { t.classList.remove('is-active'); });
+
+  if (currentRole === 'atelier') {
+    header.classList.add('rp-header--atelier');
+    // Hide diagnostic CTA
+    var cta = document.querySelector('.rp-dash-cta');
+    if (cta) cta.style.display = 'none';
+    // Activate atelier default tab
+    document.getElementById('panel-atelier-batteries').classList.add('is-active');
+    var atelierTab = document.querySelector('[data-tab="atelier-batteries"]');
+    if (atelierTab) atelierTab.classList.add('is-active');
+    // Render atelier views
+    renderAtelierBatteries();
+    renderAtelierHistorique();
+  } else {
+    // Partenaire default
+    document.getElementById('panel-commandes').classList.add('is-active');
+    var cmdTab = document.querySelector('[data-tab="commandes"]');
+    if (cmdTab) cmdTab.classList.add('is-active');
+  }
 }
 
 function deactivatePartnerMode() {
-  document.querySelector('.rp-header').classList.remove('rp-header--partner');
+  var header = document.querySelector('.rp-header');
+  header.classList.remove('rp-header--partner');
+  header.classList.remove('rp-header--atelier');
+  currentRole = null;
   document.getElementById('dashboardSection').classList.remove('is-visible');
   document.getElementById('loginSection').style.display = '';
+  // Restore CTA
+  var cta = document.querySelector('.rp-dash-cta');
+  if (cta) cta.style.display = '';
   var loginForm = document.getElementById('loginForm');
   if (loginForm) loginForm.reset();
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1945,8 +2049,9 @@ function deactivatePartnerMode() {
 // Login form
 // Demo credentials
 var DEMO_ACCOUNTS = [
-  { email: 'jean.dupont@velostore.fr', password: 'replug2026' },
-  { email: 'demo@replug.fr', password: 'demo' }
+  { email: 'jean.dupont@velostore.fr', password: 'replug2026', role: 'partenaire', displayName: 'Jean Dupont' },
+  { email: 'demo@replug.fr', password: 'demo', role: 'partenaire', displayName: 'Demo Partenaire' },
+  { email: 'atelier@re-plug.fr', password: 'replug2026', role: 'atelier', displayName: 'Atelier Re-plug' }
 ];
 
 // Toggle password visibility
@@ -1976,12 +2081,12 @@ if (loginForm) {
     errorDiv.style.display = 'none';
     forgotDiv.style.display = 'none';
 
-    var valid = DEMO_ACCOUNTS.some(function(acc) {
+    var account = DEMO_ACCOUNTS.find(function(acc) {
       return acc.email === email && acc.password === password;
     });
 
-    if (valid) {
-      activatePartnerMode();
+    if (account) {
+      activatePartnerMode(account.role, account.displayName);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       errorDiv.textContent = 'Identifiants incorrects. Vérifiez votre email et mot de passe.';
@@ -2040,7 +2145,7 @@ document.querySelectorAll('.rp-header__partner-tab').forEach(function(tab) {
     var diagWizard = document.getElementById('diagWizard');
     if (diagWizard) { diagWizard.classList.remove('is-visible'); }
     var dashCta = document.querySelector('.rp-dash-cta');
-    if (dashCta) { dashCta.style.display = ''; }
+    if (dashCta) { dashCta.style.display = (currentRole === 'atelier') ? 'none' : ''; }
   });
 });
 
@@ -3307,6 +3412,138 @@ document.getElementById('btnDownloadQR').addEventListener('click', function() {
     '</body></html>');
   w.document.close();
 });
+
+// ===== ATELIER — Données démo et fonctions =====
+var ATELIER_STATUTS = [
+  { key: 'en-attente', label: 'En attente', badge: 'rp-atelier__badge--en-attente' },
+  { key: 'receptionnee', label: 'Réceptionnée', badge: 'rp-atelier__badge--receptionnee' },
+  { key: 'diagnostic', label: 'Diagnostic atelier', badge: 'rp-atelier__badge--diagnostic' },
+  { key: 'reparation', label: 'En réparation', badge: 'rp-atelier__badge--reparation' },
+  { key: 'controle', label: 'Contrôle qualité', badge: 'rp-atelier__badge--controle' },
+  { key: 'expediee', label: 'Expédiée', badge: 'rp-atelier__badge--expediee' }
+];
+
+var ATELIER_DEMO_DATA = [
+  { ref: '#RP-2026-0042', vehicule: 'Vélo', batterie: 'Bosch PowerTube 500', intervention: 'Reconditionnement', dateReception: '10/03/26', statut: 'en-attente' },
+  { ref: '#RP-2026-0041', vehicule: 'Trottinette', batterie: 'Xiaomi 36V 7.8Ah', intervention: 'Réparation BMS', dateReception: '08/03/26', statut: 'receptionnee' },
+  { ref: '#RP-2026-0040', vehicule: 'Scooter', batterie: 'NIU NQi 60V', intervention: 'Reconditionnement', dateReception: '05/03/26', statut: 'diagnostic' },
+  { ref: '#RP-2026-0038', vehicule: 'Vélo cargo', batterie: 'Shimano BT-E8035 504Wh', intervention: 'Reconditionnement', dateReception: '28/02/26', statut: 'reparation' },
+  { ref: '#RP-2026-0037', vehicule: 'Trottinette', batterie: 'Ninebot 36V 5.2Ah', intervention: 'Reconditionnement', dateReception: '25/02/26', statut: 'controle' },
+  { ref: '#RP-2026-0035', vehicule: 'Vélo', batterie: 'Yamaha PW 500Wh', intervention: 'Réparation BMS', dateReception: '20/02/26', statut: 'reparation' },
+  { ref: '#RP-2026-0033', vehicule: 'Vélo', batterie: 'Bosch PowerTube 625', intervention: 'Reconditionnement', dateReception: '15/02/26', statut: 'en-attente' },
+  { ref: '#RP-2026-0030', vehicule: 'Vélo cargo', batterie: 'Shimano STEPS E6100', intervention: 'Réparation BMS', dateReception: '10/02/26', statut: 'receptionnee' }
+];
+
+var ATELIER_HISTORIQUE_DATA = [
+  { ref: '#RP-2026-0032', vehicule: 'Moto', batterie: 'Super Soco TC 60V', intervention: 'Reconditionnement', dateExpedition: '12/03/26' },
+  { ref: '#RP-2026-0034', vehicule: 'Trottinette', batterie: 'Segway 36V 10.2Ah', intervention: 'Réparation BMS', dateExpedition: '08/03/26' }
+];
+
+function getAtelierStatut(key) {
+  return ATELIER_STATUTS.find(function(s) { return s.key === key; }) || ATELIER_STATUTS[0];
+}
+
+function getNextStatut(currentKey) {
+  var idx = ATELIER_STATUTS.findIndex(function(s) { return s.key === currentKey; });
+  if (idx < 0 || idx >= ATELIER_STATUTS.length - 1) return null;
+  return ATELIER_STATUTS[idx + 1];
+}
+
+function renderAtelierBatteries() {
+  var container = document.getElementById('atelierBatteriesContainer');
+  if (!container) return;
+  var filterVal = document.getElementById('filterAtelierStatus').value;
+  var searchVal = (document.getElementById('atelierSearch').value || '').toLowerCase();
+
+  var filtered = ATELIER_DEMO_DATA.filter(function(b) {
+    if (filterVal && b.statut !== filterVal) return false;
+    if (searchVal && b.ref.toLowerCase().indexOf(searchVal) === -1 && b.batterie.toLowerCase().indexOf(searchVal) === -1 && b.vehicule.toLowerCase().indexOf(searchVal) === -1) return false;
+    return true;
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<p style="text-align:center;color:var(--rp-gray);padding:40px 0;">Aucune batterie à afficher.</p>';
+    return;
+  }
+
+  var html = '';
+  filtered.forEach(function(b) {
+    var idx = ATELIER_DEMO_DATA.indexOf(b);
+    var statut = getAtelierStatut(b.statut);
+    var next = getNextStatut(b.statut);
+    var btnLabel = next ? (next.key === 'expediee' ? 'Marquer expédiée' : 'Étape suivante →') : '';
+    var btnHtml = next ? '<button class="rp-btn rp-btn--primary rp-btn--small" onclick="advanceAtelierStatus(' + idx + ')">' + btnLabel + '</button>' : '';
+
+    html += '<div class="rp-atelier__card">' +
+      '<div class="rp-atelier__card-header">' +
+        '<span class="rp-atelier__card-ref">' + b.ref + '</span>' +
+        '<span class="rp-atelier__badge ' + statut.badge + '">' + statut.label + '</span>' +
+      '</div>' +
+      '<div class="rp-atelier__card-details">' +
+        '<div>Véhicule<strong>' + b.vehicule + '</strong></div>' +
+        '<div>Batterie<strong>' + b.batterie + '</strong></div>' +
+        '<div>Intervention<strong>' + b.intervention + '</strong></div>' +
+        '<div>Réception<strong>' + b.dateReception + '</strong></div>' +
+      '</div>' +
+      '<div class="rp-atelier__card-actions">' + btnHtml + '</div>' +
+    '</div>';
+  });
+  container.innerHTML = html;
+}
+
+function renderAtelierHistorique() {
+  var tbody = document.getElementById('atelierHistoriqueBody');
+  if (!tbody) return;
+  var html = '';
+  ATELIER_HISTORIQUE_DATA.forEach(function(b) {
+    html += '<tr style="border-bottom:1px solid #f0f0f0;">' +
+      '<td style="padding:10px 12px;font-weight:600;color:var(--rp-green);">' + b.ref + '</td>' +
+      '<td style="padding:10px 12px;">' + b.vehicule + '</td>' +
+      '<td style="padding:10px 12px;">' + b.intervention + '</td>' +
+      '<td style="padding:10px 12px;">' + b.dateExpedition + '</td>' +
+    '</tr>';
+  });
+  tbody.innerHTML = html;
+}
+
+function advanceAtelierStatus(index) {
+  var battery = ATELIER_DEMO_DATA[index];
+  if (!battery) return;
+  var next = getNextStatut(battery.statut);
+  if (!next) return;
+
+  if (!confirm('Confirmer le passage au statut : ' + next.label + ' ?')) return;
+
+  if (next.key === 'expediee') {
+    // Move to historique
+    var today = new Date();
+    ATELIER_HISTORIQUE_DATA.unshift({
+      ref: battery.ref, vehicule: battery.vehicule, batterie: battery.batterie,
+      intervention: battery.intervention,
+      dateExpedition: today.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: '2-digit' })
+    });
+    ATELIER_DEMO_DATA.splice(index, 1);
+    showAtelierToast('Batterie ' + battery.ref + ' expédiée !');
+  } else {
+    battery.statut = next.key;
+    showAtelierToast(battery.ref + ' → ' + next.label);
+  }
+  renderAtelierBatteries();
+  renderAtelierHistorique();
+}
+
+function showAtelierToast(message) {
+  var toast = document.createElement('div');
+  toast.className = 'rp-atelier__toast';
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(function() { toast.remove(); }, 3000);
+}
+
+// Filter & search listeners
+document.getElementById('filterAtelierStatus').addEventListener('change', renderAtelierBatteries);
+document.getElementById('atelierSearch').addEventListener('input', renderAtelierBatteries);
+
 </script>
 </body>
 </html>
