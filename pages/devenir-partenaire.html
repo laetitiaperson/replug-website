@@ -48,6 +48,8 @@
     .rp-form__group.is-invalid .rp-form__hint { color: #dc2626; }
     .rp-partner-form__legal.is-invalid { color: #dc2626; }
     .rp-partner-form__legal.is-invalid a { color: #dc2626; }
+    .rp-password-toggle { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #9ca3af; padding: 4px; display: flex; align-items: center; }
+    .rp-password-toggle:hover { color: var(--rp-dark, #1e293b); }
   </style>
 </head>
 <body>
@@ -84,12 +86,18 @@
           </div>
           <div class="rp-form__group">
             <label for="password" class="rp-form__label">Mot de passe *</label>
-            <input type="password" id="password" name="password" class="rp-form__input" minlength="8" required>
+            <div style="position:relative;">
+              <input type="password" id="password" name="password" class="rp-form__input" minlength="8" required style="padding-right:44px;">
+              <button type="button" class="rp-password-toggle" data-target="password" aria-label="Afficher le mot de passe"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="rp-eye-open"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="rp-eye-closed" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button>
+            </div>
             <p class="rp-form__hint">Minimum 8 caractères, dont 1 majuscule, 1 chiffre et 1 caractère spécial (!@#$%...)</p>
           </div>
           <div class="rp-form__group">
             <label for="password-confirm" class="rp-form__label">Confirmer le mot de passe *</label>
-            <input type="password" id="password-confirm" name="password_confirm" class="rp-form__input" required>
+            <div style="position:relative;">
+              <input type="password" id="password-confirm" name="password_confirm" class="rp-form__input" required style="padding-right:44px;">
+              <button type="button" class="rp-password-toggle" data-target="password-confirm" aria-label="Afficher le mot de passe"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="rp-eye-open"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="rp-eye-closed" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button>
+            </div>
           </div>
           <div class="rp-form__group">
             <label for="telephone" class="rp-form__label">Téléphone *</label>
@@ -255,6 +263,24 @@ document.getElementById('partnerForm').addEventListener('submit', function(e) {
   this.style.display = 'none';
   document.getElementById('partnerSuccess').classList.add('is-visible');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Toggle password visibility
+document.querySelectorAll('.rp-password-toggle').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var input = document.getElementById(this.dataset.target);
+    var eyeOpen = this.querySelector('.rp-eye-open');
+    var eyeClosed = this.querySelector('.rp-eye-closed');
+    if (input.type === 'password') {
+      input.type = 'text';
+      eyeOpen.style.display = 'none';
+      eyeClosed.style.display = '';
+    } else {
+      input.type = 'password';
+      eyeOpen.style.display = '';
+      eyeClosed.style.display = 'none';
+    }
+  });
 });
 </script>
 </body>
