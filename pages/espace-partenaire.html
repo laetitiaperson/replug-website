@@ -142,7 +142,6 @@
     .rp-devis-card__badge { display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: .82rem; font-weight: 500; }
     .rp-devis-card__badge--attente { background: #fee2e2; color: #dc2626; }
     .rp-devis-card__badge--approuve { background: #dcfce7; color: #15803d; }
-    .rp-devis-card__badge--reparation { background: #fef3c7; color: #92400e; }
     .rp-devis-card__badge--refuse { background: #fee2e2; color: #dc2626; }
 
     /* Suivi de devis - detail card */
@@ -820,47 +819,10 @@
             <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px;padding:12px 16px;background:#f8f9fa;border-radius:10px;border:1px solid #e8e8e8;">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--rp-gray)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
               <input type="text" class="rp-form__input" placeholder="Rechercher un devis..." style="flex:1;min-width:180px;padding:8px 12px;font-size:.88rem;border:1px solid #d1d5db;background:#fff;" id="devisSearch">
-              <select class="rp-form__select" style="width:auto;padding:8px 32px 8px 12px;font-size:.88rem;border:1px solid #d1d5db;background:#fff;" id="devisStatut">
-                <option value="">Statut</option>
-                <option value="attente">A payer</option>
-                <option value="reparation">Solde dû</option>
-              </select>
             </div>
 
             <!-- Devis list -->
             <div id="devisList">
-
-              <div class="rp-devis-card" data-statut="reparation" data-ref="#RP-2026-0042" data-diag-ref="DIAG-2026-0015" data-client="Dubois" data-email="martin.dubois@email.fr" data-batterie="Bosch PowerPack 500" data-date="2026-03-08" data-montant="389" data-prestation="Reconditionnement batterie">
-                <div class="rp-devis-card__header">
-                  <span class="rp-devis-card__ref">#RP-2026-0042</span>
-                  <div class="rp-devis-card__header-right"><span class="rp-devis-card__badge rp-devis-card__badge--reparation">Solde dû</span><span class="rp-devis-card__price">389 EUR</span></div>
-                </div>
-                <div class="rp-devis-card__details">
-                  <span>Client<strong>Martin Dubois</strong></span>
-                  <span>Email<strong>martin.dubois@email.fr</strong></span>
-                  <span>Batterie<strong>Bosch PowerPack 500</strong></span>
-                  <span>Date<strong>08 mars 2026</strong></span>
-                </div>
-                <div style="padding:0 20px 16px;text-align:right;">
-                  <button class="rp-btn rp-btn--outline-dark rp-btn--small rp-devis-voir-detail">Voir détails</button>
-                </div>
-              </div>
-
-              <div class="rp-devis-card" data-statut="reparation" data-ref="#RP-2026-0040" data-diag-ref="DIAG-2026-0012" data-client="Moreau" data-email="pierre.moreau@email.fr" data-batterie="Shimano STEPS E8000" data-date="2026-03-01" data-montant="620" data-prestation="Reconditionnement batterie">
-                <div class="rp-devis-card__header">
-                  <span class="rp-devis-card__ref">#RP-2026-0040</span>
-                  <div class="rp-devis-card__header-right"><span class="rp-devis-card__badge rp-devis-card__badge--reparation">Solde dû</span><span class="rp-devis-card__price">620 EUR</span></div>
-                </div>
-                <div class="rp-devis-card__details">
-                  <span>Client<strong>Pierre Moreau</strong></span>
-                  <span>Email<strong>pierre.moreau@email.fr</strong></span>
-                  <span>Batterie<strong>Shimano STEPS E8000</strong></span>
-                  <span>Date<strong>01 mars 2026</strong></span>
-                </div>
-                <div style="padding:0 20px 16px;text-align:right;">
-                  <button class="rp-btn rp-btn--outline-dark rp-btn--small rp-devis-voir-detail">Voir détails</button>
-                </div>
-              </div>
 
               <div class="rp-devis-card" data-statut="attente" data-ref="#RP-2026-0039" data-diag-ref="DIAG-2026-0014" data-client="Petit" data-email="claire.petit@email.fr" data-batterie="Bosch PowerTube 625" data-date="2026-02-25" data-montant="295" data-prestation="Remplacement cellules">
                 <div class="rp-devis-card__header">
@@ -894,38 +856,6 @@
                 </div>
               </div>
 
-              <div class="rp-devis-card" data-statut="reparation" data-ref="#RP-2026-0035" data-diag-ref="DIAG-2026-0010" data-client="Martin" data-email="julie.martin@email.fr" data-batterie="Yamaha PW-X3 600Wh" data-date="2026-02-05" data-montant="540" data-prestation="Réparation BMS">
-                <div class="rp-devis-card__header">
-                  <span class="rp-devis-card__ref">#RP-2026-0035</span>
-                  <div class="rp-devis-card__header-right"><span class="rp-devis-card__badge rp-devis-card__badge--reparation">Solde dû</span><span class="rp-devis-card__price">540 EUR</span></div>
-                </div>
-                <div class="rp-devis-card__details">
-                  <span>Client<strong>Julie Martin</strong></span>
-                  <span>Email<strong>julie.martin@email.fr</strong></span>
-                  <span>Batterie<strong>Yamaha PW-X3 600Wh</strong></span>
-                  <span>Date<strong>05 févr. 2026</strong></span>
-                </div>
-                <div style="padding:0 20px 16px;text-align:right;">
-                  <button class="rp-btn rp-btn--outline-dark rp-btn--small rp-devis-voir-detail">Voir détails</button>
-                </div>
-              </div>
-
-              <div class="rp-devis-card" data-statut="reparation" data-ref="#RP-2026-0033" data-diag-ref="DIAG-2026-0008" data-client="Fournier" data-email="anne.fournier@email.fr" data-batterie="Bosch PowerPack 400" data-date="2026-01-22" data-montant="380" data-prestation="Reconditionnement batterie">
-                <div class="rp-devis-card__header">
-                  <span class="rp-devis-card__ref">#RP-2026-0033</span>
-                  <div class="rp-devis-card__header-right"><span class="rp-devis-card__badge rp-devis-card__badge--reparation">Solde dû</span><span class="rp-devis-card__price">380 EUR</span></div>
-                </div>
-                <div class="rp-devis-card__details">
-                  <span>Client<strong>Anne Fournier</strong></span>
-                  <span>Email<strong>anne.fournier@email.fr</strong></span>
-                  <span>Batterie<strong>Bosch PowerPack 400</strong></span>
-                  <span>Date<strong>22 janv. 2026</strong></span>
-                </div>
-                <div style="padding:0 20px 16px;text-align:right;">
-                  <button class="rp-btn rp-btn--outline-dark rp-btn--small rp-devis-voir-detail">Voir détails</button>
-                </div>
-              </div>
-
               <div class="rp-devis-card" data-statut="attente" data-ref="#RP-2026-0031" data-diag-ref="DIAG-2026-0006" data-client="Bonnet" data-email="paul.bonnet@email.fr" data-batterie="Niu NQi Pro 72V" data-date="2026-01-10" data-montant="515" data-prestation="Remplacement cellules">
                 <div class="rp-devis-card__header">
                   <span class="rp-devis-card__ref">#RP-2026-0031</span>
@@ -942,21 +872,6 @@
                 </div>
               </div>
 
-              <div class="rp-devis-card" data-statut="reparation" data-ref="#RP-2025-0029" data-diag-ref="DIAG-2025-0003" data-client="Mercier" data-email="luc.mercier@email.fr" data-batterie="Zero FX 52V" data-date="2025-12-20" data-montant="680" data-prestation="Reconditionnement batterie">
-                <div class="rp-devis-card__header">
-                  <span class="rp-devis-card__ref">#RP-2025-0029</span>
-                  <div class="rp-devis-card__header-right"><span class="rp-devis-card__badge rp-devis-card__badge--reparation">Solde dû</span><span class="rp-devis-card__price">680 EUR</span></div>
-                </div>
-                <div class="rp-devis-card__details">
-                  <span>Client<strong>Luc Mercier</strong></span>
-                  <span>Email<strong>luc.mercier@email.fr</strong></span>
-                  <span>Batterie<strong>Zero FX 52V</strong></span>
-                  <span>Date<strong>20 déc. 2025</strong></span>
-                </div>
-                <div style="padding:0 20px 16px;text-align:right;">
-                  <button class="rp-btn rp-btn--outline-dark rp-btn--small rp-devis-voir-detail">Voir détails</button>
-                </div>
-              </div>
 
             </div>
 
@@ -2363,22 +2278,19 @@ document.querySelectorAll('.rp-devis-subtab').forEach(function(btn) {
 // ===== Administration des devis — filter =====
 function filterDevis() {
   var search = document.getElementById('devisSearch').value.toLowerCase();
-  var statut = document.getElementById('devisStatut').value;
   var cards = document.querySelectorAll('#devisList .rp-devis-card');
   cards.forEach(function(card) {
     var matchSearch = !search ||
       card.dataset.ref.toLowerCase().includes(search) ||
       card.dataset.client.toLowerCase().includes(search) ||
       card.dataset.email.toLowerCase().includes(search);
-    var matchStatut = !statut || card.dataset.statut === statut;
-    card.style.display = (matchSearch && matchStatut) ? '' : 'none';
+    card.style.display = matchSearch ? '' : 'none';
   });
 }
 document.getElementById('devisSearch').addEventListener('input', filterDevis);
-document.getElementById('devisStatut').addEventListener('change', filterDevis);
 
 // ===== Devis — Voir détails =====
-var DEVIS_STATUS_LABELS = { attente: 'A payer', reparation: 'Solde dû', approuve: 'Validé', refuse: 'Refusé' };
+var DEVIS_STATUS_LABELS = { attente: 'A payer', approuve: 'Validé', refuse: 'Refusé' };
 
 var currentDevisCard = null;
 
@@ -2421,27 +2333,15 @@ function showDevisDetail(card) {
   document.getElementById('devisTVA').textContent = tva.toFixed(2).replace('.', ',') + ' €';
   document.getElementById('devisTotalTTC').textContent = totalTTC.toFixed(2).replace('.', ',') + ' €';
 
-  // Payment section adapted to status
+  // Payment section — acompte 50% pour valider le devis
   var halfAmount = (totalTTC / 2).toFixed(2).replace('.', ',') + ' €';
   var notice = document.getElementById('devisPaymentNotice');
   var paySection = document.getElementById('devisPaymentSection');
-  currentDevisStatut = statut;
 
-  if (statut === 'reparation') {
-    // Solde à régler pour déclencher livraison retour
-    notice.innerHTML = '⚠️ La réparation de votre batterie est terminée. Réglez le solde restant de <strong>' + halfAmount + '</strong> pour enclencher la livraison retour.';
-    paySection.querySelector('p').innerHTML = 'Solde restant à régler : <strong id="devisAcompteAmount" style="color:var(--rp-green);">' + halfAmount + '</strong>';
-    document.getElementById('btnDevisPayer').textContent = 'Payer le solde et lancer la livraison';
-  } else if (statut === 'refuse') {
-    notice.innerHTML = '⚠️ Ce devis a été refusé. Aucun paiement n\'est requis.';
-    paySection.style.display = 'none';
-  } else {
-    // Acompte 50% pour valider la commande (statut attente ou validé)
-    notice.innerHTML = '⚠️ Un acompte de 50 % est exigible pour valider le devis et lancer la réparation. Le solde sera payé avant la livraison retour.';
-    paySection.querySelector('p').innerHTML = 'Acompte de 50 % à régler : <strong id="devisAcompteAmount" style="color:var(--rp-green);">' + halfAmount + '</strong>';
-    document.getElementById('btnDevisPayer').textContent = 'Payer l\'acompte';
-    paySection.style.display = '';
-  }
+  notice.innerHTML = '⚠️ Un acompte de 50 % est exigible pour valider le devis et lancer la réparation. Le solde sera payé avant la livraison retour.';
+  paySection.querySelector('p').innerHTML = 'Acompte de 50 % à régler : <strong id="devisAcompteAmount" style="color:var(--rp-green);">' + halfAmount + '</strong>';
+  document.getElementById('btnDevisPayer').textContent = 'Payer l\'acompte';
+  paySection.style.display = '';
   document.getElementById('devisPayVirementRef').textContent = devisRef;
 
   // Reset payment method to CB
@@ -2466,69 +2366,30 @@ document.getElementById('btnFermerDevisDetail').addEventListener('click', functi
   document.getElementById('devisList').style.display = '';
 });
 
-// Payment method toggle — respects current devis status
-var currentDevisStatut = 'attente';
-
+// Payment method toggle
 document.querySelectorAll('input[name="devisPayMethod"]').forEach(function(radio) {
   radio.addEventListener('change', function() {
     document.getElementById('devisPayCB').style.display = this.value === 'cb' ? '' : 'none';
     document.getElementById('devisPayVirement').style.display = this.value === 'virement' ? '' : 'none';
-    var isSolde = currentDevisStatut === 'reparation';
-    if (this.value === 'cb') {
-      document.getElementById('btnDevisPayer').textContent = isSolde ? 'Payer le solde et lancer la livraison' : 'Payer l\'acompte';
-    } else {
-      document.getElementById('btnDevisPayer').textContent = 'J\'ai effectué le virement';
-    }
+    document.getElementById('btnDevisPayer').textContent = this.value === 'cb' ? 'Payer l\'acompte' : 'J\'ai effectué le virement';
   });
 });
 
-// Pay button — updates devis status after payment
+// Pay button — acompte payé → devis transformé en commande, on le retire de la liste
 document.getElementById('btnDevisPayer').addEventListener('click', function() {
   var method = document.querySelector('input[name="devisPayMethod"]:checked').value;
-  var isSolde = currentDevisStatut === 'reparation';
+  alert(method === 'cb'
+    ? 'Acompte confirmé ! La réparation de la batterie va être lancée. Ce devis est maintenant dans vos commandes.'
+    : 'Merci ! La réparation débutera dès réception du virement. Ce devis sera transféré dans vos commandes.');
 
-  if (isSolde) {
-    // Solde payé → livraison enclenchée
-    alert(method === 'cb'
-      ? 'Paiement du solde confirmé ! La livraison retour de la batterie est enclenchée.'
-      : 'Merci ! La livraison retour sera enclenchée dès réception du virement.');
-    // Pas de changement de statut supplémentaire ici (livraison = fin du cycle)
-  } else {
-    // Acompte payé → passe en "Solde dû"
-    alert(method === 'cb'
-      ? 'Acompte confirmé ! La réparation de la batterie va être lancée.'
-      : 'Merci ! La réparation débutera dès réception du virement.');
-
-    // Update card status in the list
-    if (currentDevisCard) {
-      currentDevisCard.dataset.statut = 'reparation';
-      var badge = currentDevisCard.querySelector('.rp-devis-card__badge');
-      if (badge) {
-        badge.className = 'rp-devis-card__badge rp-devis-card__badge--reparation';
-        badge.textContent = 'Solde dû';
-      }
-    }
-
-    // Update detail panel to reflect new status
-    currentDevisStatut = 'reparation';
-    var detailBadge = document.getElementById('devisDetailBadge');
-    detailBadge.className = 'rp-devis-card__badge rp-devis-card__badge--reparation';
-    detailBadge.textContent = 'Solde dû';
-
-    // Update payment section for solde
-    var totalText = document.getElementById('devisDetailPrice').textContent;
-    var totalNum = parseFloat(totalText.replace(/[^0-9,\.]/g, '').replace(',', '.')) || 0;
-    var halfAmount = (totalNum / 2).toFixed(2).replace('.', ',') + ' €';
-    document.getElementById('devisPaymentNotice').innerHTML = '⚠️ La réparation de votre batterie est terminée. Réglez le solde restant de <strong>' + halfAmount + '</strong> pour enclencher la livraison retour.';
-    document.getElementById('devisPaymentSection').querySelector('p').innerHTML = 'Solde restant à régler : <strong id="devisAcompteAmount" style="color:var(--rp-green);">' + halfAmount + '</strong>';
-    document.getElementById('btnDevisPayer').textContent = 'Payer le solde et lancer la livraison';
-
-    // Reset to CB
-    var cbRadio = document.querySelector('input[name="devisPayMethod"][value="cb"]');
-    if (cbRadio) cbRadio.checked = true;
-    document.getElementById('devisPayCB').style.display = '';
-    document.getElementById('devisPayVirement').style.display = 'none';
+  // Remove the card from the devis list (it becomes a commande)
+  if (currentDevisCard) {
+    currentDevisCard.remove();
   }
+
+  // Return to devis list
+  document.getElementById('devisDetailPanel').style.display = 'none';
+  document.getElementById('devisList').style.display = '';
 });
 
 // ===== Suivi des devis — search by reference =====
@@ -2561,8 +2422,8 @@ function formatDateFr(dateStr) {
   return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
-var statutLabels = { attente: 'A payer', approuve: 'Validé', reparation: 'Solde dû', refuse: 'Refusé' };
-var statutClasses = { attente: 'rp-devis-card__badge--attente', approuve: 'rp-devis-card__badge--approuve', reparation: 'rp-devis-card__badge--reparation', refuse: 'rp-devis-card__badge--refuse' };
+var statutLabels = { attente: 'A payer', approuve: 'Validé', refuse: 'Refusé' };
+var statutClasses = { attente: 'rp-devis-card__badge--attente', approuve: 'rp-devis-card__badge--approuve', refuse: 'rp-devis-card__badge--refuse' };
 
 function showSuiviDetail(ref) {
   var d = devisData[ref];
