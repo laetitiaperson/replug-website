@@ -1410,22 +1410,7 @@
                   <div class="rp-diag__form-grid">
                     <div class="rp-diag__form-group">
                       <label>Tension mesurée (V) <span style="color:#dc2626;">*</span></label>
-                      <select id="diagTension">
-                        <option value="">-- Sélectionner --</option>
-                        <option value="0">0 V (aucune tension)</option>
-                        <option value="12">12 V</option>
-                        <option value="24">24 V</option>
-                        <option value="36">36 V</option>
-                        <option value="36.5">36.5 V</option>
-                        <option value="37">37 V</option>
-                        <option value="42">42 V</option>
-                        <option value="48">48 V</option>
-                        <option value="48.5">48.5 V</option>
-                        <option value="52">52 V</option>
-                        <option value="60">60 V</option>
-                        <option value="72">72 V</option>
-                        <option value="autre">Autre</option>
-                      </select>
+                      <input type="text" id="diagTension" placeholder="ex: 36.5">
                     </div>
                     <div class="rp-diag__form-group">
                       <label>Tension du chargeur (V) <span style="color:#dc2626;">*</span></label>
@@ -3062,8 +3047,8 @@ document.getElementById('diagLaunchBtn').addEventListener('click', function() {
   var clientAdresse = document.getElementById('diagClientAdresse').value || '—';
   var clientVille = document.getElementById('diagClientVille').value || '—';
   var clientDept = document.getElementById('diagClientDept').value || '—';
-  var tensionSel = document.getElementById('diagTension');
-  var tensionMesuree = tensionSel && tensionSel.value ? tensionSel.options[tensionSel.selectedIndex].text : '—';
+  var tensionEl = document.getElementById('diagTension');
+  var tensionMesuree = tensionEl && tensionEl.value.trim() ? tensionEl.value.trim() + ' V' : '—';
 
   // Récupérer infos batterie (première carte)
   var battCard = document.querySelector('#diagBatteriesList .rp-diag__battery-card');
