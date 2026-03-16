@@ -1275,8 +1275,8 @@
                           <input type="text" placeholder="ex: 250W">
                         </div>
                         <div class="rp-diag__form-group">
-                          <label>Âge (années) <span style="color:#dc2626;">*</span></label>
-                          <input type="text" placeholder="ex: 3">
+                          <label>Âge <span style="color:#dc2626;">*</span></label>
+                          <select id="diagBattAge"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select>
                         </div>
                         <div class="rp-diag__form-group">
                           <label>Numéro de série (optionnel)</label>
@@ -2783,10 +2783,10 @@ document.getElementById('diagContinueBtn').addEventListener('click', function() 
       if (!firstInvalidEl) { firstInvalidEl = fabricant; firstInvalidSection = 'diagSectionBatteries'; }
     } else { fabricantGroup.classList.remove('is-invalid'); }
 
-    // Modèle, Capacité, Puissance, Âge (inputs texte obligatoires)
+    // Modèle, Capacité, Puissance (inputs texte obligatoires)
     var battInputs = battCard.querySelectorAll('.rp-diag__form-grid .rp-diag__form-group');
-    // Index: 0=Catégorie(select), 1=Fabricant(select), 2=Modèle, 3=Voltage(select), 4=Capacité, 5=Puissance, 6=Âge, 7=Série(opt), 8=Date(opt)
-    [2, 4, 5, 6].forEach(function(idx) {
+    // Index: 0=Catégorie(select), 1=Fabricant(select), 2=Modèle, 3=Voltage(select), 4=Capacité, 5=Puissance, 6=Âge(select), 7=Série(opt), 8=Date(opt)
+    [2, 4, 5].forEach(function(idx) {
       var group = battInputs[idx];
       var input = group.querySelector('input');
       if (input && !input.value.trim()) {
@@ -2794,6 +2794,14 @@ document.getElementById('diagContinueBtn').addEventListener('click', function() 
         if (!firstInvalidEl) { firstInvalidEl = input; firstInvalidSection = 'diagSectionBatteries'; }
       } else if (input) { group.classList.remove('is-invalid'); }
     });
+
+    // Âge (select)
+    var age = battCard.querySelector('#diagBattAge');
+    var ageGroup = age.closest('.rp-diag__form-group');
+    if (!age.value) {
+      ageGroup.classList.add('is-invalid'); allValid = false;
+      if (!firstInvalidEl) { firstInvalidEl = age; firstInvalidSection = 'diagSectionBatteries'; }
+    } else { ageGroup.classList.remove('is-invalid'); }
 
     // Voltage (select)
     var voltage = battCard.querySelector('#diagBattVoltage');
