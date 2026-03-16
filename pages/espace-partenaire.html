@@ -435,6 +435,8 @@
     .rp-diag-result__badge--print:hover { background: #e0e0e0; }
     .rp-diag-result__delete { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 8px; border: 1px solid #e5e7eb; background: #fff; color: #9ca3af; cursor: pointer; transition: all .2s; margin-left: auto; }
     .rp-diag-result__delete:hover { color: #dc2626; border-color: #dc2626; background: #fef2f2; }
+    .rp-password-toggle { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #9ca3af; padding: 4px; display: flex; align-items: center; }
+    .rp-password-toggle:hover { color: var(--rp-dark); }
     .rp-diag-result__montant { font-size: .88rem; color: var(--rp-gray); margin-bottom: 2px; }
     .rp-diag-result__price { font-size: 1.6rem; font-weight: 700; color: var(--rp-dark); margin-bottom: 8px; }
     .rp-diag-result hr { border: none; border-top: 1px solid #e5e7eb; margin: 20px 0; }
@@ -544,7 +546,10 @@
           </div>
           <div class="rp-form__group">
             <label for="partner-password" class="rp-form__label">Mot de passe</label>
-            <input type="password" id="partner-password" name="password" class="rp-form__input" placeholder="Votre mot de passe" required autocomplete="current-password">
+            <div style="position:relative;">
+              <input type="password" id="partner-password" name="password" class="rp-form__input" placeholder="Votre mot de passe" required autocomplete="current-password" style="padding-right:44px;">
+              <button type="button" id="togglePasswordLogin" class="rp-password-toggle" aria-label="Afficher le mot de passe"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="rp-eye-open"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="rp-eye-closed" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button>
+            </div>
           </div>
           <div class="rp-form__group" style="display:flex;align-items:center;justify-content:space-between;font-size:14px;">
             <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
@@ -1958,6 +1963,22 @@ var DEMO_ACCOUNTS = [
   { email: 'jean.dupont@velostore.fr', password: 'replug2026' },
   { email: 'demo@replug.fr', password: 'demo' }
 ];
+
+// Toggle password visibility
+document.getElementById('togglePasswordLogin').addEventListener('click', function() {
+  var input = document.getElementById('partner-password');
+  var eyeOpen = this.querySelector('.rp-eye-open');
+  var eyeClosed = this.querySelector('.rp-eye-closed');
+  if (input.type === 'password') {
+    input.type = 'text';
+    eyeOpen.style.display = 'none';
+    eyeClosed.style.display = '';
+  } else {
+    input.type = 'password';
+    eyeOpen.style.display = '';
+    eyeClosed.style.display = 'none';
+  }
+});
 
 var loginForm = document.getElementById('loginForm');
 if (loginForm) {
