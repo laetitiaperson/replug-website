@@ -2723,11 +2723,34 @@ document.getElementById('diagContinueBtn').addEventListener('click', function() 
   var firstInvalidSection = null;
 
   // --- Validation champs client ---
+  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  var telRegex = /^[0-9]{10}$/;
+  var cpRegex = /^[0-9]{5}$/;
+
   var requiredClientIds = ['diagClientNom', 'diagClientEmail', 'diagClientTel', 'diagClientAdresse', 'diagClientVille', 'diagClientDept'];
   requiredClientIds.forEach(function(id) {
     var input = document.getElementById(id);
     var group = input.closest('.rp-diag__form-group');
-    if (!input.value.trim()) {
+    var val = input.value.trim();
+    var invalid = false;
+    // Supprime l'ancien message d'erreur
+    var oldHint = group.querySelector('.rp-diag__hint-error');
+    if (oldHint) oldHint.remove();
+
+    if (!val) {
+      invalid = true;
+    } else if (id === 'diagClientEmail' && !emailRegex.test(val)) {
+      invalid = true;
+      group.insertAdjacentHTML('beforeend', '<span class="rp-diag__hint-error" style="display:block;font-size:.78rem;color:#dc2626;margin-top:4px;">Format email invalide</span>');
+    } else if (id === 'diagClientTel' && !telRegex.test(val.replace(/[\s.\-]/g, ''))) {
+      invalid = true;
+      group.insertAdjacentHTML('beforeend', '<span class="rp-diag__hint-error" style="display:block;font-size:.78rem;color:#dc2626;margin-top:4px;">10 chiffres requis</span>');
+    } else if (id === 'diagClientDept' && !cpRegex.test(val.replace(/\s/g, ''))) {
+      invalid = true;
+      group.insertAdjacentHTML('beforeend', '<span class="rp-diag__hint-error" style="display:block;font-size:.78rem;color:#dc2626;margin-top:4px;">5 chiffres requis</span>');
+    }
+
+    if (invalid) {
       group.classList.add('is-invalid');
       allValid = false;
       if (!firstInvalidEl) { firstInvalidEl = input; firstInvalidSection = 'diagSectionClient'; }
@@ -2806,11 +2829,14 @@ document.getElementById('diagContinueBtn').addEventListener('click', function() 
   diagGoToStep(2);
 });
 
-// Retirer le liseré rouge dès que l'utilisateur saisit ou change un champ
+// Retirer le liseré rouge et le message d'erreur dès que l'utilisateur saisit
 document.querySelectorAll('#diagSectionClient input, #diagSectionBatteries input').forEach(function(input) {
   input.addEventListener('input', function() {
     if (this.value.trim()) {
-      this.closest('.rp-diag__form-group').classList.remove('is-invalid');
+      var group = this.closest('.rp-diag__form-group');
+      group.classList.remove('is-invalid');
+      var hint = group.querySelector('.rp-diag__hint-error');
+      if (hint) hint.remove();
     }
   });
 });
