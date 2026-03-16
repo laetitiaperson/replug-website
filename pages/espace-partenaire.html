@@ -1627,7 +1627,6 @@
                     <h3>Résultat du diagnostic</h3>
                     <span class="rp-diag-result__ref" id="diagResultRef"></span>
                   </div>
-                  <button class="rp-diag-result__badge rp-diag-result__badge--print" onclick="window.print()" type="button">🖨️ Imprimer</button>
                 </div>
 
                 <!-- Prix total -->
@@ -1670,16 +1669,12 @@
                 </div>
 
                 <!-- Actions -->
-                <div class="rp-diag-result__actions">
-                  <button class="rp-btn rp-btn--primary rp-btn--small" id="diagDemandeDevis" type="button">Commander</button>
-                  <button class="rp-btn rp-btn--outline-dark rp-btn--small" onclick="alert('Diagnostic sauvegardé.')">Sauvegarder</button>
+                <div class="rp-facture__actions" style="margin-top:24px;">
+                  <button class="rp-btn rp-btn--primary rp-btn--small" id="diagCommander" type="button">Commander</button>
+                  <button class="rp-btn rp-btn--outline-dark rp-btn--small" id="diagSauvegarder" type="button">Sauvegarder</button>
+                  <button class="rp-btn rp-btn--outline-dark rp-btn--small" onclick="window.print()">Imprimer</button>
                 </div>
 
-              </div>
-
-              <!-- Nouveau diagnostic — hors du cadre résultat -->
-              <div style="text-align:center;margin-top:24px;">
-                <button class="rp-btn rp-btn--outline-dark rp-btn--small" id="diagNewDiag" type="button">Nouveau diagnostic</button>
               </div>
 
             </div>
@@ -3142,19 +3137,8 @@ document.getElementById('diagLaunchBtn').addEventListener('click', function() {
 });
 
 // Demander devis → créer une carte devis + switch vers onglet Devis avec détail ouvert
-document.getElementById('diagDemandeDevis').addEventListener('click', function() {
-  var data = window._lastDiagResult;
-  if (!data) { alert('Erreur : aucune donnée de diagnostic.'); return; }
-
-  // Générer une référence devis unique
-  var initiales = data.clientNom.split(' ').map(function(w) { return w.charAt(0).toUpperCase(); }).join('');
-  var dept = data.clientDept || '00';
-  var today = new Date();
-  var dateStr = today.getFullYear() + String(today.getMonth()+1).padStart(2,'0') + String(today.getDate()).padStart(2,'0');
-  var devisRef = initiales + '-' + dept + '-' + dateStr + '-' + String(Math.floor(Math.random()*900+100));
-  var dateFr = today.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
-
-  // Ajouter dans DIAG_DATA pour que showDevisDetail fonctionne
+// --- Fonction utilitaire : enregistrer le diagnostic dans DIAG_DATA ---
+function diagSaveToDiagData(data) {
   DIAG_DATA[data.ref] = {
     ref: data.ref, date: data.date, status: 'attente', statusLabel: 'A payer',
     client: data.clientNom, email: data.clientEmail, tel: data.clientTel,
@@ -3163,8 +3147,37 @@ document.getElementById('diagDemandeDevis').addEventListener('click', function()
     resultat: data.resultat, resultatDetail: data.resultatDetail || '',
     prestations: data.prestations, total: data.total
   };
+}
 
-  // Créer la carte HTML
+// --- Fonction utilitaire : quitter le wizard et basculer vers un onglet ---
+function diagExitWizardToTab(tabName) {
+  document.querySelectorAll('.rp-header__partner-tab').forEach(function(t) {
+    t.classList.remove('is-active');
+    if (t.dataset.tab === tabName) t.classList.add('is-active');
+  });
+  document.querySelectorAll('.rp-dashboard__panel').forEach(function(p) { p.classList.remove('is-active'); });
+  document.getElementById('panel-' + tabName).classList.add('is-active');
+  document.getElementById('panel-diagnostic').style.display = 'none';
+  document.getElementById('panel-diagnostic').classList.remove('is-active');
+  var ctaBar = document.querySelector('.rp-cta-bar');
+  if (ctaBar) ctaBar.style.display = '';
+}
+
+// === Sauvegarder → crée un devis dans Mes devis ===
+document.getElementById('diagSauvegarder').addEventListener('click', function() {
+  var data = window._lastDiagResult;
+  if (!data) { alert('Erreur : aucune donnée de diagnostic.'); return; }
+
+  diagSaveToDiagData(data);
+
+  var today = new Date();
+  var dateFr = today.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
+  var initiales = data.clientNom.split(' ').map(function(w) { return w.charAt(0).toUpperCase(); }).join('');
+  var dept = data.clientDept || '00';
+  var dateStr = today.getFullYear() + String(today.getMonth()+1).padStart(2,'0') + String(today.getDate()).padStart(2,'0');
+  var devisRef = '#RP-' + initiales + '-' + dept + '-' + dateStr + '-' + String(Math.floor(Math.random()*900+100));
+
+  // Créer la carte devis
   var cardHtml = '<div class="rp-devis-card" data-statut="attente" data-ref="' + devisRef + '" data-diag-ref="' + data.ref + '" data-client="' + data.clientNom + '" data-email="' + data.clientEmail + '" data-batterie="' + data.batterie + '" data-date="' + today.toISOString().slice(0,10) + '" data-montant="' + data.total.replace(/[^0-9]/g, '') + '" data-prestation="Diagnostic ' + data.ref + '">' +
     '<div class="rp-devis-card__header">' +
       '<span class="rp-devis-card__ref">' + devisRef + '</span>' +
@@ -3181,30 +3194,15 @@ document.getElementById('diagDemandeDevis').addEventListener('click', function()
     '</div>' +
   '</div>';
 
-  // Insérer en haut de la liste
   var devisList = document.getElementById('devisList');
   devisList.insertAdjacentHTML('afterbegin', cardHtml);
-
-  // Attacher le listener sur le bouton "Commander" de la nouvelle carte
   var newCard = devisList.firstElementChild;
   newCard.querySelector('.rp-devis-voir-detail').addEventListener('click', function() {
     showDevisDetail(this.closest('.rp-devis-card'));
   });
 
-  // Basculer vers l'onglet Devis (même logique que le tab switching normal)
-  document.querySelectorAll('.rp-header__partner-tab').forEach(function(t) {
-    t.classList.remove('is-active');
-    if (t.dataset.tab === 'devis') t.classList.add('is-active');
-  });
-  document.querySelectorAll('.rp-dashboard__panel').forEach(function(p) { p.classList.remove('is-active'); });
-  document.getElementById('panel-devis').classList.add('is-active');
-  // Masquer le wizard
-  document.getElementById('panel-diagnostic').style.display = 'none';
-  document.getElementById('panel-diagnostic').classList.remove('is-active');
-  var ctaBar = document.querySelector('.rp-cta-bar');
-  if (ctaBar) ctaBar.style.display = '';
-
-  // S'assurer que le sous-onglet Administration est actif et la liste visible
+  // Basculer vers Mes devis
+  diagExitWizardToTab('devis');
   document.querySelectorAll('.rp-devis-subtab').forEach(function(t) {
     t.classList.remove('is-active');
     if (t.dataset.devisTab === 'admin') t.classList.add('is-active');
@@ -3214,52 +3212,50 @@ document.getElementById('diagDemandeDevis').addEventListener('click', function()
   devisList.style.display = '';
   document.getElementById('devisDetailPanel').style.display = 'none';
 
-  // Ouvrir directement le détail du nouveau devis
-  showDevisDetail(newCard);
+  alert('Devis ' + devisRef + ' sauvegardé dans Mes devis.');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// New diagnostic (reset all)
-document.getElementById('diagNewDiag').addEventListener('click', function() {
-  // Reset all form fields
-  document.getElementById('diagClientNom').value = '';
-  document.getElementById('diagClientEmail').value = '';
-  document.getElementById('diagClientTel').value = '';
-  document.getElementById('diagClientAdresse').value = '';
-  document.getElementById('diagClientVille').value = '';
-  document.getElementById('diagClientDept').value = '';
-  document.getElementById('diagTension').value = '';
-  var tensionChargeur = document.getElementById('diagTensionChargeur'); if (tensionChargeur) tensionChargeur.value = '';
-  var courantCharge = document.getElementById('diagCourantCharge'); if (courantCharge) courantCharge.value = '';
-  var codeErreur = document.getElementById('diagCodeErreur'); if (codeErreur) codeErreur.value = '';
-  var diagFrequence = document.getElementById('diagFrequence'); if (diagFrequence) diagFrequence.selectedIndex = 0;
-  var diagStockage = document.getElementById('diagStockage'); if (diagStockage) diagStockage.selectedIndex = 0;
-  var diagDernierUsage = document.getElementById('diagDernierUsage'); if (diagDernierUsage) diagDernierUsage.selectedIndex = 0;
-  var diagReparation = document.getElementById('diagReparation'); if (diagReparation) diagReparation.selectedIndex = 0;
-  document.querySelectorAll('input[name="diagProbleme"]').forEach(function(cb) { cb.checked = false; });
-  document.querySelectorAll('input[name="diagVisuel"]').forEach(function(r) { r.checked = false; });
-  document.querySelectorAll('input[name="diagCharge"]').forEach(function(r) { r.checked = false; });
-  document.querySelectorAll('input[name="diagDecharge"]').forEach(function(r) { r.checked = false; });
-  // Reset batterie
-  var firstCard = document.querySelector('#diagBatteriesList .rp-diag__battery-card');
-  if (firstCard) {
-    firstCard.querySelectorAll('input').forEach(function(inp) {
-      if (inp.type === 'text' || inp.type === 'date') inp.value = '';
-    });
-    firstCard.querySelectorAll('select').forEach(function(sel) { sel.selectedIndex = 0; });
-  }
-  // Remettre le fabricant en mode désactivé
-  var fabSel = document.getElementById('diagBattFabricant');
-  fabSel.innerHTML = '<option value="">-- Choisir une catégorie d\'abord --</option>';
-  fabSel.disabled = true;
-  // Retirer les erreurs de validation
-  document.querySelectorAll('.rp-diag__form-group.is-invalid').forEach(function(g) { g.classList.remove('is-invalid'); });
-  // Expand all sections
-  document.querySelectorAll('.rp-diag__section.is-collapsed').forEach(function(s) {
-    s.classList.remove('is-collapsed');
-    s.querySelector('.rp-diag__section-toggle').textContent = 'Masquer';
-  });
-  diagGoToStep(1);
+// === Commander → crée une facture d'acompte dans Mes commandes (statut Solde dû) ===
+document.getElementById('diagCommander').addEventListener('click', function() {
+  var data = window._lastDiagResult;
+  if (!data) { alert('Erreur : aucune donnée de diagnostic.'); return; }
+
+  diagSaveToDiagData(data);
+
+  var today = new Date();
+  var dateStr = String(today.getDate()).padStart(2,'0') + '/' + String(today.getMonth()+1).padStart(2,'0') + '/' + String(today.getFullYear()).slice(2);
+  var livrDate = new Date(today.getTime() + 14*24*60*60*1000);
+  var livrStr = String(livrDate.getDate()).padStart(2,'0') + '/' + String(livrDate.getMonth()+1).padStart(2,'0') + '/' + String(livrDate.getFullYear()).slice(2);
+  var montantTTC = parseFloat(data.total.replace(/[^0-9,\.]/g, '').replace(',', '.')) || 0;
+  var acompte = Math.round(montantTTC / 2 * 100) / 100;
+  var solde = Math.round((montantTTC - acompte) * 100) / 100;
+  var ref = '#RP-' + today.getFullYear() + '-' + String(Math.floor(Math.random()*9000+1000));
+
+  // Ajouter une ligne dans le tableau commandes
+  var rowHtml = '<tr style="border-top:1px solid #eee;" data-client="' + data.clientNom.split(' ')[0].toLowerCase() + '" data-status="solde-du" data-date="' + today.toISOString().slice(0,10) + '" data-montant="' + montantTTC + '" data-acompte="' + acompte + '" data-solde="' + solde + '">' +
+    '<td style="padding:10px;white-space:nowrap;font-weight:500;"><a href="#" onclick="openFacture(this);return false;" style="color:var(--rp-green);text-decoration:underline;font-weight:500;cursor:pointer;">' + ref + '</a></td>' +
+    '<td style="padding:10px;white-space:nowrap;">' + data.clientNom + '</td>' +
+    '<td style="padding:10px;white-space:nowrap;">' + (data.categorie || 'Vélo') + '</td>' +
+    '<td style="padding:10px;white-space:nowrap;">' + (data.prestations[0] ? data.prestations[0].label : 'Réparation') + '</td>' +
+    '<td style="padding:10px;white-space:nowrap;">' + dateStr + '</td>' +
+    '<td style="padding:10px;white-space:nowrap;">' + livrStr + '</td>' +
+    '<td style="padding:10px;white-space:nowrap;font-weight:600;">' + montantTTC.toFixed(0) + ' €</td>' +
+    '<td style="padding:10px;white-space:nowrap;">' + acompte.toFixed(2).replace('.', ',') + ' €</td>' +
+    '<td style="padding:10px;white-space:nowrap;font-weight:600;color:#d97706;">' + solde.toFixed(2).replace('.', ',') + ' €</td>' +
+    '<td style="padding:10px;white-space:nowrap;"><span style="background:#fef3c7;color:#92400e;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">Solde dû</span></td>' +
+  '</tr>';
+
+  var tbody = document.getElementById('commandesBody');
+  tbody.insertAdjacentHTML('afterbegin', rowHtml);
+
+  // Basculer vers Mes commandes
+  diagExitWizardToTab('commandes');
+
+  alert('Commande ' + ref + ' créée ! Facture d\'acompte de ' + acompte.toFixed(2).replace('.', ',') + ' € générée.');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 });
+
 
 // ===== Télécharger QR Code (generates a simple page to print/save as PDF) =====
 document.getElementById('btnDownloadQR').addEventListener('click', function() {
