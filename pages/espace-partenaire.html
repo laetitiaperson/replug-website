@@ -133,6 +133,7 @@
     .rp-devis-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 20px 24px; margin-bottom: 12px; transition: box-shadow .2s; }
     .rp-devis-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,.06); }
     .rp-devis-card__header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .rp-devis-card__header-right { display: flex; align-items: center; gap: 12px; }
     .rp-devis-card__ref { font-weight: 600; font-size: 1rem; color: var(--rp-dark); }
     .rp-devis-card__price { font-weight: 700; font-size: 1.15rem; color: var(--rp-dark); }
     .rp-devis-card__details { display: flex; gap: 24px; flex-wrap: wrap; font-size: .88rem; color: var(--rp-gray); }
@@ -819,14 +820,13 @@
               <div class="rp-devis-card" data-statut="reparation" data-ref="#RP-2026-0042" data-diag-ref="DIAG-2026-0015" data-client="Dubois" data-email="martin.dubois@email.fr" data-batterie="Bosch PowerPack 500" data-date="2026-03-08" data-montant="389" data-prestation="Reconditionnement batterie">
                 <div class="rp-devis-card__header">
                   <span class="rp-devis-card__ref">#RP-2026-0042</span>
-                  <span class="rp-devis-card__price">389 EUR</span>
+                  <div class="rp-devis-card__header-right"><span class="rp-devis-card__badge rp-devis-card__badge--reparation">Solde dû</span><span class="rp-devis-card__price">389 EUR</span></div>
                 </div>
                 <div class="rp-devis-card__details">
                   <span>Client<strong>Martin Dubois</strong></span>
                   <span>Email<strong>martin.dubois@email.fr</strong></span>
                   <span>Batterie<strong>Bosch PowerPack 500</strong></span>
                   <span>Date<strong>08 mars 2026</strong></span>
-                  <span>Statut<strong><span class="rp-devis-card__badge rp-devis-card__badge--reparation">Solde dû</span></strong></span>
                 </div>
                 <div style="padding:0 20px 16px;text-align:right;">
                   <button class="rp-btn rp-btn--outline-dark rp-btn--small rp-devis-voir-detail">Voir détails</button>
@@ -836,14 +836,13 @@
               <div class="rp-devis-card" data-statut="reparation" data-ref="#RP-2026-0040" data-diag-ref="DIAG-2026-0012" data-client="Moreau" data-email="pierre.moreau@email.fr" data-batterie="Shimano STEPS E8000" data-date="2026-03-01" data-montant="620" data-prestation="Reconditionnement batterie">
                 <div class="rp-devis-card__header">
                   <span class="rp-devis-card__ref">#RP-2026-0040</span>
-                  <span class="rp-devis-card__price">620 EUR</span>
+                  <div class="rp-devis-card__header-right"><span class="rp-devis-card__badge rp-devis-card__badge--reparation">Solde dû</span><span class="rp-devis-card__price">620 EUR</span></div>
                 </div>
                 <div class="rp-devis-card__details">
                   <span>Client<strong>Pierre Moreau</strong></span>
                   <span>Email<strong>pierre.moreau@email.fr</strong></span>
                   <span>Batterie<strong>Shimano STEPS E8000</strong></span>
                   <span>Date<strong>01 mars 2026</strong></span>
-                  <span>Statut<strong><span class="rp-devis-card__badge rp-devis-card__badge--reparation">Solde dû</span></strong></span>
                 </div>
                 <div style="padding:0 20px 16px;text-align:right;">
                   <button class="rp-btn rp-btn--outline-dark rp-btn--small rp-devis-voir-detail">Voir détails</button>
@@ -853,14 +852,13 @@
               <div class="rp-devis-card" data-statut="attente" data-ref="#RP-2026-0039" data-diag-ref="DIAG-2026-0014" data-client="Petit" data-email="claire.petit@email.fr" data-batterie="Bosch PowerTube 625" data-date="2026-02-25" data-montant="295" data-prestation="Remplacement cellules">
                 <div class="rp-devis-card__header">
                   <span class="rp-devis-card__ref">#RP-2026-0039</span>
-                  <span class="rp-devis-card__price">295 EUR</span>
+                  <div class="rp-devis-card__header-right"><span class="rp-devis-card__badge rp-devis-card__badge--attente">A payer</span><span class="rp-devis-card__price">295 EUR</span></div>
                 </div>
                 <div class="rp-devis-card__details">
                   <span>Client<strong>Claire Petit</strong></span>
                   <span>Email<strong>claire.petit@email.fr</strong></span>
                   <span>Batterie<strong>Bosch PowerTube 625</strong></span>
                   <span>Date<strong>25 févr. 2026</strong></span>
-                  <span>Statut<strong><span class="rp-devis-card__badge rp-devis-card__badge--attente">A payer</span></strong></span>
                 </div>
                 <div style="padding:0 20px 16px;text-align:right;">
                   <button class="rp-btn rp-btn--outline-dark rp-btn--small rp-devis-voir-detail">Voir détails</button>
@@ -870,14 +868,13 @@
               <div class="rp-devis-card" data-statut="attente" data-ref="#RP-2026-0036" data-diag-ref="DIAG-2026-0011" data-client="Leroy" data-email="marc.leroy@email.fr" data-batterie="NIU NQi 60V" data-date="2026-02-10" data-montant="450" data-prestation="Remplacement cellules">
                 <div class="rp-devis-card__header">
                   <span class="rp-devis-card__ref">#RP-2026-0036</span>
-                  <span class="rp-devis-card__price">450 EUR</span>
+                  <div class="rp-devis-card__header-right"><span class="rp-devis-card__badge rp-devis-card__badge--attente">A payer</span><span class="rp-devis-card__price">450 EUR</span></div>
                 </div>
                 <div class="rp-devis-card__details">
                   <span>Client<strong>Marc Leroy</strong></span>
                   <span>Email<strong>marc.leroy@email.fr</strong></span>
                   <span>Batterie<strong>NIU NQi 60V</strong></span>
                   <span>Date<strong>10 févr. 2026</strong></span>
-                  <span>Statut<strong><span class="rp-devis-card__badge rp-devis-card__badge--attente">A payer</span></strong></span>
                 </div>
                 <div style="padding:0 20px 16px;text-align:right;">
                   <button class="rp-btn rp-btn--outline-dark rp-btn--small rp-devis-voir-detail">Voir détails</button>
@@ -887,14 +884,13 @@
               <div class="rp-devis-card" data-statut="reparation" data-ref="#RP-2026-0035" data-diag-ref="DIAG-2026-0010" data-client="Martin" data-email="julie.martin@email.fr" data-batterie="Yamaha PW-X3 600Wh" data-date="2026-02-05" data-montant="540" data-prestation="Réparation BMS">
                 <div class="rp-devis-card__header">
                   <span class="rp-devis-card__ref">#RP-2026-0035</span>
-                  <span class="rp-devis-card__price">540 EUR</span>
+                  <div class="rp-devis-card__header-right"><span class="rp-devis-card__badge rp-devis-card__badge--reparation">Solde dû</span><span class="rp-devis-card__price">540 EUR</span></div>
                 </div>
                 <div class="rp-devis-card__details">
                   <span>Client<strong>Julie Martin</strong></span>
                   <span>Email<strong>julie.martin@email.fr</strong></span>
                   <span>Batterie<strong>Yamaha PW-X3 600Wh</strong></span>
                   <span>Date<strong>05 févr. 2026</strong></span>
-                  <span>Statut<strong><span class="rp-devis-card__badge rp-devis-card__badge--reparation">Solde dû</span></strong></span>
                 </div>
                 <div style="padding:0 20px 16px;text-align:right;">
                   <button class="rp-btn rp-btn--outline-dark rp-btn--small rp-devis-voir-detail">Voir détails</button>
@@ -904,14 +900,13 @@
               <div class="rp-devis-card" data-statut="reparation" data-ref="#RP-2026-0033" data-diag-ref="DIAG-2026-0008" data-client="Fournier" data-email="anne.fournier@email.fr" data-batterie="Bosch PowerPack 400" data-date="2026-01-22" data-montant="380" data-prestation="Reconditionnement batterie">
                 <div class="rp-devis-card__header">
                   <span class="rp-devis-card__ref">#RP-2026-0033</span>
-                  <span class="rp-devis-card__price">380 EUR</span>
+                  <div class="rp-devis-card__header-right"><span class="rp-devis-card__badge rp-devis-card__badge--reparation">Solde dû</span><span class="rp-devis-card__price">380 EUR</span></div>
                 </div>
                 <div class="rp-devis-card__details">
                   <span>Client<strong>Anne Fournier</strong></span>
                   <span>Email<strong>anne.fournier@email.fr</strong></span>
                   <span>Batterie<strong>Bosch PowerPack 400</strong></span>
                   <span>Date<strong>22 janv. 2026</strong></span>
-                  <span>Statut<strong><span class="rp-devis-card__badge rp-devis-card__badge--reparation">Solde dû</span></strong></span>
                 </div>
                 <div style="padding:0 20px 16px;text-align:right;">
                   <button class="rp-btn rp-btn--outline-dark rp-btn--small rp-devis-voir-detail">Voir détails</button>
@@ -921,14 +916,13 @@
               <div class="rp-devis-card" data-statut="attente" data-ref="#RP-2026-0031" data-diag-ref="DIAG-2026-0006" data-client="Bonnet" data-email="paul.bonnet@email.fr" data-batterie="Niu NQi Pro 72V" data-date="2026-01-10" data-montant="515" data-prestation="Remplacement cellules">
                 <div class="rp-devis-card__header">
                   <span class="rp-devis-card__ref">#RP-2026-0031</span>
-                  <span class="rp-devis-card__price">515 EUR</span>
+                  <div class="rp-devis-card__header-right"><span class="rp-devis-card__badge rp-devis-card__badge--attente">A payer</span><span class="rp-devis-card__price">515 EUR</span></div>
                 </div>
                 <div class="rp-devis-card__details">
                   <span>Client<strong>Paul Bonnet</strong></span>
                   <span>Email<strong>paul.bonnet@email.fr</strong></span>
                   <span>Batterie<strong>Niu NQi Pro 72V</strong></span>
                   <span>Date<strong>10 janv. 2026</strong></span>
-                  <span>Statut<strong><span class="rp-devis-card__badge rp-devis-card__badge--attente">A payer</span></strong></span>
                 </div>
                 <div style="padding:0 20px 16px;text-align:right;">
                   <button class="rp-btn rp-btn--outline-dark rp-btn--small rp-devis-voir-detail">Voir détails</button>
@@ -938,14 +932,13 @@
               <div class="rp-devis-card" data-statut="reparation" data-ref="#RP-2025-0029" data-diag-ref="DIAG-2025-0003" data-client="Mercier" data-email="luc.mercier@email.fr" data-batterie="Zero FX 52V" data-date="2025-12-20" data-montant="680" data-prestation="Reconditionnement batterie">
                 <div class="rp-devis-card__header">
                   <span class="rp-devis-card__ref">#RP-2025-0029</span>
-                  <span class="rp-devis-card__price">680 EUR</span>
+                  <div class="rp-devis-card__header-right"><span class="rp-devis-card__badge rp-devis-card__badge--reparation">Solde dû</span><span class="rp-devis-card__price">680 EUR</span></div>
                 </div>
                 <div class="rp-devis-card__details">
                   <span>Client<strong>Luc Mercier</strong></span>
                   <span>Email<strong>luc.mercier@email.fr</strong></span>
                   <span>Batterie<strong>Zero FX 52V</strong></span>
                   <span>Date<strong>20 déc. 2025</strong></span>
-                  <span>Statut<strong><span class="rp-devis-card__badge rp-devis-card__badge--reparation">Solde dû</span></strong></span>
                 </div>
                 <div style="padding:0 20px 16px;text-align:right;">
                   <button class="rp-btn rp-btn--outline-dark rp-btn--small rp-devis-voir-detail">Voir détails</button>
@@ -3182,14 +3175,13 @@ document.getElementById('diagDemandeDevis').addEventListener('click', function()
   var cardHtml = '<div class="rp-devis-card" data-statut="attente" data-ref="' + devisRef + '" data-diag-ref="' + data.ref + '" data-client="' + data.clientNom + '" data-email="' + data.clientEmail + '" data-batterie="' + data.batterie + '" data-date="' + today.toISOString().slice(0,10) + '" data-montant="' + data.total.replace(/[^0-9]/g, '') + '" data-prestation="Diagnostic ' + data.ref + '">' +
     '<div class="rp-devis-card__header">' +
       '<span class="rp-devis-card__ref">' + devisRef + '</span>' +
-      '<span class="rp-devis-card__price">' + data.total.replace('€','EUR') + '</span>' +
+      '<div class="rp-devis-card__header-right"><span class="rp-devis-card__badge rp-devis-card__badge--attente">A payer</span><span class="rp-devis-card__price">' + data.total.replace('€','EUR') + '</span></div>' +
     '</div>' +
     '<div class="rp-devis-card__details">' +
       '<span>Client<strong>' + data.clientNom + '</strong></span>' +
       '<span>Email<strong>' + data.clientEmail + '</strong></span>' +
       '<span>Batterie<strong>' + data.batterie + '</strong></span>' +
       '<span>Date<strong>' + dateFr + '</strong></span>' +
-      '<span>Statut<strong><span class="rp-devis-card__badge rp-devis-card__badge--attente">A payer</span></strong></span>' +
     '</div>' +
     '<div style="padding:0 20px 16px;text-align:right;">' +
       '<button class="rp-btn rp-btn--outline-dark rp-btn--small rp-devis-voir-detail">Voir détails</button>' +
