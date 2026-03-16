@@ -885,7 +885,7 @@
                   <span>Date<strong>25 févr. 2026</strong></span>
                 </div>
                 <div style="padding:0 20px 16px;text-align:right;">
-                  <button class="rp-btn rp-btn--outline-dark rp-btn--small rp-devis-voir-detail">Voir détails</button>
+                  <button class="rp-btn rp-btn--outline-dark rp-btn--small rp-devis-voir-detail">Commander</button>
                 </div>
               </div>
 
@@ -901,7 +901,7 @@
                   <span>Date<strong>10 févr. 2026</strong></span>
                 </div>
                 <div style="padding:0 20px 16px;text-align:right;">
-                  <button class="rp-btn rp-btn--outline-dark rp-btn--small rp-devis-voir-detail">Voir détails</button>
+                  <button class="rp-btn rp-btn--outline-dark rp-btn--small rp-devis-voir-detail">Commander</button>
                 </div>
               </div>
 
@@ -917,7 +917,7 @@
                   <span>Date<strong>10 janv. 2026</strong></span>
                 </div>
                 <div style="padding:0 20px 16px;text-align:right;">
-                  <button class="rp-btn rp-btn--outline-dark rp-btn--small rp-devis-voir-detail">Voir détails</button>
+                  <button class="rp-btn rp-btn--outline-dark rp-btn--small rp-devis-voir-detail">Commander</button>
                 </div>
               </div>
 
@@ -2356,7 +2356,7 @@ function filterDevis() {
 }
 document.getElementById('devisSearch').addEventListener('input', filterDevis);
 
-// ===== Devis — Voir détails =====
+// ===== Devis — Commander =====
 var DEVIS_STATUS_LABELS = { attente: 'A payer', approuve: 'Validé', refuse: 'Refusé' };
 
 var currentDevisCard = null;
@@ -3151,7 +3151,7 @@ document.getElementById('diagDemandeDevis').addEventListener('click', function()
       '<span>Date<strong>' + dateFr + '</strong></span>' +
     '</div>' +
     '<div style="padding:0 20px 16px;text-align:right;">' +
-      '<button class="rp-btn rp-btn--outline-dark rp-btn--small rp-devis-voir-detail">Voir détails</button>' +
+      '<button class="rp-btn rp-btn--outline-dark rp-btn--small rp-devis-voir-detail">Commander</button>' +
     '</div>' +
   '</div>';
 
@@ -3159,7 +3159,7 @@ document.getElementById('diagDemandeDevis').addEventListener('click', function()
   var devisList = document.getElementById('devisList');
   devisList.insertAdjacentHTML('afterbegin', cardHtml);
 
-  // Attacher le listener sur le bouton "Voir détails" de la nouvelle carte
+  // Attacher le listener sur le bouton "Commander" de la nouvelle carte
   var newCard = devisList.firstElementChild;
   newCard.querySelector('.rp-devis-voir-detail').addEventListener('click', function() {
     showDevisDetail(this.closest('.rp-devis-card'));
