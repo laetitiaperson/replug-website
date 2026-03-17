@@ -631,6 +631,7 @@
         <!-- Panel: Commandes -->
         <div class="rp-dashboard__panel is-active" id="panel-commandes">
 
+          <div id="commandesContent">
           <!-- Title -->
           <h2 style="font-size:1.2rem;margin:0 0 16px;">Mes commandes</h2>
 
@@ -834,16 +835,13 @@
               <p style="font-size:1.5rem;font-weight:700;color:#dc2626;">2 264,50 €</p>
             </div>
           </div>
+          </div>
 
-        </div>
-
-        <!-- Overlay Facture -->
-        <div class="rp-facture-overlay" id="factureOverlay" onclick="closeFacture(event)">
-          <div class="rp-facture" onclick="event.stopPropagation()">
-
+          <!-- Facture detail panel (hidden by default, like devis detail) -->
+          <div class="rp-suivi-detail" id="factureDetailPanel" style="display:none;">
             <!-- Header : logo + coordonnées -->
             <div class="rp-devis-doc__header">
-              <img src="../assets/images/logo-replug.svg" alt="Re-plug" class="rp-devis-doc__logo">
+              <img src="../images/logo-replug.png" alt="Re-plug" class="rp-devis-doc__logo">
               <div class="rp-devis-doc__emetteur">
                 <strong>Re-plug SAS</strong>
                 8, rue Lemercier — 75017 Paris<br>
@@ -854,48 +852,39 @@
             <!-- Titre + référence -->
             <div class="rp-devis-doc__title-row">
               <span class="rp-devis-doc__title" id="factureTitle">FACTURE</span>
-              <span style="font-size:.95rem;color:var(--rp-gray);" id="factureRef"></span>
+              <span class="rp-devis-doc__ref" id="factureRef"></span>
             </div>
 
             <!-- Destinataire -->
             <div class="rp-devis-doc__dest">
               <div class="rp-devis-doc__dest-label">Destinataire</div>
-              <div style="margin-top:6px;">
-                <strong id="factureDestNom"></strong><br>
-                <span id="factureDestAdresse" style="font-size:.88rem;color:var(--rp-gray);"></span><br>
-                <span id="factureDestSiret" style="font-size:.85rem;color:var(--rp-gray);"></span>
-              </div>
+              <strong id="factureDestNom"></strong>
+              <span id="factureDestAdresse"></span><br>
+              <span id="factureDestSiret"></span>
               <div class="rp-devis-doc__client-ref" id="factureClientRef"></div>
             </div>
 
             <!-- Tableau prestations -->
             <table class="rp-devis-doc__table">
               <thead>
-                <tr>
-                  <th style="padding:10px 14px;font-size:.82rem;font-weight:600;text-align:left;">Désignation</th>
-                  <th style="padding:10px 14px;font-size:.82rem;font-weight:600;text-align:center;">Quantité</th>
-                  <th style="padding:10px 14px;font-size:.82rem;font-weight:600;text-align:left;">Prix unitaire HT</th>
-                  <th style="padding:10px 14px;font-size:.82rem;font-weight:600;text-align:right;">Total HT (Euros)</th>
-                </tr>
+                <tr><th>Désignation</th><th>Quantité</th><th>Prix unitaire HT</th><th>Total HT (Euros)</th></tr>
               </thead>
               <tbody id="factureTableBody"></tbody>
             </table>
 
             <!-- Totaux -->
-            <div style="display:flex;justify-content:flex-end;margin-bottom:24px;">
-              <div style="min-width:260px;">
-                <div style="display:flex;justify-content:space-between;font-size:.9rem;padding:6px 14px;"><span>Total HT :</span><strong id="factureTotalHT"></strong></div>
-                <div style="display:flex;justify-content:space-between;font-size:.9rem;padding:6px 14px;"><span>TVA (20%) :</span><strong id="factureTVA"></strong></div>
-                <div class="rp-devis-doc__total-row--final" style="display:flex;justify-content:space-between;font-size:1.05rem;padding:10px 14px;margin-top:8px;">
-                  <span>TOTAL TTC (Euros) :</span><strong id="factureTotalTTC"></strong>
-                </div>
+            <div class="rp-devis-doc__totals">
+              <div class="rp-devis-doc__totals-box">
+                <div class="rp-devis-doc__total-row"><span>Total HT :</span><span id="factureTotalHT"></span></div>
+                <div class="rp-devis-doc__total-row"><span>TVA (20%) :</span><span id="factureTVA"></span></div>
+                <div class="rp-devis-doc__total-row rp-devis-doc__total-row--final"><span>TOTAL TTC (Euros) :</span><span id="factureTotalTTC"></span></div>
               </div>
             </div>
 
             <!-- Conditions de paiement -->
-            <div style="margin-bottom:20px;">
+            <div class="rp-devis-doc__conditions">
               <div class="rp-devis-doc__conditions-title">Conditions de paiement</div>
-              <p style="font-size:.85rem;color:var(--rp-gray);margin:6px 0 0;font-style:italic;" id="factureConditions">50% à la commande, 50% avant livraison</p>
+              <p id="factureConditions">50% à la commande, 50% avant livraison</p>
             </div>
 
             <!-- Statut paiement -->
@@ -907,11 +896,12 @@
             </div>
 
             <!-- Actions -->
-            <div class="rp-facture__actions">
+            <div class="rp-facture__actions" style="margin-top:20px;">
               <button class="rp-btn rp-btn--primary rp-btn--small" onclick="window.print()">Imprimer</button>
-              <button class="rp-btn rp-btn--outline-dark rp-btn--small" onclick="closeFacture()">Fermer</button>
+              <button class="rp-btn rp-btn--outline-dark rp-btn--small" id="btnFermerFacture">Fermer</button>
             </div>
           </div>
+
         </div>
 
         <!-- Panel: Diagnostics -->
@@ -2165,6 +2155,10 @@ document.querySelectorAll('.rp-header__partner-tab').forEach(function(tab) {
     if (devisSearchBar) { devisSearchBar.style.display = ''; }
     var devisList = document.getElementById('devisList');
     if (devisList) { devisList.style.display = ''; }
+    var factureDetail = document.getElementById('factureDetailPanel');
+    if (factureDetail) { factureDetail.style.display = 'none'; }
+    var commandesContent = document.getElementById('commandesContent');
+    if (commandesContent) { commandesContent.style.display = ''; }
     // (Panel diagnostics supprimé)
     // Close diagnostic wizard if open
     var diagWizard = document.getElementById('diagWizard');
@@ -2409,13 +2403,20 @@ function openFacture(link) {
     paidLine.className = 'rp-facture__paid rp-facture__paid--ok';
   }
 
-  document.getElementById('factureOverlay').classList.add('is-visible');
+  document.getElementById('commandesContent').style.display = 'none';
+  document.querySelector('.rp-dash-cta').style.display = 'none';
+  document.getElementById('factureDetailPanel').style.display = 'block';
+  window.scrollTo({ top: document.getElementById('factureDetailPanel').offsetTop - 80, behavior: 'smooth' });
 }
 
-function closeFacture(e) {
-  if (e && e.target !== document.getElementById('factureOverlay')) return;
-  document.getElementById('factureOverlay').classList.remove('is-visible');
+function closeFacture() {
+  document.getElementById('factureDetailPanel').style.display = 'none';
+  document.getElementById('commandesContent').style.display = '';
+  document.querySelector('.rp-dash-cta').style.display = '';
+  window.scrollTo({ top: document.querySelector('.rp-dash-cta').offsetTop - 80, behavior: 'smooth' });
 }
+
+document.getElementById('btnFermerFacture').addEventListener('click', closeFacture);
 
 // ===== Diagnostic wizard =====
 function launchDiagnosticWizard() {
