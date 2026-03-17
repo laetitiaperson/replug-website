@@ -234,21 +234,17 @@
       /* ---- Masquer tout par défaut ---- */
       body * { visibility: hidden !important; }
 
-      /* ---- Zone imprimable : facture (overlay) ---- */
-      .rp-facture-overlay.is-visible,
-      .rp-facture-overlay.is-visible * {
+      /* ---- Zone imprimable : facture (panneau inline) ---- */
+      #factureDetailPanel[style*="display: block"],
+      #factureDetailPanel[style*="display: block"] * {
         visibility: visible !important;
       }
-      .rp-facture-overlay.is-visible {
+      #factureDetailPanel[style*="display: block"] {
         position: fixed !important; inset: 0 !important;
-        background: #fff !important; padding: 0 !important;
-        display: flex !important; z-index: 99999 !important;
-        overflow: visible !important;
-      }
-      .rp-facture-overlay.is-visible .rp-facture {
-        box-shadow: none !important; max-height: none !important;
-        border-radius: 0 !important; overflow: visible !important;
-        margin: 0 auto !important; padding: 20px 40px !important;
+        background: #fff !important; z-index: 99999 !important;
+        overflow: visible !important; max-width: none !important;
+        padding: 20px 40px !important; box-shadow: none !important;
+        border-radius: 0 !important;
       }
       .rp-facture__actions { display: none !important; }
 
