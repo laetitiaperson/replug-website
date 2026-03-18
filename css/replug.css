@@ -433,15 +433,22 @@ h1, h2, h3, h4, h5, h6 {
   transform: translateY(-2px);
 }
 
+.rp-expertise__card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
 .rp-expertise__card-icon {
   width: 56px;
   height: 56px;
+  min-width: 56px;
   background-color: var(--rp-dark);
   border-radius: var(--rp-radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 24px;
 }
 
 .rp-expertise__card-icon svg {
@@ -451,10 +458,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .rp-expertise__card-title {
-  font-size: 1.2rem;
+  font-size: 1.35rem;
   font-weight: 700;
   color: var(--rp-dark);
-  margin-bottom: 16px;
 }
 
 .rp-expertise__card-text {
