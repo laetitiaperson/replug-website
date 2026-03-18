@@ -885,7 +885,7 @@
               <div class="rp-devis-doc__totals-box">
                 <div class="rp-devis-doc__total-row"><span>Total HT :</span><span id="factureTotalHT"></span></div>
                 <div class="rp-devis-doc__total-row"><span>TVA (20%) :</span><span id="factureTVA"></span></div>
-                <div class="rp-devis-doc__total-row rp-devis-doc__total-row--final"><span>TOTAL TTC (Euros) :</span><span id="factureTotalTTC"></span></div>
+                <div class="rp-devis-doc__total-row rp-devis-doc__total-row--final"><span id="factureTotalLabel">TOTAL TTC (Euros) :</span><span id="factureTotalTTC"></span></div>
               </div>
             </div>
 
@@ -1045,14 +1045,20 @@
                 <span class="rp-devis-card__badge" id="devisDetailBadge"></span>
               </div>
 
-              <!-- Destinataire = partenaire -->
-              <div class="rp-devis-doc__dest">
-                <div class="rp-devis-doc__dest-label">Destinataire</div>
-                <strong id="devisDestNom">Cycles Expert SARL</strong>
-                <span id="devisDestAdresse">12 avenue de la République — 75011 Paris</span><br>
-                <span id="devisDestSiret">SIRET : 823 456 789 00012</span>
-                <div class="rp-devis-doc__client-ref" id="devisClientRef"></div>
+              <!-- Destinataire + Date -->
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap;margin-bottom:8px;">
+                <div class="rp-devis-doc__dest" style="margin-bottom:0;flex:1;min-width:240px;">
+                  <div class="rp-devis-doc__dest-label">Destinataire</div>
+                  <strong id="devisDestNom">Cycles Expert SARL</strong>
+                  <span id="devisDestAdresse">12 avenue de la République — 75011 Paris</span><br>
+                  <span id="devisDestSiret">SIRET : 823 456 789 00012</span>
+                </div>
+                <div style="text-align:right;padding-top:16px;">
+                  <span style="font-size:.9rem;color:var(--rp-gray);">Date : </span>
+                  <strong id="devisDate" style="font-size:.9rem;color:var(--rp-dark);"></strong>
+                </div>
               </div>
+              <div class="rp-devis-doc__client-ref" id="devisClientRef" style="margin-bottom:20px;"></div>
 
               <!-- Tableau désignation -->
               <table class="rp-devis-doc__table">
@@ -2422,10 +2428,10 @@ function openFacture(link) {
   var solde = parseFloat(row.dataset.solde) || 0;
   var isAcompte = status === 'solde-du';
 
-  // Montant affiché = acompte (50%) pour facture d'acompte, total pour facture finale
-  var displayTTC = isAcompte ? acompte : montantTTC;
-  var displayHT = Math.round(displayTTC / 1.20 * 100) / 100;
-  var displayTVA = Math.round((displayTTC - displayHT) * 100) / 100;
+  // Montants : toujours basés sur le total commande
+  var totalHT = Math.round(montantTTC / 1.20 * 100) / 100;
+  var totalTVA = Math.round((montantTTC - totalHT) * 100) / 100;
+  var acompteHT = Math.round(acompte / 1.20 * 100) / 100;
 
   // Titre du document
   document.getElementById('factureTitle').textContent = isAcompte ? 'FACTURE D\'ACOMPTE' : 'FACTURE';
@@ -2444,22 +2450,47 @@ function openFacture(link) {
 
   // Tableau prestations avec lignes vides (style PDF)
   var tbody = document.getElementById('factureTableBody');
-  var label = isAcompte ? 'Acompte 50 % — ' + intervention : intervention;
   var emptyRowStyle = 'background:#f6f9f2;';
-  tbody.innerHTML =
-    '<tr>' +
-      '<td style="padding:12px 14px;font-size:.88rem;border-bottom:1px solid #f0f0f0;">' + label + '</td>' +
-      '<td style="padding:12px 14px;font-size:.88rem;text-align:center;border-bottom:1px solid #f0f0f0;">1</td>' +
-      '<td style="padding:12px 14px;font-size:.88rem;border-bottom:1px solid #f0f0f0;">' + displayHT.toFixed(2).replace('.', ',') + '</td>' +
-      '<td style="padding:12px 14px;font-size:.88rem;text-align:right;border-bottom:1px solid #f0f0f0;">' + displayHT.toFixed(2).replace('.', ',') + ' €</td>' +
-    '</tr>' +
-    '<tr style="' + emptyRowStyle + '"><td colspan="4" style="padding:10px 14px;">&nbsp;</td></tr>' +
-    '<tr style="' + emptyRowStyle + '"><td colspan="4" style="padding:10px 14px;">&nbsp;</td></tr>';
+  if (isAcompte) {
+    // Facture d'acompte : montant total + déduction acompte versé
+    tbody.innerHTML =
+      '<tr>' +
+        '<td style="padding:12px 14px;font-size:.88rem;border-bottom:1px solid #f0f0f0;">' + intervention + '</td>' +
+        '<td style="padding:12px 14px;font-size:.88rem;text-align:center;border-bottom:1px solid #f0f0f0;">1</td>' +
+        '<td style="padding:12px 14px;font-size:.88rem;border-bottom:1px solid #f0f0f0;">' + totalHT.toFixed(2).replace('.', ',') + '</td>' +
+        '<td style="padding:12px 14px;font-size:.88rem;text-align:right;border-bottom:1px solid #f0f0f0;">' + totalHT.toFixed(2).replace('.', ',') + ' €</td>' +
+      '</tr>' +
+      '<tr style="background:#fef9e7;">' +
+        '<td colspan="3" style="padding:12px 14px;font-size:.88rem;color:#92400e;font-weight:500;border-bottom:1px solid #f0f0f0;">Acompte 50 % versé</td>' +
+        '<td style="padding:12px 14px;font-size:.88rem;text-align:right;color:#92400e;font-weight:500;border-bottom:1px solid #f0f0f0;">- ' + acompteHT.toFixed(2).replace('.', ',') + ' €</td>' +
+      '</tr>' +
+      '<tr style="' + emptyRowStyle + '"><td colspan="4" style="padding:10px 14px;">&nbsp;</td></tr>';
+  } else {
+    tbody.innerHTML =
+      '<tr>' +
+        '<td style="padding:12px 14px;font-size:.88rem;border-bottom:1px solid #f0f0f0;">' + intervention + '</td>' +
+        '<td style="padding:12px 14px;font-size:.88rem;text-align:center;border-bottom:1px solid #f0f0f0;">1</td>' +
+        '<td style="padding:12px 14px;font-size:.88rem;border-bottom:1px solid #f0f0f0;">' + totalHT.toFixed(2).replace('.', ',') + '</td>' +
+        '<td style="padding:12px 14px;font-size:.88rem;text-align:right;border-bottom:1px solid #f0f0f0;">' + totalHT.toFixed(2).replace('.', ',') + ' €</td>' +
+      '</tr>' +
+      '<tr style="' + emptyRowStyle + '"><td colspan="4" style="padding:10px 14px;">&nbsp;</td></tr>' +
+      '<tr style="' + emptyRowStyle + '"><td colspan="4" style="padding:10px 14px;">&nbsp;</td></tr>';
+  }
 
-  // Totaux
-  document.getElementById('factureTotalHT').textContent = displayHT.toFixed(2).replace('.', ',') + ' €';
-  document.getElementById('factureTVA').textContent = displayTVA.toFixed(2).replace('.', ',') + ' €';
-  document.getElementById('factureTotalTTC').textContent = displayTTC.toFixed(2).replace('.', ',') + ' €';
+  // Totaux : pour acompte, afficher le solde restant après déduction de l'acompte
+  if (isAcompte) {
+    var soldeHT = Math.round(solde / 1.20 * 100) / 100;
+    var soldeTVA = Math.round((solde - soldeHT) * 100) / 100;
+    document.getElementById('factureTotalHT').textContent = soldeHT.toFixed(2).replace('.', ',') + ' €';
+    document.getElementById('factureTVA').textContent = soldeTVA.toFixed(2).replace('.', ',') + ' €';
+    document.getElementById('factureTotalTTC').textContent = solde.toFixed(2).replace('.', ',') + ' €';
+    document.getElementById('factureTotalLabel').textContent = 'SOLDE RESTANT TTC :';
+  } else {
+    document.getElementById('factureTotalHT').textContent = totalHT.toFixed(2).replace('.', ',') + ' €';
+    document.getElementById('factureTVA').textContent = totalTVA.toFixed(2).replace('.', ',') + ' €';
+    document.getElementById('factureTotalTTC').textContent = montantTTC.toFixed(2).replace('.', ',') + ' €';
+    document.getElementById('factureTotalLabel').textContent = 'TOTAL TTC (Euros) :';
+  }
 
   // Conditions adaptées
   document.getElementById('factureConditions').textContent = isAcompte
@@ -2469,7 +2500,7 @@ function openFacture(link) {
   // Statut paiement
   var paidLine = document.getElementById('facturePaidDate');
   if (isAcompte) {
-    paidLine.textContent = 'Acompte de 50 % réglé — Solde restant : ' + solde.toFixed(2).replace('.', ',') + ' €';
+    paidLine.textContent = 'Acompte de 50 % réglé (' + acompte.toFixed(2).replace('.', ',') + ' €) — Solde restant : ' + solde.toFixed(2).replace('.', ',') + ' €';
     paidLine.className = 'rp-facture__paid rp-facture__paid--pending';
   } else {
     paidLine.textContent = 'Facture réglée le ' + dateCmd;
@@ -2551,22 +2582,22 @@ document.getElementById('btnPayerSolde').addEventListener('click', function() {
   document.getElementById('factureTitle').textContent = 'FACTURE';
   document.getElementById('factureConditions').textContent = 'Facture intégralement réglée';
 
-  // Mettre à jour le tableau avec le montant total
-  var displayTTC = montant;
-  var displayHT = Math.round(displayTTC / 1.20 * 100) / 100;
-  var displayTVA = Math.round((displayTTC - displayHT) * 100) / 100;
+  // Mettre à jour le tableau avec le montant total (facture finale complète)
+  var totalHT = Math.round(montant / 1.20 * 100) / 100;
+  var totalTVA = Math.round((montant - totalHT) * 100) / 100;
   var intervention = targetRow.cells[3].textContent.trim();
   var emptyRowStyle = 'background:#f6f9f2;';
   document.getElementById('factureTableBody').innerHTML =
     '<tr><td style="padding:12px 14px;font-size:.88rem;border-bottom:1px solid #f0f0f0;">' + intervention + '</td>' +
     '<td style="padding:12px 14px;font-size:.88rem;text-align:center;border-bottom:1px solid #f0f0f0;">1</td>' +
-    '<td style="padding:12px 14px;font-size:.88rem;border-bottom:1px solid #f0f0f0;">' + displayHT.toFixed(2).replace('.', ',') + '</td>' +
-    '<td style="padding:12px 14px;font-size:.88rem;text-align:right;border-bottom:1px solid #f0f0f0;">' + displayHT.toFixed(2).replace('.', ',') + ' €</td></tr>' +
+    '<td style="padding:12px 14px;font-size:.88rem;border-bottom:1px solid #f0f0f0;">' + totalHT.toFixed(2).replace('.', ',') + '</td>' +
+    '<td style="padding:12px 14px;font-size:.88rem;text-align:right;border-bottom:1px solid #f0f0f0;">' + totalHT.toFixed(2).replace('.', ',') + ' €</td></tr>' +
     '<tr style="' + emptyRowStyle + '"><td colspan="4" style="padding:10px 14px;">&nbsp;</td></tr>' +
     '<tr style="' + emptyRowStyle + '"><td colspan="4" style="padding:10px 14px;">&nbsp;</td></tr>';
-  document.getElementById('factureTotalHT').textContent = displayHT.toFixed(2).replace('.', ',') + ' €';
-  document.getElementById('factureTVA').textContent = displayTVA.toFixed(2).replace('.', ',') + ' €';
-  document.getElementById('factureTotalTTC').textContent = displayTTC.toFixed(2).replace('.', ',') + ' €';
+  document.getElementById('factureTotalHT').textContent = totalHT.toFixed(2).replace('.', ',') + ' €';
+  document.getElementById('factureTVA').textContent = totalTVA.toFixed(2).replace('.', ',') + ' €';
+  document.getElementById('factureTotalTTC').textContent = montant.toFixed(2).replace('.', ',') + ' €';
+  document.getElementById('factureTotalLabel').textContent = 'TOTAL TTC (Euros) :';
 
   var isCB = document.querySelector('input[name="facturePayMethod"]:checked').value === 'cb';
   alert(isCB
@@ -2697,13 +2728,20 @@ function showDevisDetail(card) {
   document.getElementById('devisDestSiret').textContent = 'SIRET : 823 456 789 00012';
   document.getElementById('devisClientRef').textContent = 'Client final : ' + d.client + ' — ' + d.batterie;
 
-  // Tableau prestations
+  // Date
+  var today = new Date();
+  document.getElementById('devisDate').textContent = ('0' + today.getDate()).slice(-2) + '/' + ('0' + (today.getMonth() + 1)).slice(-2) + '/' + today.getFullYear();
+
+  // Tableau prestations avec lignes vides vertes (style PDF)
   var tableHtml = '';
+  var emptyRowStyle = 'background:#f6f9f2;';
   d.prestations.forEach(function(p) {
     var prixNum = parseFloat(p.prix.replace(/[^0-9,\.]/g, '').replace(',', '.')) || 0;
     var prixHT = (prixNum / 1.20).toFixed(2).replace('.', ',');
-    tableHtml += '<tr><td>' + p.label + '</td><td style="text-align:center;">1</td><td>' + prixHT + '</td><td>' + prixHT + ' €</td></tr>';
+    tableHtml += '<tr><td style="padding:12px 14px;font-size:.88rem;border-bottom:1px solid #f0f0f0;">' + p.label + '</td><td style="padding:12px 14px;font-size:.88rem;text-align:center;border-bottom:1px solid #f0f0f0;">1</td><td style="padding:12px 14px;font-size:.88rem;border-bottom:1px solid #f0f0f0;">' + prixHT + '</td><td style="padding:12px 14px;font-size:.88rem;text-align:right;border-bottom:1px solid #f0f0f0;">' + prixHT + ' €</td></tr>';
   });
+  tableHtml += '<tr style="' + emptyRowStyle + '"><td colspan="4" style="padding:10px 14px;">&nbsp;</td></tr>';
+  tableHtml += '<tr style="' + emptyRowStyle + '"><td colspan="4" style="padding:10px 14px;">&nbsp;</td></tr>';
   document.getElementById('devisDetailTableBody').innerHTML = tableHtml;
 
   // Totaux
