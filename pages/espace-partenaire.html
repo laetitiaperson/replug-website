@@ -851,19 +851,31 @@
               <span class="rp-devis-doc__ref" id="factureRef"></span>
             </div>
 
-            <!-- Destinataire -->
-            <div class="rp-devis-doc__dest">
-              <div class="rp-devis-doc__dest-label">Destinataire</div>
-              <strong id="factureDestNom"></strong>
-              <span id="factureDestAdresse"></span><br>
-              <span id="factureDestSiret"></span>
-              <div class="rp-devis-doc__client-ref" id="factureClientRef"></div>
+            <!-- Destinataire + Date -->
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;flex-wrap:wrap;gap:16px;">
+              <div class="rp-devis-doc__dest" style="margin-bottom:0;flex:1;min-width:240px;">
+                <div class="rp-devis-doc__dest-label">Destinataire</div>
+                <strong id="factureDestNom"></strong>
+                <span id="factureDestAdresse"></span><br>
+                <span id="factureDestSiret"></span>
+              </div>
+              <div style="text-align:right;font-size:.9rem;color:var(--rp-gray);padding-top:16px;">
+                Date : <strong id="factureDate" style="color:var(--rp-dark);"></strong>
+              </div>
             </div>
+
+            <!-- Client final -->
+            <div id="factureClientRef" style="font-size:.85rem;color:var(--rp-gray);font-style:italic;margin-bottom:20px;"></div>
 
             <!-- Tableau prestations -->
             <table class="rp-devis-doc__table">
               <thead>
-                <tr><th>Désignation</th><th>Quantité</th><th>Prix unitaire HT</th><th>Total HT (Euros)</th></tr>
+                <tr>
+                  <th>Désignation</th>
+                  <th style="text-align:center;">Quantité</th>
+                  <th>Prix unitaire HT</th>
+                  <th style="text-align:right;">Total HT (Euros)</th>
+                </tr>
               </thead>
               <tbody id="factureTableBody"></tbody>
             </table>
@@ -885,6 +897,13 @@
 
             <!-- Statut paiement -->
             <div class="rp-facture__paid" id="facturePaidDate"></div>
+
+            <!-- Bouton Payer le solde (facture d'acompte uniquement) -->
+            <div id="facturePayerSolde" style="display:none;text-align:center;margin-top:16px;">
+              <button class="rp-btn rp-btn--primary" id="btnPayerSolde" style="padding:12px 32px;font-size:1rem;">
+                Payer le solde
+              </button>
+            </div>
 
             <!-- Pied de page légal -->
             <div class="rp-devis-doc__footer">
@@ -2367,6 +2386,7 @@ function openFacture(link) {
   var status = row.dataset.status;
   var montantTTC = parseFloat(row.dataset.montant) || 0;
   var acompte = parseFloat(row.dataset.acompte) || 0;
+  var solde = parseFloat(row.dataset.solde) || 0;
   var isAcompte = status === 'solde-du';
 
   // Montant affiché = acompte (50%) pour facture d'acompte, total pour facture finale
@@ -2382,12 +2402,26 @@ function openFacture(link) {
   document.getElementById('factureDestNom').textContent = 'Cycles Expert SARL';
   document.getElementById('factureDestAdresse').textContent = '12 avenue de la République — 75011 Paris';
   document.getElementById('factureDestSiret').textContent = 'SIRET : 823 456 789 00012';
+
+  // Client final
   document.getElementById('factureClientRef').textContent = 'Client final : ' + client + ' — ' + vehicule;
 
-  // Tableau prestations
+  // Date
+  document.getElementById('factureDate').textContent = dateCmd;
+
+  // Tableau prestations avec lignes vides (style PDF)
   var tbody = document.getElementById('factureTableBody');
   var label = isAcompte ? 'Acompte 50 % — ' + intervention : intervention;
-  tbody.innerHTML = '<tr><td style="padding:12px 14px;font-size:.88rem;border-bottom:1px solid #f0f0f0;">' + label + '</td><td style="padding:12px 14px;font-size:.88rem;text-align:center;border-bottom:1px solid #f0f0f0;">1</td><td style="padding:12px 14px;font-size:.88rem;border-bottom:1px solid #f0f0f0;">' + displayHT.toFixed(2).replace('.', ',') + '</td><td style="padding:12px 14px;font-size:.88rem;text-align:right;border-bottom:1px solid #f0f0f0;">' + displayHT.toFixed(2).replace('.', ',') + ' €</td></tr>';
+  var emptyRowStyle = 'background:#f6f9f2;';
+  tbody.innerHTML =
+    '<tr>' +
+      '<td style="padding:12px 14px;font-size:.88rem;border-bottom:1px solid #f0f0f0;">' + label + '</td>' +
+      '<td style="padding:12px 14px;font-size:.88rem;text-align:center;border-bottom:1px solid #f0f0f0;">1</td>' +
+      '<td style="padding:12px 14px;font-size:.88rem;border-bottom:1px solid #f0f0f0;">' + displayHT.toFixed(2).replace('.', ',') + '</td>' +
+      '<td style="padding:12px 14px;font-size:.88rem;text-align:right;border-bottom:1px solid #f0f0f0;">' + displayHT.toFixed(2).replace('.', ',') + ' €</td>' +
+    '</tr>' +
+    '<tr style="' + emptyRowStyle + '"><td colspan="4" style="padding:10px 14px;">&nbsp;</td></tr>' +
+    '<tr style="' + emptyRowStyle + '"><td colspan="4" style="padding:10px 14px;">&nbsp;</td></tr>';
 
   // Totaux
   document.getElementById('factureTotalHT').textContent = displayHT.toFixed(2).replace('.', ',') + ' €';
@@ -2402,11 +2436,22 @@ function openFacture(link) {
   // Statut paiement
   var paidLine = document.getElementById('facturePaidDate');
   if (isAcompte) {
-    paidLine.textContent = '⚠️ Acompte de 50 % réglé — Solde restant : ' + acompte.toFixed(2).replace('.', ',') + ' €';
+    paidLine.textContent = 'Acompte de 50 % réglé — Solde restant : ' + solde.toFixed(2).replace('.', ',') + ' €';
     paidLine.className = 'rp-facture__paid rp-facture__paid--pending';
   } else {
-    paidLine.textContent = '✓ Facture réglée le ' + dateCmd;
+    paidLine.textContent = 'Facture réglée le ' + dateCmd;
     paidLine.className = 'rp-facture__paid rp-facture__paid--ok';
+  }
+
+  // Bouton Payer le solde (facture d'acompte uniquement)
+  var payerSoldeDiv = document.getElementById('facturePayerSolde');
+  if (isAcompte) {
+    payerSoldeDiv.style.display = 'block';
+    document.getElementById('btnPayerSolde').textContent = 'Payer le solde — ' + solde.toFixed(2).replace('.', ',') + ' €';
+    // Stocker la row pour la mise à jour après paiement
+    document.getElementById('btnPayerSolde').dataset.rowRef = ref;
+  } else {
+    payerSoldeDiv.style.display = 'none';
   }
 
   document.getElementById('commandesContent').style.display = 'none';
@@ -2423,6 +2468,61 @@ function closeFacture() {
 }
 
 document.getElementById('btnFermerFacture').addEventListener('click', closeFacture);
+
+// ===== Payer le solde (facture d'acompte) =====
+document.getElementById('btnPayerSolde').addEventListener('click', function() {
+  var ref = this.dataset.rowRef;
+  // Trouver la ligne dans le tableau
+  var rows = document.querySelectorAll('#commandesBody tr');
+  var targetRow = null;
+  rows.forEach(function(r) {
+    var link = r.querySelector('a');
+    if (link && link.textContent.trim() === ref) targetRow = r;
+  });
+  if (!targetRow) return;
+
+  // Mettre à jour les données de la ligne
+  var montant = parseFloat(targetRow.dataset.montant) || 0;
+  targetRow.dataset.status = 'paye';
+  targetRow.dataset.acompte = montant;
+  targetRow.dataset.solde = '0';
+
+  // Mettre à jour les cellules visuelles
+  targetRow.cells[6].textContent = montant.toFixed(0) + ' €'; // Acompte
+  targetRow.cells[7].innerHTML = '<span style="font-weight:600;color:#15803d;">0 €</span>'; // Solde
+  targetRow.cells[8].innerHTML = '<span style="background:#dcfce7;color:#15803d;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500;">Payé</span>';
+
+  // Masquer le bouton et mettre à jour le statut sur la facture
+  document.getElementById('facturePayerSolde').style.display = 'none';
+  var paidLine = document.getElementById('facturePaidDate');
+  var today = new Date();
+  var dateStr = ('0' + today.getDate()).slice(-2) + '/' + ('0' + (today.getMonth() + 1)).slice(-2) + '/' + today.getFullYear().toString().slice(-2);
+  paidLine.textContent = 'Facture réglée le ' + dateStr;
+  paidLine.className = 'rp-facture__paid rp-facture__paid--ok';
+
+  // Mettre à jour le titre et les conditions
+  document.getElementById('factureTitle').textContent = 'FACTURE';
+  document.getElementById('factureConditions').textContent = 'Facture intégralement réglée';
+
+  // Mettre à jour le tableau avec le montant total
+  var displayTTC = montant;
+  var displayHT = Math.round(displayTTC / 1.20 * 100) / 100;
+  var displayTVA = Math.round((displayTTC - displayHT) * 100) / 100;
+  var intervention = targetRow.cells[3].textContent.trim();
+  var emptyRowStyle = 'background:#f6f9f2;';
+  document.getElementById('factureTableBody').innerHTML =
+    '<tr><td style="padding:12px 14px;font-size:.88rem;border-bottom:1px solid #f0f0f0;">' + intervention + '</td>' +
+    '<td style="padding:12px 14px;font-size:.88rem;text-align:center;border-bottom:1px solid #f0f0f0;">1</td>' +
+    '<td style="padding:12px 14px;font-size:.88rem;border-bottom:1px solid #f0f0f0;">' + displayHT.toFixed(2).replace('.', ',') + '</td>' +
+    '<td style="padding:12px 14px;font-size:.88rem;text-align:right;border-bottom:1px solid #f0f0f0;">' + displayHT.toFixed(2).replace('.', ',') + ' €</td></tr>' +
+    '<tr style="' + emptyRowStyle + '"><td colspan="4" style="padding:10px 14px;">&nbsp;</td></tr>' +
+    '<tr style="' + emptyRowStyle + '"><td colspan="4" style="padding:10px 14px;">&nbsp;</td></tr>';
+  document.getElementById('factureTotalHT').textContent = displayHT.toFixed(2).replace('.', ',') + ' €';
+  document.getElementById('factureTVA').textContent = displayTVA.toFixed(2).replace('.', ',') + ' €';
+  document.getElementById('factureTotalTTC').textContent = displayTTC.toFixed(2).replace('.', ',') + ' €';
+
+  alert('Paiement du solde enregistré avec succès !');
+});
 
 // ===== Diagnostic wizard =====
 function launchDiagnosticWizard() {
