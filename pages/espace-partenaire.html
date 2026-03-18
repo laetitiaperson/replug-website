@@ -1321,11 +1321,8 @@
                         </div>
                         <div class="rp-diag__form-group">
                           <label>Voltage (V) <span style="color:#1a1a1a;">*</span></label>
-                          <select id="diagBattVoltage">
-                            <option value="">-- Sélectionner --</option>
-                            <option value="24">24V</option>
-                            <option value="36">36V</option>
-                            <option value="48">48V</option>
+                          <select id="diagBattVoltage" disabled>
+                            <option value="">-- Choisir une catégorie d'abord --</option>
                           </select>
                         </div>
                         <div class="rp-diag__form-group">
@@ -2789,6 +2786,35 @@ var FABRICANTS_PAR_CATEGORIE = {
   autre: []
 };
 
+// ===== Voltages par catégorie =====
+var VOLTAGES_PAR_CATEGORIE = {
+  velo: ['36', '48'],
+  scooter: ['48', '60', '72'],
+  trottinette: ['36', '48', '60'],
+  autre: []
+};
+
+function updateVoltages() {
+  var categorie = document.getElementById('diagBattCategorie').value;
+  var voltSelect = document.getElementById('diagBattVoltage');
+  voltSelect.innerHTML = '';
+  if (!categorie) {
+    voltSelect.innerHTML = '<option value="">-- Choisir une catégorie d\'abord --</option>';
+    voltSelect.disabled = true;
+    return;
+  }
+  voltSelect.disabled = false;
+  voltSelect.innerHTML = '<option value="">-- Sélectionner --</option>';
+  var liste = VOLTAGES_PAR_CATEGORIE[categorie] || [];
+  liste.forEach(function(v) {
+    var opt = document.createElement('option');
+    opt.value = v;
+    opt.textContent = v + 'V';
+    voltSelect.appendChild(opt);
+  });
+  voltSelect.closest('.rp-diag__form-group').classList.remove('is-invalid');
+}
+
 function updateFabricants() {
   var categorie = document.getElementById('diagBattCategorie').value;
   var fabSelect = document.getElementById('diagBattFabricant');
@@ -2819,6 +2845,7 @@ function updateFabricants() {
 
 document.getElementById('diagBattCategorie').addEventListener('change', function() {
   updateFabricants();
+  updateVoltages();
   // Retirer le liseré rouge de la catégorie
   this.closest('.rp-diag__form-group').classList.remove('is-invalid');
 });
