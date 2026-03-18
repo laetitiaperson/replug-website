@@ -898,11 +898,44 @@
             <!-- Statut paiement -->
             <div class="rp-facture__paid" id="facturePaidDate"></div>
 
-            <!-- Bouton Payer le solde (facture d'acompte uniquement) -->
-            <div id="facturePayerSolde" style="display:none;text-align:center;margin-top:16px;">
-              <button class="rp-btn rp-btn--primary" id="btnPayerSolde" style="padding:12px 32px;font-size:1rem;">
-                Payer le solde
-              </button>
+            <!-- Section paiement solde (facture d'acompte uniquement) -->
+            <div id="facturePayerSolde" class="rp-devis-doc__payment" style="display:none;">
+              <p style="font-size:.9rem;color:var(--rp-dark);margin-bottom:12px;font-weight:500;">Solde restant à régler : <strong id="factureSoldeAmount" style="color:var(--rp-green);"></strong></p>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
+                <label style="flex:1;min-width:140px;display:flex;align-items:center;gap:8px;padding:12px 16px;border:2px solid #e8e8e8;border-radius:8px;cursor:pointer;font-size:.88rem;">
+                  <input type="radio" name="facturePayMethod" value="cb" checked style="accent-color:var(--rp-green);">
+                  Carte bancaire
+                </label>
+                <label style="flex:1;min-width:140px;display:flex;align-items:center;gap:8px;padding:12px 16px;border:2px solid #e8e8e8;border-radius:8px;cursor:pointer;font-size:.88rem;">
+                  <input type="radio" name="facturePayMethod" value="virement" style="accent-color:var(--rp-green);">
+                  Virement bancaire
+                </label>
+              </div>
+              <div id="facturePayCB">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+                  <div style="grid-column:1/-1;">
+                    <label style="font-size:.82rem;color:var(--rp-gray);margin-bottom:4px;display:block;">Numéro de carte</label>
+                    <input type="text" class="rp-form__input" placeholder="1234 5678 9012 3456" maxlength="19" style="font-size:.9rem;" disabled>
+                  </div>
+                  <div>
+                    <label style="font-size:.82rem;color:var(--rp-gray);margin-bottom:4px;display:block;">Expiration</label>
+                    <input type="text" class="rp-form__input" placeholder="MM/AA" maxlength="5" style="font-size:.9rem;" disabled>
+                  </div>
+                  <div>
+                    <label style="font-size:.82rem;color:var(--rp-gray);margin-bottom:4px;display:block;">CVV</label>
+                    <input type="text" class="rp-form__input" placeholder="123" maxlength="3" style="font-size:.9rem;" disabled>
+                  </div>
+                </div>
+              </div>
+              <div id="facturePayVirement" style="display:none;">
+                <div style="background:#f8f9fa;border-radius:8px;padding:16px;font-size:.88rem;margin-bottom:12px;">
+                  <p style="font-weight:600;margin-bottom:8px;">Coordonnées bancaires Re-plug :</p>
+                  <p style="margin-bottom:4px;">IBAN : <strong>FR76 1234 5678 9012 3456 7890 123</strong></p>
+                  <p style="margin-bottom:4px;">BIC : <strong>REPLFRPP</strong></p>
+                  <p>Référence à indiquer : <strong id="facturePayVirementRef"></strong></p>
+                </div>
+              </div>
+              <button class="rp-btn rp-btn--primary" style="width:100%;" id="btnPayerSolde">Payer le solde</button>
             </div>
 
             <!-- Pied de page légal -->
@@ -2443,13 +2476,18 @@ function openFacture(link) {
     paidLine.className = 'rp-facture__paid rp-facture__paid--ok';
   }
 
-  // Bouton Payer le solde (facture d'acompte uniquement)
+  // Section paiement solde (facture d'acompte uniquement)
   var payerSoldeDiv = document.getElementById('facturePayerSolde');
   if (isAcompte) {
-    payerSoldeDiv.style.display = 'block';
-    document.getElementById('btnPayerSolde').textContent = 'Payer le solde — ' + solde.toFixed(2).replace('.', ',') + ' €';
-    // Stocker la row pour la mise à jour après paiement
+    payerSoldeDiv.style.display = '';
+    document.getElementById('factureSoldeAmount').textContent = solde.toFixed(2).replace('.', ',') + ' €';
+    document.getElementById('facturePayVirementRef').textContent = ref;
+    document.getElementById('btnPayerSolde').textContent = 'Payer le solde';
     document.getElementById('btnPayerSolde').dataset.rowRef = ref;
+    // Reset au mode CB
+    document.querySelectorAll('input[name="facturePayMethod"]').forEach(function(r) { r.checked = r.value === 'cb'; });
+    document.getElementById('facturePayCB').style.display = '';
+    document.getElementById('facturePayVirement').style.display = 'none';
   } else {
     payerSoldeDiv.style.display = 'none';
   }
@@ -2470,6 +2508,15 @@ function closeFacture() {
 document.getElementById('btnFermerFacture').addEventListener('click', closeFacture);
 
 // ===== Payer le solde (facture d'acompte) =====
+// Toggle CB / Virement
+document.querySelectorAll('input[name="facturePayMethod"]').forEach(function(radio) {
+  radio.addEventListener('change', function() {
+    document.getElementById('facturePayCB').style.display = this.value === 'cb' ? '' : 'none';
+    document.getElementById('facturePayVirement').style.display = this.value === 'virement' ? '' : 'none';
+    document.getElementById('btnPayerSolde').textContent = this.value === 'cb' ? 'Payer le solde' : 'J\'ai effectué le virement';
+  });
+});
+
 document.getElementById('btnPayerSolde').addEventListener('click', function() {
   var ref = this.dataset.rowRef;
   // Trouver la ligne dans le tableau
@@ -2521,7 +2568,10 @@ document.getElementById('btnPayerSolde').addEventListener('click', function() {
   document.getElementById('factureTVA').textContent = displayTVA.toFixed(2).replace('.', ',') + ' €';
   document.getElementById('factureTotalTTC').textContent = displayTTC.toFixed(2).replace('.', ',') + ' €';
 
-  alert('Paiement du solde enregistré avec succès !');
+  var isCB = document.querySelector('input[name="facturePayMethod"]:checked').value === 'cb';
+  alert(isCB
+    ? 'Paiement du solde enregistré avec succès !'
+    : 'Merci ! Votre commande sera finalisée dès réception du virement.');
 });
 
 // ===== Diagnostic wizard =====
