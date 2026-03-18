@@ -1443,7 +1443,7 @@
                 <div class="rp-diag__section-body">
                   <div class="rp-diag__form-grid">
                     <div class="rp-diag__form-group">
-                      <label>Tension mesurée (V) <span style="color:#1a1a1a;">*</span></label>
+                      <label>Tension mesurée (V)</label>
                       <input type="text" id="diagTension" placeholder="ex: 36.5">
                     </div>
                     <div class="rp-diag__form-group">
@@ -3106,7 +3106,7 @@ document.getElementById('diagLaunchBtn').addEventListener('click', function() {
   var firstInvalidSection = null;
 
   // --- Validation Mesures électriques ---
-  var requiredStep2Ids = ['diagTension', 'diagTensionChargeur', 'diagCourantCharge'];
+  var requiredStep2Ids = ['diagTensionChargeur', 'diagCourantCharge'];
   requiredStep2Ids.forEach(function(id) {
     var input = document.getElementById(id);
     if (!input) return;
