@@ -3,43 +3,149 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ressources — Re-plug</title>
-  <meta name="description" content="Guides techniques, FAQ et processus de réparation. Tout comprendre sur la performance et la sécurité des batteries lithium-ion.">
+  <title>Ressources — Guides, articles et expertise batterie | Re-plug</title>
+  <meta name="description" content="Guides techniques, articles experts et actualités sur les batteries lithium-ion : réparation, reconditionnement, BMS, réglementation européenne et sécurité. Par Re-plug, spécialiste de la seconde vie des batteries.">
+  <meta name="keywords" content="batterie lithium-ion, réparation batterie vélo électrique, BMS, reconditionnement batterie, réglementation batteries UE 2023/1542, sécurité batterie, SOH batterie, durée de vie batterie">
+  <link rel="canonical" href="https://re-plug.fr/pages/ressources.html">
+  <meta property="og:title" content="Ressources — Guides et expertise batterie | Re-plug">
+  <meta property="og:description" content="Guides techniques, articles experts et actualités sur les batteries lithium-ion. Tout comprendre sur la réparation, le reconditionnement et la réglementation.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://re-plug.fr/pages/ressources.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400;1,9..40,700&display=swap" rel="stylesheet">
   <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="../css/replug.css">
+  <style>
+    .rp-ressources__filters{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:40px;}
+    .rp-ressources__filter-btn{padding:8px 20px;border-radius:30px;border:1.5px solid #d1d5db;background:#fff;color:#374151;font-size:.9rem;font-weight:500;cursor:pointer;transition:all .2s;}
+    .rp-ressources__filter-btn:hover{border-color:#16a34a;color:#16a34a;}
+    .rp-ressources__filter-btn.is-active{background:#16a34a;color:#fff;border-color:#16a34a;}
+    .rp-ressources__badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.3px;margin-bottom:8px;}
+    .rp-ressources__badge--guide{background:#dbeafe;color:#1e40af;}
+    .rp-ressources__badge--technique{background:#fce7f3;color:#be185d;}
+    .rp-ressources__badge--reglementation{background:#fef3c7;color:#92400e;}
+  </style>
 </head>
 <body>
   <a class="rp-sr-only" href="#main-content">Aller au contenu principal</a>
-  <header class="rp-header"><div class="rp-header__inner"><a href="../index.html" class="rp-header__logo" aria-label="Re-plug — Accueil"><img src="../images/logo-replug.png" alt="Re-plug" class="rp-header__logo-img" width="120" height="40"></a><nav class="rp-header__nav" aria-label="Navigation principale"><a href="qui-sommes-nous.html" class="rp-header__nav-link">Qui sommes-nous</a><a href="notre-expertise.html" class="rp-header__nav-link">Notre expertise</a><a href="ressources.html" class="rp-header__nav-link active">Ressources</a><a href="blog.html" class="rp-header__nav-link">Blog</a><a href="contact.html" class="rp-header__nav-link">Contact</a><a href="trouver-un-reparateur.html" class="rp-btn rp-btn--primary rp-header__nav-cta">Trouver un réparateur</a></nav><div class="rp-header__actions"><a href="espace-partenaire.html" class="rp-header__partner-link" aria-label="Espace Partenaire"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Espace Partenaire</span></a><a href="trouver-un-reparateur.html" class="rp-btn rp-btn--primary rp-header__cta">Trouver un réparateur</a></div><button class="rp-header__burger" aria-label="Ouvrir le menu" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+  <header class="rp-header"><div class="rp-header__inner"><a href="../index.html" class="rp-header__logo" aria-label="Re-plug — Accueil"><img src="../images/logo-replug.png" alt="Re-plug" class="rp-header__logo-img" width="120" height="40"></a><nav class="rp-header__nav" aria-label="Navigation principale"><a href="qui-sommes-nous.html" class="rp-header__nav-link">Qui sommes-nous</a><a href="notre-expertise.html" class="rp-header__nav-link">Notre expertise</a><a href="ressources.html" class="rp-header__nav-link active">Ressources</a><a href="contact.html" class="rp-header__nav-link">Contact</a><a href="trouver-un-reparateur.html" class="rp-btn rp-btn--primary rp-header__nav-cta">Trouver un réparateur</a></nav><div class="rp-header__actions"><a href="espace-partenaire.html" class="rp-header__partner-link" aria-label="Espace Partenaire"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Espace Partenaire</span></a><a href="trouver-un-reparateur.html" class="rp-btn rp-btn--primary rp-header__cta">Trouver un réparateur</a></div><button class="rp-header__burger" aria-label="Ouvrir le menu" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
 
   <main id="main-content">
     <section class="rp-page-hero rp-page-hero--with-bg" style="background-image:url('../images/velo-electrique-noir.avif');">
       <div class="rp-page-hero__inner">
         <h1 class="rp-page-hero__title">Tout comprendre sur la performance et la sécurité des batteries lithium-ion.</h1>
-        <p class="rp-page-hero__subtitle">Expertise, guides techniques et conseils pour prolonger la vie de vos équipements électriques</p>
+        <p class="rp-page-hero__subtitle">Guides experts, articles techniques et actualités réglementaires pour prolonger la vie de vos batteries</p>
       </div>
     </section>
 
-    <!-- Guides experts -->
-    <section class="rp-guides">
-      <div class="rp-guides__inner">
-        <h2 class="rp-guides__title">Guides experts</h2>
-        <div class="rp-guides__grid">
-          <article class="rp-guides__card">
-            <div class="rp-guides__card-img"><img src="../images/photo-7.avif" alt="Trottinette électrique" loading="lazy"></div>
-            <h3 class="rp-guides__card-title">Comment optimiser la durée de vie de votre batterie ?</h3>
-            <p class="rp-guides__card-text">Les bonnes pratiques de charge et de stockage pour préserver la chimie de vos cellules.</p>
-            <a href="focus-duree-de-vie.html" class="rp-btn rp-btn--primary rp-btn--small">En savoir plus</a>
-          </article>
-          <article class="rp-guides__card">
-            <div class="rp-guides__card-img"><img src="../images/velo-electrique-noir.avif" alt="Réparation batterie — sécurité" loading="lazy"></div>
-            <h3 class="rp-guides__card-title">Comment renforcer la sécurité des batteries lithium-ion ?</h3>
-            <p class="rp-guides__card-text">Comprendre les risques, les normes européennes et l'importance d'un diagnostic certifié Re-plug.</p>
-            <a href="focus-securite.html" class="rp-btn rp-btn--primary rp-btn--small">En savoir plus</a>
-          </article>
+    <!-- Articles & Guides fusionnés -->
+    <section class="rp-blog" aria-label="Articles et guides">
+      <div class="rp-blog__inner">
+
+        <div class="rp-ressources__filters" role="group" aria-label="Filtrer par catégorie">
+          <button class="rp-ressources__filter-btn is-active" data-filter="tous">Tous</button>
+          <button class="rp-ressources__filter-btn" data-filter="guide">Guide</button>
+          <button class="rp-ressources__filter-btn" data-filter="technique">Technique</button>
+          <button class="rp-ressources__filter-btn" data-filter="reglementation">Réglementation</button>
+        </div>
+
+        <div class="rp-blog__grid" id="ressourcesGrid">
+
+          <a href="focus-duree-de-vie.html" class="rp-blog__card" style="text-decoration:none;" data-category="guide">
+            <div class="rp-blog__card-image">
+              <img src="../images/photo-7.avif" alt="Trottinette électrique — optimiser la durée de vie de la batterie" loading="lazy" width="600" height="340">
+            </div>
+            <div class="rp-blog__card-body">
+              <span class="rp-ressources__badge rp-ressources__badge--guide">Guide</span>
+              <h2 class="rp-blog__card-title">Comment optimiser la durée de vie de votre batterie ?</h2>
+              <p class="rp-blog__card-excerpt">Les bonnes pratiques de charge et de stockage pour préserver la chimie de vos cellules lithium-ion.</p>
+            </div>
+          </a>
+
+          <a href="focus-securite.html" class="rp-blog__card" style="text-decoration:none;" data-category="guide">
+            <div class="rp-blog__card-image">
+              <img src="../images/velo-electrique-noir.avif" alt="Sécurité des batteries lithium-ion" loading="lazy" width="600" height="340">
+            </div>
+            <div class="rp-blog__card-body">
+              <span class="rp-ressources__badge rp-ressources__badge--guide">Guide</span>
+              <h2 class="rp-blog__card-title">Comment renforcer la sécurité des batteries lithium-ion ?</h2>
+              <p class="rp-blog__card-excerpt">Comprendre les risques, les normes européennes et l'importance d'un diagnostic certifié Re-plug.</p>
+            </div>
+          </a>
+
+          <a href="article-reparer-remplacer-batterie.html" class="rp-blog__card" style="text-decoration:none;" data-category="guide">
+            <div class="rp-blog__card-image">
+              <img src="../images/calcul-financier-batterie.jpg" alt="Calcul financier — réparer ou remplacer une batterie de vélo électrique" loading="lazy" width="600" height="340">
+            </div>
+            <div class="rp-blog__card-body">
+              <span class="rp-ressources__badge rp-ressources__badge--guide">Guide</span>
+              <p class="rp-blog__card-date">12 mars 2026</p>
+              <h2 class="rp-blog__card-title">Réparer ou remplacer sa batterie de vélo électrique : le vrai calcul financier</h2>
+              <p class="rp-blog__card-excerpt">Comparatif chiffré entre remplacement, réparation et reconditionnement. Dans la majorité des cas, réparer coûte 2 à 3 fois moins cher.</p>
+            </div>
+          </a>
+
+          <a href="article-bms.html" class="rp-blog__card" style="text-decoration:none;" data-category="technique">
+            <div class="rp-blog__card-image">
+              <img src="../images/bms-circuit.jpg" alt="Carte électronique BMS — Battery Management System" loading="lazy" width="600" height="340">
+            </div>
+            <div class="rp-blog__card-body">
+              <span class="rp-ressources__badge rp-ressources__badge--technique">Technique</span>
+              <p class="rp-blog__card-date">12 novembre 2025</p>
+              <h2 class="rp-blog__card-title">Le Battery Management System (BMS) : le cerveau caché de la batterie</h2>
+              <p class="rp-blog__card-excerpt">Le BMS surveille, protège et optimise chaque cellule de votre batterie. Découvrez son rôle et comment détecter une panne.</p>
+            </div>
+          </a>
+
+          <a href="article-expliquer-soh-client.html" class="rp-blog__card" style="text-decoration:none;" data-category="technique">
+            <div class="rp-blog__card-image">
+              <img src="../images/relation-client-batterie.jpg" alt="Échange professionnel-client — expliquer l'état de santé d'une batterie" loading="lazy" width="600" height="340">
+            </div>
+            <div class="rp-blog__card-body">
+              <span class="rp-ressources__badge rp-ressources__badge--technique">Technique</span>
+              <p class="rp-blog__card-date">12 mars 2026</p>
+              <h2 class="rp-blog__card-title">Comment expliquer l'état de santé d'une batterie à son client sans jargon technique ?</h2>
+              <p class="rp-blog__card-excerpt">SOH, BMS, déséquilibre cellulaire : comment traduire un diagnostic batterie en langage clair pour vos clients.</p>
+            </div>
+          </a>
+
+          <a href="article-batterie-surchauffe.html" class="rp-blog__card" style="text-decoration:none;" data-category="technique">
+            <div class="rp-blog__card-image">
+              <img src="../images/batterie-surchauffe.jpg" alt="Surchauffe batterie — signaux d'alerte" loading="lazy" width="600" height="340">
+            </div>
+            <div class="rp-blog__card-body">
+              <span class="rp-ressources__badge rp-ressources__badge--technique">Technique</span>
+              <p class="rp-blog__card-date">12 mars 2026</p>
+              <h2 class="rp-blog__card-title">Batterie de vélo électrique gonflée, qui surchauffe ou qui coupe : que faire ?</h2>
+              <p class="rp-blog__card-excerpt">Trois signaux d'alerte distincts qui exigent des réactions différentes. Comment les identifier et réagir selon le niveau de gravité.</p>
+            </div>
+          </a>
+
+          <a href="article-reglement-europeen.html" class="rp-blog__card" style="text-decoration:none;" data-category="reglementation">
+            <div class="rp-blog__card-image">
+              <img src="../images/drapeaux-europe.jpg" alt="Drapeaux européens — règlement UE 2023/1542 sur les batteries" loading="lazy" width="600" height="340">
+            </div>
+            <div class="rp-blog__card-body">
+              <span class="rp-ressources__badge rp-ressources__badge--reglementation">Réglementation</span>
+              <p class="rp-blog__card-date">12 novembre 2025</p>
+              <h2 class="rp-blog__card-title">Le nouveau règlement européen : ce que vous devez savoir sur les batteries</h2>
+              <p class="rp-blog__card-excerpt">Le règlement UE 2023/1542 remplace la directive de 2006 et transforme en profondeur les règles applicables aux batteries. Voici ce qui change.</p>
+            </div>
+          </a>
+
+          <a href="article-assurance-batterie.html" class="rp-blog__card" style="text-decoration:none;" data-category="reglementation">
+            <div class="rp-blog__card-image">
+              <img src="../images/velo-electrique-assurance.jpg" alt="Vélo électrique — assurance et panne de batterie" loading="lazy" width="600" height="340">
+            </div>
+            <div class="rp-blog__card-body">
+              <span class="rp-ressources__badge rp-ressources__badge--reglementation">Réglementation</span>
+              <p class="rp-blog__card-date">12 mars 2026</p>
+              <h2 class="rp-blog__card-title">Assurance vélo électrique : la panne de batterie est-elle couverte ?</h2>
+              <p class="rp-blog__card-excerpt">Garantie légale, assurance MRH, assurance vélo dédiée : ce qui est couvert (et ce qui ne l'est pas) en cas de panne de batterie.</p>
+            </div>
+          </a>
+
         </div>
       </div>
     </section>
@@ -150,11 +256,35 @@
     </section>
   </main>
 
-  <footer class="rp-footer"><div class="rp-footer__inner"><div class="rp-footer__grid"><div class="rp-footer__brand"><img src="../images/logo-replug.png" alt="Re-plug" class="rp-footer__logo-img" width="120" height="40"><p class="rp-footer__brand-text">Re-plug prolonge la vie des batteries.</p></div><div><p class="rp-footer__col-title">Navigation</p><ul class="rp-footer__links"><li><a href="qui-sommes-nous.html">Qui sommes-nous</a></li><li><a href="notre-expertise.html">Notre expertise</a></li><li><a href="ressources.html">Ressources</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div><div><p class="rp-footer__col-title">Services</p><ul class="rp-footer__links"><li><a href="trouver-un-reparateur.html">Trouver un réparateur</a></li><li><a href="devenir-partenaire.html">Devenir partenaire</a></li><li><a href="espace-partenaire.html">Espace partenaire</a></li></ul></div><div><p class="rp-footer__col-title">Contact</p><ul class="rp-footer__links"><li>Re-plug SAS</li><li>8, rue Lemercier, 75017 Paris</li><li><a href="mailto:admin@re-plug.fr">admin@re-plug.fr</a></li></ul></div></div><div class="rp-footer__bottom"><p class="rp-footer__copy">&copy; 2026 Re-plug SAS.</p><ul class="rp-footer__legal-links"><li><a href="mentions-legales.html">Mentions légales</a></li><li><a href="cgv-professionnels.html">CGV</a></li><li><a href="politique-de-confidentialite.html">Confidentialité</a></li><li><a href="politique-de-cookies.html">Cookies</a></li><li><a href="politique-de-garantie.html">Garantie</a></li><li><a href="politique-de-livraison.html">Livraison et retour</a></li></ul></div></div></footer>
+  <footer class="rp-footer"><div class="rp-footer__inner"><div class="rp-footer__grid"><div class="rp-footer__brand"><img src="../images/logo-replug.png" alt="Re-plug" class="rp-footer__logo-img" width="120" height="40"><p class="rp-footer__brand-text">Re-plug prolonge la vie des batteries.</p></div><div><p class="rp-footer__col-title">Navigation</p><ul class="rp-footer__links"><li><a href="qui-sommes-nous.html">Qui sommes-nous</a></li><li><a href="notre-expertise.html">Notre expertise</a></li><li><a href="ressources.html">Ressources</a></li><li><a href="contact.html">Contact</a></li></ul></div><div><p class="rp-footer__col-title">Services</p><ul class="rp-footer__links"><li><a href="trouver-un-reparateur.html">Trouver un réparateur</a></li><li><a href="devenir-partenaire.html">Devenir partenaire</a></li><li><a href="espace-partenaire.html">Espace partenaire</a></li></ul></div><div><p class="rp-footer__col-title">Contact</p><ul class="rp-footer__links"><li>Re-plug SAS</li><li>8, rue Lemercier, 75017 Paris</li><li><a href="mailto:admin@re-plug.fr">admin@re-plug.fr</a></li></ul></div></div><div class="rp-footer__bottom"><p class="rp-footer__copy">&copy; 2026 Re-plug SAS.</p><ul class="rp-footer__legal-links"><li><a href="mentions-legales.html">Mentions légales</a></li><li><a href="cgv-professionnels.html">CGV</a></li><li><a href="politique-de-confidentialite.html">Confidentialité</a></li><li><a href="politique-de-cookies.html">Cookies</a></li><li><a href="politique-de-garantie.html">Garantie</a></li><li><a href="politique-de-livraison.html">Livraison et retour</a></li></ul></div></div></footer>
 
   <script>
+    // FAQ accordion
     document.querySelectorAll('.rp-faq__question').forEach(function(btn){btn.addEventListener('click',function(){var item=this.closest('.rp-faq__item'),isOpen=item.classList.contains('is-open');document.querySelectorAll('.rp-faq__item.is-open').forEach(function(el){el.classList.remove('is-open');el.querySelector('.rp-faq__question').setAttribute('aria-expanded','false');});if(!isOpen){item.classList.add('is-open');this.setAttribute('aria-expanded','true');}else{this.setAttribute('aria-expanded','false');}});});
+
+    // Burger menu
     document.querySelector('.rp-header__burger').addEventListener('click',function(){var h=document.querySelector('.rp-header');h.classList.toggle('rp-header--open');this.setAttribute('aria-expanded',h.classList.contains('rp-header--open'));});
+
+    // Category filters
+    document.querySelectorAll('.rp-ressources__filter-btn').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        document.querySelectorAll('.rp-ressources__filter-btn').forEach(function(b){b.classList.remove('is-active');});
+        this.classList.add('is-active');
+        var filter = this.dataset.filter;
+        document.querySelectorAll('#ressourcesGrid .rp-blog__card').forEach(function(card){
+          if(filter === 'tous' || card.dataset.category === filter){
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Cookies
+    function rpAcceptCookies(){localStorage.setItem('rp_cookies','accepted');document.getElementById('rp-cookie-banner').classList.remove('is-visible');}
+    function rpRefuseCookies(){localStorage.setItem('rp_cookies','refused');document.getElementById('rp-cookie-banner').classList.remove('is-visible');}
+    (function(){if(!localStorage.getItem('rp_cookies')){document.getElementById('rp-cookie-banner').classList.add('is-visible');}})();
   </script>
 
 <!-- Cookie Banner -->
