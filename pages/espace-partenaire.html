@@ -2791,7 +2791,7 @@ var VOLTAGES_PAR_CATEGORIE = {
   velo: ['36', '48'],
   scooter: ['48', '60', '72'],
   trottinette: ['36', '48', '60'],
-  autre: []
+  autre: ['24', '36', '48', '60', '72', 'autre']
 };
 
 function updateVoltages() {
@@ -2809,7 +2809,7 @@ function updateVoltages() {
   liste.forEach(function(v) {
     var opt = document.createElement('option');
     opt.value = v;
-    opt.textContent = v + 'V';
+    opt.textContent = v === 'autre' ? 'Autre / Je ne sais pas' : v + 'V';
     voltSelect.appendChild(opt);
   });
   voltSelect.closest('.rp-diag__form-group').classList.remove('is-invalid');
